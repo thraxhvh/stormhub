@@ -7,6 +7,7 @@ local scriptUrl = ({
     [6717117731] = "https://raw.githubusercontent.com/thraxhvh/scripts/main/subway%20surf",
     [9377039667] = "https://raw.githubusercontent.com/thraxhvh/scripts/main/roblox%20innovation%20awards%20voting%20hub",
     [8304191830] = "https://raw.githubusercontent.com/thraxhvh/scripts/main/anime%20adventure"
+    [8305160617] = "https://raw.githubusercontent.com/thraxhvh/scripts/main/last%20to%20leave"
 })[game.PlaceId]
 
 if scriptUrl then
