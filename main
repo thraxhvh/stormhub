@@ -20,7 +20,7 @@ if game.PlaceId == 9377039667 then -- Roblox Innovation Awards Voting Hub
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/roblox%20innovation%20awards%20voting%20hub"))()
 end
 if game.PlaceId == 8304191830 then -- Anime Adventures
-loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anime%20adventures"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/load%20ad%20hubs"))()
 end
 if game.PlaceId == 8305160617 then -- Last to Leave
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/last%20to%20leave"))()
