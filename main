@@ -15,6 +15,7 @@ loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main
 end
 if game.PlaceId == 6717117731 then -- Subway Surf
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/subway%20surf"))()
+end
 if game.PlaceId == 9377039667 then -- Roblox Innovation Awards Voting Hub
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/roblox%20innovation%20awards%20voting%20hub"))()
 end
