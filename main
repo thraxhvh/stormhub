@@ -25,3 +25,6 @@ end
 if game.PlaceId == 8305160617 then -- Last to Leave
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/last%20to%20leave"))()
 end
+if game.PlaceId == 5023820864 then -- Trade Tower
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/trade%20tower"))()
+end
