@@ -4202,6 +4202,7 @@ local Toggle = sect1:AddToggle("Auto Click", false, function(a)
     aa = a
     while aa do task.wait()
     mouse1click()
+    wait()
     end
 end)
 Toggle:AddKeybind(CRAP,function()
@@ -4214,11 +4215,158 @@ end)
 sect1:AddSlider("Jump", 24, 24, 100, false, function(v)
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
 end)
+local sect1 = tab1:CreateSector("Teleports", 'left')
+sect1:AddButton("Upgrade", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-99.28072357177734, 4.001918792724609, 138.34478759765625)
+    task.wait()
+    local teleport_table = {
+    location1 = Vector3.new(), -- your desired position
+}
 
+local tween_s = game:GetService('TweenService')
+local tweeninfo = TweenInfo.new(0,Enum.EasingStyle.Linear)
+
+local lp = game.Players.LocalPlayer
+
+function bypass_teleport(v)
+    if lp.Character and 
+    lp.Character:FindFirstChild('HumanoidRootPart') then
+        local cf = CFrame.new(v)
+        local a = tween_s:Create(lp.Character.HumanoidRootPart,tweeninfo,{CFrame=cf})
+        a:Play()
+        -- a.Completed:Wait()
+        -- print('Teleporting Done!')
+    end
+end
+
+bypass_teleport(teleport_table.location1)
+end)
 -- Misc
 local sect1 = tab2:CreateSector("Misc", 'left')
 sect1:AddButton("Unload gui", function()
     game:GetService("CoreGui")["Storm Hub | Youtube Simulator Z"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+local sect1 = tab2:CreateSector("Info", 'left')
+sect1:AddLabel("Rejoin if execute 2x time")
+sect1:AddLabel("if forgot to delete binds")
+
+elseif game.PlaceId == 855499080 then -- ⚔️ SKYWARS 🏹
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Storm Hub | ⚔️ SKYWARS 🏹", Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Combat", 'left')
+sect1:AddLabel("Auto Click only work w/ bind")
+local Toggle = sect1:AddToggle("Auto Click", false, function(a)
+    aa = a
+    while aa do task.wait()
+    mouse1click()
+    wait()
+    end
+end)
+Toggle:AddKeybind(CRAP,function()
+end)
+local sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 24, 24, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 60, 60, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+sect1:AddToggle("Bypass speed ( 60x )", false, function(a)
+    aa = a
+    while aa do task.wait()
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60
+    end
+end)
+sect1:AddToggle("Bypass jump ( 100x )", false, function()
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
+end)
+local sect1 = tab1:CreateSector("Teleports", 'right')
+sect1:AddLabel("Spawn")
+sect1:AddButton("Spawn", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(5.004316960821598e-09, 267.9999084472656, -2.3981556296348572e-08)
+end)
+sect1:AddLabel("Shop")
+sect1:AddButton("Group Room", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(128, 263.9999084472656, -4.76837158203125e-07)
+end)
+sect1:AddLabel("Store Room")
+sect1:AddButton("Enter", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-62, 263.9999084472656, -9.60222678259015e-07)
+end)
+sect1:AddLabel("Vip")
+sect1:AddButton("Enter", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 263.9999084472656, -70)
+end)
+sect1:AddButton("Exit", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 268.1999206542969, -6)
+end)
+
+sect1:AddLabel("Mega Vip Room")
+sect1:AddButton("Enter", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0, 263.9999084472656, 70)
+end)
+sect1:AddButton("Exit", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4.819310284176481e-09, 268.1999206542969, 6)
+end)
+local sect1 = tab1:CreateSector("Map", 'left')
+sect1:AddButton("Winter Mode", function( )
+    fireclickdetector(game:GetService("Workspace").EnableChristmas.ClickDetector)
+end)
+sect1:AddButton("Night Mode", function( )
+    fireclickdetector(game:GetService("Workspace").ToggleNight.ClickDetector)
+end)
+sect1:AddButton("Snow Mode", function()
+    fireclickdetector(game:GetService("Workspace").ToggleSnow.ClickDetector)
+end)
+local sect1 = tab1:CreateSector("Misc", 'left')
+sect1:AddToggle("Tp tool", false, function(state)
+        if state then
+        mouse = game.Players.LocalPlayer:GetMouse()
+tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = "Click Teleport"
+tool.Activated:connect(function()
+local pos = mouse.Hit+Vector3.new(0,2.5,0)
+pos = CFrame.new(pos.X,pos.Y,pos.Z)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+end)
+tool.Parent = game.Players.LocalPlayer.Backpack
+else
+        game:GetService("Players").LocalPlayer.Backpack["Click Teleport"]:Destroy()
+        end
+end)
+sect1:AddButton("Bypass group door", function()
+    game:GetService("Workspace").GroupDoor.CanCollide = false
+end)
+local sect1 = tab1:CreateSector("Codes", 'left')
+sect1:AddButton("Reedem sword code", function()
+local args = {
+    [1] = "sword"
+}
+
+game:GetService("ReplicatedStorage").Events.PromoRewards:FireServer(unpack(args))
+end)
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Storm Hub | ⚔️ SKYWARS 🏹"]:Destroy()
 end)
 sect1:AddLabel("made by thrax")
 local sect1 = tab2:CreateSector("Others", 'right')
