@@ -4293,10 +4293,15 @@ sect1:AddToggle("Bypass speed ( 60x )", false, function(a)
     aa = a
     while aa do task.wait()
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 60
+    wait(0.1)
     end
 end)
-sect1:AddToggle("Bypass jump ( 100x )", false, function()
+sect1:AddToggle("Bypass jump ( 100x )", false, function(b)
+    bb = b
+    while aa do task.wait()
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = 100
+    wait(0.1)
+    end
 end)
 local sect1 = tab1:CreateSector("Teleports", 'right')
 sect1:AddLabel("Spawn")
@@ -4326,6 +4331,14 @@ end)
 sect1:AddButton("Exit", function()
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-4.819310284176481e-09, 268.1999206542969, 6)
 end)
+local sect1 = tab1:CreateSector("Reach", 'left')
+sect1:AddSlider("Reach Size", 4, 4, 100, false, function(value)
+    reachsize = value
+	reachsize = tonumber(value)
+end)
+sect1:AddToggle("Reach Visualizer", false, function(value)
+    visualizerEnabled = value
+end)
 local sect1 = tab1:CreateSector("Map", 'left')
 sect1:AddButton("Winter Mode", function( )
     fireclickdetector(game:GetService("Workspace").EnableChristmas.ClickDetector)
@@ -4353,8 +4366,19 @@ else
         game:GetService("Players").LocalPlayer.Backpack["Click Teleport"]:Destroy()
         end
 end)
-sect1:AddButton("Bypass group door", function()
-    game:GetService("Workspace").GroupDoor.CanCollide = false
+sect1:AddToggle("Bypass group door", false, function(state)
+    if state then
+        game:GetService("Workspace").GroupDoor.CanCollide = false
+    else
+        game:GetService("Workspace").GroupDoor.CanCollide = true
+    end
+end)
+sect1:AddToggle("Bypass kill plates", false, function(state)
+    if state then
+        game:GetService("Workspace").Borders.InvisibleBorder.Part.CanCollide = false
+    else
+        game:GetService("Workspace").Borders.InvisibleBorder.Part.CanCollide = true
+    end
 end)
 local sect1 = tab1:CreateSector("Codes", 'left')
 sect1:AddButton("Reedem sword code", function()
@@ -4465,4 +4489,228 @@ end)
 local sect1 = tab3:CreateSector("Info", 'left')
 sect1:AddLabel("Rejoin if execute 2x time")
 sect1:AddLabel("if forgot to delete binds")
+sect1:AddButton("Reach", function()
+    local Players = game:GetService("Players")
+local LocalPlayer = Players.LocalPlayer or game:GetService("Players"):GetPlayerFromCharacter(Players.LocalPlayer.Character)
+local Character = LocalPlayer.Character or LocalPlayer.Character:FindFirstChild("HumanoidRootPart").Parent
+ 
+local MT = getrawmetatable(game)
+local OldIndex = MT. __index
+local OldNamecall = MT.__namecall
+ 
+setreadonly(MT, false)
+MT.__index = newcclosure(function(H, HP, T, D) --Bypasses some anti FTI checks. (uBlubble, Xelvidant, etc.)
+	if not checkcaller() and getnamecallmethod() then
+		if tostring(H) == "Humanoid" and tostring(HP) == "Health" then
+			return 0
+		end
+		if tostring(T) == "Position" and tostring(D) == "Magnitude" then
+			return 0
+		end
+	end
+	return OldIndex(H, HP)
+end)
+ 
+local StarterGui = game:GetService("StarterGui")
+local DevConsoleHook --Bypasses all dev console disablers.
+DevConsoleHook = hookfunc(StarterGui.SetCore, newcclosure(function(Self, ...)
+	local Args = table.pack(...)
+	if Self == StarterGui then
+		if Args[1] == "DevConsoleVisible" then
+			Args[1] = nil
+		end
+	end
+end))
+ 
+--Bypasses script execution.
+for _,v in next, getconnections(game:GetService("LogService").MessageOut) do
+	v:Disable()
+end
+for _,v in next, getconnections(game:GetService("ScriptContext").Error) do
+	v:Disable()
+end
+ 
+game:GetService("ScriptContext"):SetTimeout(0.1)
+setreadonly(MT, true) 
+ 
+local UNIATTEMPT = true
+local VisualizerTransparencyAmount = 0.4
+local UIS = game:GetService("UserInputService")
+ 
+-----------------------------
+--bypass 2
+local customtheme = "Dark"
+local reachsize = 5
+local dmgEnabled = true
+local multiplier = 0
+local visualizerEnabled
+local reachType = "Sphere"
+ 
+local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
+local UI = Material.Load({
+	Title = "Storm Hub | Reach",
+	Style = 0,
+	SizeX = 471,
+	SizeY = 269,
+	Theme = customtheme
+})
+--page bypass stuffj
+ 
+UIS.InputBegan:Connect(function(input, gameProcessedEvent)
+	if input.KeyCode == Enum.KeyCode.X then
+		game:GetService("CoreGui")["Sebs Darkside"].Enabled = not game:GetService("CoreGui")["Sebs Darkside"].Enabled
+	end	
+end)
+ 
+--new page which is gonna be circle reach & stuffghj
+ 
+local Page2 = UI.New({
+	Title = "Reach/Circle"
+})
+local Page3 = UI.New({
+	Title = "Auto Clicker"
+})
+local Page4 = UI.New({
+	Title = "Themes"
+})
+ 
+local Page5 = UI.New({
+	Title = "Visuaizer"
+})
+ 
+ 
+ 
+local ThemePage = Page4.Dropdown({
+	Text = "Themes",
+	Callback = function(value)
+		customtheme = value
+		Text = customtheme
+	end,
+	Options = {"Dark", "Light", "Mocha", "Aqua", "Jester"}
+})
+local ac_on
+local ac_off
+local AcOnText = Page3.TextField({
+	Text = "Keybind for autoclicker on",
+	Callback = function(value)
+		print(ac_on)
+		ac_on = value
+	end,
+})
+local AcOffText = Page3.TextField({
+	Text = "Keybind for autoclicker off ",
+	Callback = function(value)
+		print(ac_off)
+		ac_off = value
+	end,
+})
+ 
+local Mouse = game.Players.LocalPlayer:GetMouse()
+Mouse.KeyDown:Connect(function(key)
+	if key == ac_on then
+		_G.AutoClicker = true
+		while _G.AutoClicker do
+			wait()
+			pcall(function()
+				local Sword = game:GetService'Players'.LocalPlayer.Character:FindFirstChildOfClass'Tool'
+				Sword:Activate()
+			end)
+		end
+	end
+end)
+local Mouse = game.Players.LocalPlayer:GetMouse()
+Mouse.KeyDown:Connect(function(key)
+	if key == ac_off then
+		_G.AutoClicker = false
+		while _G.AutoClicker do
+			wait()
+			pcall(function()
+				local Sword = game:GetService'Players'.LocalPlayer.Character:FindFirstChildOfClass'Tool'
+				Sword:Activate()
+			end)
+		end
+	end
+end)
+ 
+local CircleSize = Page2.Slider({
+	Text = "Circle Size",
+	Callback = function(value)
+		reachsize = value
+		reachsize = tonumber(value)
+	end,
+	Min = 0,
+	Max = 200,
+	Def = 4
+})
+local sparemultiplier = 1
+local dmgEnabled = Page2.Toggle({
+	Text = "Enable DMG",
+	Callback = function(value)
+		dmgEnabled = value
+	end,
+})
+local dmgSlider = Page2.Slider({
+	Text = "DMG Amount",
+	Callback = function(value)
+		multiplier = value
+		multiplier = tonumber(value)
+		sparemultiplier = value
+		sparemultiplier = tonumber(value)
+	end,
+	Min = 0.4,
+	Max = 20,
+	Def = 1,
+ 
+})
+local ShapeDropdown = Page5.Dropdown({
+	Text = "Visualizer Shape",
+	Callback = function(value)
+		reachType = value
+	end,
+	Options = {"Sphere", "Block"}
+})
+local ve = Page5.Toggle({
+	Text = "Visualizer",
+	Callback = function(value)
+		visualizerEnabled = value
+	end,
+})
+ 
+ 
+local visualizer = Instance.new("Part")
+ 
+visualizer.Color = Color3.new(1, 0.968627, 0)
+visualizer.Transparency = VisualizerTransparencyAmount
+visualizer.Anchored = true
+visualizer.CanCollide = false
+visualizer.CastShadow = false
+visualizer.Size = Vector3.new(0.5,0.5,0.5)
+visualizer.BottomSurface = Enum.SurfaceType.Glue
+visualizer.TopSurface = Enum.SurfaceType.Glue
+local TweenService = game:GetService("TweenService")
+local part = visualizer
+local TweeningInformation = TweenInfo.new(
+	1,
+	Enum.EasingStyle.Quad,
+	Enum.EasingDirection.Out,
+	753475938457843579348573,
+	true,
+	0
+)
+ 
+local PartProperties = {
+	Color = Color3.fromRGB(255,0,0)
+}
+ 
+local Tween = TweenService:Create(part,TweeningInformation,PartProperties)
+Tween:Play()
+local Red = Color3.new(1, 0, 0.0156863)
+local Blue = Color3.new(0, 0.180392, 1)
+local Black = Color3.new(0, 0, 0)
+local White = Color3.new(1, 1, 1)
+local config = "Reset"
+local colorrvalue = 0
+local colorgvalue = 0
+local colorbvalue = 0
+end)
 end
