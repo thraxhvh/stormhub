@@ -9,7 +9,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | Prison Life", Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Storm Hub | Prison Life", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Teleports")
 local tab3 = window:CreateTab("Visual")
@@ -533,7 +533,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | The Underground War", Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Storm Hub | The Underground War", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
@@ -598,13 +598,14 @@ end)
     -- Misc
 local sect1 = tab2:CreateSector("Misc", 'left')
 sect1:AddButton("Unload gui", function()
-    game:GetService("CoreGui")["Storm Hub | LUCKY BLOCK"]:Destroy()
+    game:GetService("CoreGui")["Storm Hub | The Underground War"]:Destroy()
 end)
 sect1:AddLabel("made by thrax")
 local sect1 = tab2:CreateSector("Others", 'right')
 sect1:AddButton("Rejoin", function()
     game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
 end)
+
 elseif game.PlaceId == 70005410 then -- Blox Hunt
     loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
     local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
@@ -2064,63 +2065,6 @@ end)
     MiscSection:NewKeybind("Toggle UI", "", Enum.KeyCode.V, function()
 	    Library:ToggleUI()
     end)
-elseif game.PlaceId == 10758111998 then -- Booga Booga Reborn
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
-    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-    local Window = Library.CreateLib("Storm Hub | Booga Booga Reborn", "Ocean")
-    
-    -- MAIN
-    local Farm = Window:NewTab("Farm")
-    local FarmSection = Farm:NewSection("Auto Farm")
-    FarmSection:NewToggle("auto farm", "", function(state)
-        if state then
-            _G.autoA = true
-            while _G.autoA == true do
-        local part = getClosestObject(workspace)
-        local HRPPosition = Players.LocalPlayer.Character.HumanoidRootPart.Position
-        local realDistance = math.round(math.abs((HRPPosition - part.Position).Magnitude))
-    
-        ReplicatedStorage.Events.SwingTool:FireServer(ReplicatedStorage.RelativeTime.Value, {
-            [1] = part
-        })
-        for i,v in pairs(getClosestPickups(workspace)) do
-            game:GetService("ReplicatedStorage").Events.Pickup:FireServer(v)
-        end
-        wait(0.1)
-        if part.Position.Y <= 30 then
-            TweenService:Create(Players.LocalPlayer.Character.HumanoidRootPart, TweenInfo.new(realDistance/10, Enum.EasingStyle.Linear), {CFrame=part.CFrame+Vector3.new(0,part.Size.Y,0)}):Play()
-            task.wait(realDistance/10)
-        end
-    end
-else
-    _G.autoA = false
-    end
-end)
-
-    -- COMBAT
-    local Combat = Window:NewTab("Combat")
-    local CombatSection = Combat:NewSection("Combat")
-    CombatSection:NewToggle("kill aura", "", function(state)
-        _G.autoK = true
-            while _G.autoK == true do
-        if Character:FindFirstChild("HumanoidRootPart") then
-            local closest = getClosest()
-            local hrp = Character.HumanoidRootPart.Position
-
-            -- guessing the distance tbh
-            if (hrp - closest.Character.HumanoidRootPart.Position).Magnitude <= 10 then
-                ReplicatedStorage.Events.SwingTool:FireServer(ReplicatedStorage.RelativeTime.Value, {
-                    [1] = closest.Character.HumanoidRootPart
-                })
-            end
-else
-    end
-end
-end)
-    
-    -- AUTO FARM
-    local Farm = Window:NewTab("Auto Farm")
-    local FarmSection = Farm:NewSection("Auto Farm")
 
 elseif game.PlaceId == 10034808900 then -- Touch Football Tournament
     loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
@@ -2947,69 +2891,55 @@ end})
 game:GetService("Players").LocalPlayer.PlayerGui.RebirthShopFrame.LocalScript:Destroy()
 
 elseif game.PlaceId == 4913581664 then -- Cart Ride Into Rdite!
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
-local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/Kinlei/MaterialLua/master/Module.lua"))()
-
-local UI = Material.Load({
-     Title = "Storm Hub | Cart Ride Into Rdite!",
-     Style = 2,
-     SizeX = 540,
-     SizeY = 335,
-     ColorOverrides = {
-        MainFrame = Color3.fromRGB(15,15,15),
-        Minimise = Color3.fromRGB(255,68,68),
-        MinimiseAccent = Color3.fromRGB(147,59,0),
-        Maximise = Color3.fromRGB(25,255,0),
-        MaximiseAccent = Color3.fromRGB(0,255,110),
-        NavBar = Color3.fromRGB(235,235,235),
-        NavBarAccent = Color3.fromRGB(32,32,32),
-        NavBarInvert = Color3.fromRGB(0,0,0),
-        TitleBar = Color3.fromRGB(30, 30, 30),
-        TitleBarAccent = Color3.fromRGB(255,255,255),
-        Overlay = Color3.fromRGB(30, 30, 30),
-        Banner = Color3.fromRGB(30, 30, 30),
-        BannerAccent = Color3.fromRGB(255,255,255),
-        Content = Color3.fromRGB(85,85,85),
-        Button = Color3.fromRGB(40, 40, 40),
-        ButtonAccent = Color3.fromRGB(235, 235, 235),
-        ChipSet = Color3.fromRGB(45, 45, 45),
-        ChipSetAccent = Color3.fromRGB(255, 255, 255),
-        DataTable = Color3.fromRGB(160,160,160),
-        DataTableAccent = Color3.fromRGB(45,45,45),
-        Slider = Color3.fromRGB(45,45,45),
-        SliderAccent = Color3.fromRGB(235,235,235),
-        Toggle = Color3.fromRGB(230, 230, 230),
-        ToggleAccent = Color3.fromRGB(235, 235, 235),
-        Dropdown = Color3.fromRGB(45, 45, 45),
-        DropdownAccent = Color3.fromRGB(235,235,235),
-        ColorPicker = Color3.fromRGB(10, 10, 10),
-        ColorPickerAccent = Color3.fromRGB(235,235,235),
-        TextField = Color3.fromRGB(55,55,55),
-        TextFieldAccent = Color3.fromRGB(235,235,235),
-    }
-})
-
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Storm Hub | Cart Ride Into Rdite!", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
 local function tp(place)
     plr.Character.HumanoidRootPart.CFrame = place
 end
-local Main = UI.New({Title = "Main"})
-local Misc = UI.New({Title = "Misc"})
-Main.Button({Text = 'Start', Callback = function()
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddDropdown("Teleports", {'Start', 'End'}, "Choose location to tp", false, function(value)
+    if value == 'Start' then
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(44, 0.049999997, -76, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end})
-Main.Button({Text = 'Finish', Callback = function()
+end
+    if value == 'End' then
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(310.683014, 849.75, 321.389221, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end})
-
--- MISC
-Misc.Button({Text = 'Rejoin', Callback = function()
-    game:GetService("TeleportService"):Teleport(game.PlaceId, LocalPlayer)
-end})
-
-Misc.Button({Text = 'Destroy Gui', Callback = function()
+end
+end)
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+sect1:AddSlider("HipHeight", 1.8, 1.8, 30, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.HipHeight = v
+end)
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
     game:GetService("CoreGui")["Storm Hub | Cart Ride Into Rdite!"]:Destroy()
-end})
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
 
 elseif game.PlaceId == 7462526249 then -- NIKELAND ⚽ [CUP CLASH!]🌀
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
@@ -3464,69 +3394,35 @@ Misc.Button({Text = 'Destroy Gui', Callback = function()
 end})
 
 elseif game.PlaceId == 537413528 then -- Build A Boat For Treasure
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
-local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/module.lua"))()
-
-local UI = Material.Load({
-     Title = "Storm Hub | Build A Boat For Treasure",
-     Style = 2,
-     SizeX = 540,
-     SizeY = 335,
-     ColorOverrides = {
-        MainFrame = Color3.fromRGB(15,15,15),
-        Minimise = Color3.fromRGB(255,68,68),
-        MinimiseAccent = Color3.fromRGB(147,59,0),
-        Maximise = Color3.fromRGB(25,255,0),
-        MaximiseAccent = Color3.fromRGB(0,255,110),
-        NavBar = Color3.fromRGB(235,235,235),
-        NavBarAccent = Color3.fromRGB(32,32,32),
-        NavBarInvert = Color3.fromRGB(0,0,0),
-        TitleBar = Color3.fromRGB(30, 30, 30),
-        TitleBarAccent = Color3.fromRGB(255,255,255),
-        Overlay = Color3.fromRGB(30, 30, 30),
-        Banner = Color3.fromRGB(30, 30, 30),
-        BannerAccent = Color3.fromRGB(255,255,255),
-        Content = Color3.fromRGB(85,85,85),
-        Button = Color3.fromRGB(40, 40, 40),
-        ButtonAccent = Color3.fromRGB(235, 235, 235),
-        ChipSet = Color3.fromRGB(45, 45, 45),
-        ChipSetAccent = Color3.fromRGB(255, 255, 255),
-        DataTable = Color3.fromRGB(160,160,160),
-        DataTableAccent = Color3.fromRGB(45,45,45),
-        Slider = Color3.fromRGB(45,45,45),
-        SliderAccent = Color3.fromRGB(235,235,235),
-        Toggle = Color3.fromRGB(230, 230, 230),
-        ToggleAccent = Color3.fromRGB(235, 235, 235),
-        Dropdown = Color3.fromRGB(45, 45, 45),
-        DropdownAccent = Color3.fromRGB(235,235,235),
-        ColorPicker = Color3.fromRGB(10, 10, 10),
-        ColorPickerAccent = Color3.fromRGB(235,235,235),
-        TextField = Color3.fromRGB(55,55,55),
-        TextFieldAccent = Color3.fromRGB(235,235,235),
-    }
-})
-
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Storm Hub | Build A Boat For Treasure", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
 local function tp(place)
     plr.Character.HumanoidRootPart.CFrame = place
 end
-local Main = UI.New({Title = "Main"})
-local LP = UI.New({Title = "Local Player"})
-local Tp = UI.New({Title = "Teleport"})
-local Misc = UI.New({Title = "Misc"})
 
--- MAIN
-Main.Button({Text = 'Auto Farm', Callback = function()
-workspace:FindFirstChild("Really redZone").VoteLaunchRE:FireServer()
-wait(0.5)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-48.51678466796875, 45.55967330932617, -89.11919403076172)
-        wait(0.1)
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddButton("Auto Farm", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-48.51678466796875, 45.55967330932617, -89.11919403076172)
+task.wait(0.1)
     local teleport_table = {
-    location1 = Vector3.new(-63.09759521484375, 46.95407485961914, 8709.833984375), -- your desired position
+    location1 = Vector3.new(-48.150936126708984, 39.39284133911133, 8725.5146484375), -- your desired position
 }
 
 local tween_s = game:GetService('TweenService')
-local tweeninfo = TweenInfo.new(2,Enum.EasingStyle.Linear)
+local tweeninfo = TweenInfo.new(5,Enum.EasingStyle.Linear)
 
 local lp = game.Players.LocalPlayer
 
@@ -3542,15 +3438,15 @@ function bypass_teleport(v)
 end
 
 bypass_teleport(teleport_table.location1)
-wait(2.5)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-68.7127685546875, -330.3124084472656, 8784.208984375)
-wait()
+task.wait(5)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-68.7127685546875, -310.3124084472656, 8784.208984375)
+task.wait()
     local teleport_table = {
     location1 = Vector3.new(-56.23459243774414, -360.40423583984375, 9486.35546875), -- your desired position
 }
 
 local tween_s = game:GetService('TweenService')
-local tweeninfo = TweenInfo.new(2,Enum.EasingStyle.Linear)
+local tweeninfo = TweenInfo.new(5,Enum.EasingStyle.Linear)
 
 local lp = game.Players.LocalPlayer
 
@@ -3566,21 +3462,19 @@ function bypass_teleport(v)
 end
 
 bypass_teleport(teleport_table.location1)
-wait(10)
+task.wait(5)
 workspace.ClaimRiverResultsGold:FireServer()
-end})
-Main.Toggle({Text = 'Auto Farm', Callback = function(state)
+end)
+sect1:AddToggle("Auto Farm", false, function(state)
 if state then
-workspace:FindFirstChild("Really redZone").VoteLaunchRE:FireServer()
-wait(0.5)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-48.51678466796875, 45.55967330932617, -89.11919403076172)
-        wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-48.51678466796875, 45.55967330932617, -89.11919403076172)
+task.wait(0.1)
     local teleport_table = {
-    location1 = Vector3.new(-63.09759521484375, 46.95407485961914, 8709.833984375), -- your desired position
+    location1 = Vector3.new(-48.150936126708984, 39.39284133911133, 8725.5146484375), -- your desired position
 }
 
 local tween_s = game:GetService('TweenService')
-local tweeninfo = TweenInfo.new(2,Enum.EasingStyle.Linear)
+local tweeninfo = TweenInfo.new(5,Enum.EasingStyle.Linear)
 
 local lp = game.Players.LocalPlayer
 
@@ -3596,15 +3490,15 @@ function bypass_teleport(v)
 end
 
 bypass_teleport(teleport_table.location1)
-wait(2.5)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-68.7127685546875, -330.3124084472656, 8784.208984375)
-wait()
+task.wait(5)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-68.7127685546875, -310.3124084472656, 8784.208984375)
+task.wait()
     local teleport_table = {
     location1 = Vector3.new(-56.23459243774414, -360.40423583984375, 9486.35546875), -- your desired position
 }
 
 local tween_s = game:GetService('TweenService')
-local tweeninfo = TweenInfo.new(2,Enum.EasingStyle.Linear)
+local tweeninfo = TweenInfo.new(5,Enum.EasingStyle.Linear)
 
 local lp = game.Players.LocalPlayer
 
@@ -3620,174 +3514,36 @@ function bypass_teleport(v)
 end
 
 bypass_teleport(teleport_table.location1)
-wait(10)
-game.Players.LocalPlayer.Character:Destroy()
-wait()
+task.wait(5)
 workspace.ClaimRiverResultsGold:FireServer()
 end
-end})
-Main.Button({Text = 'Respawn', Callback = function()
+end)
+sect1:AddButton("Respawn", function()
     game.Players.LocalPlayer.Character:Destroy()
-end})
+end)
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+sect1:AddSlider("HipHeight", 2, 2, 50, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.HipHeight = v
+end)
 
--- LOCAL PLAYER
-LP.Slider({Text = "Speed", Callback = function(Value)
-	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
-	end,
-	Min = 16,
-	Max = 200,
-	Def = 16
-})
-LP.Button({Text = "Reset Speed", Callback = function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
-end})
-LP.Slider({Text = "Jump", Callback = function(Value)
-	game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Value)
-	end,
-	Min = 50,
-	Max = 200,
-	Def = 50
-})
-LP.Button({Text = "Reset Jump", Callback = function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-end})
 
--- MISC
-Misc.Button({Text = 'Rejoin', Callback = function()
-    game:GetService("TeleportService"):Teleport(game.PlaceId, LocalPlayer)
-end})
-
-Misc.Button({Text = 'Destroy Gui', Callback = function()
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
     game:GetService("CoreGui")["Storm Hub | Build A Boat For Treasure"]:Destroy()
-end})
-
-elseif game.PlaceId == 2473334918 then -- Gas Station Simulator
-loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
-local Material = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/module.lua"))()
-
-local UI = Material.Load({
-     Title = "Storm Hub | 🔥🚘 Gas Station Simulator",
-     Style = 2,
-     SizeX = 540,
-     SizeY = 335,
-     ColorOverrides = {
-        MainFrame = Color3.fromRGB(15,15,15),
-        Minimise = Color3.fromRGB(255,68,68),
-        MinimiseAccent = Color3.fromRGB(147,59,0),
-        Maximise = Color3.fromRGB(25,255,0),
-        MaximiseAccent = Color3.fromRGB(0,255,110),
-        NavBar = Color3.fromRGB(235,235,235),
-        NavBarAccent = Color3.fromRGB(32,32,32),
-        NavBarInvert = Color3.fromRGB(0,0,0),
-        TitleBar = Color3.fromRGB(30, 30, 30),
-        TitleBarAccent = Color3.fromRGB(255,255,255),
-        Overlay = Color3.fromRGB(30, 30, 30),
-        Banner = Color3.fromRGB(30, 30, 30),
-        BannerAccent = Color3.fromRGB(255,255,255),
-        Content = Color3.fromRGB(85,85,85),
-        Button = Color3.fromRGB(40, 40, 40),
-        ButtonAccent = Color3.fromRGB(235, 235, 235),
-        ChipSet = Color3.fromRGB(45, 45, 45),
-        ChipSetAccent = Color3.fromRGB(255, 255, 255),
-        DataTable = Color3.fromRGB(160,160,160),
-        DataTableAccent = Color3.fromRGB(45,45,45),
-        Slider = Color3.fromRGB(45,45,45),
-        SliderAccent = Color3.fromRGB(235,235,235),
-        Toggle = Color3.fromRGB(230, 230, 230),
-        ToggleAccent = Color3.fromRGB(235, 235, 235),
-        Dropdown = Color3.fromRGB(45, 45, 45),
-        DropdownAccent = Color3.fromRGB(235,235,235),
-        ColorPicker = Color3.fromRGB(10, 10, 10),
-        ColorPickerAccent = Color3.fromRGB(235,235,235),
-        TextField = Color3.fromRGB(55,55,55),
-        TextFieldAccent = Color3.fromRGB(235,235,235),
-    }
-})
-
-local plr = game.Players.LocalPlayer
-local function tp(place)
-    plr.Character.HumanoidRootPart.CFrame = place
-end
-local Main = UI.New({Title = "Main"})
-local V = UI.New({Title = "Visual"})
-local LP = UI.New({Title = "Local Player"})
-local Tp = UI.New({Title = "Teleport"})
-local Misc = UI.New({Title = "Misc"})
-
-
--- MAIN
-Main.Button({Text = 'Choose Plot 7', Callback = function()
-local args = {
-[1] = "7"
-}
-
-game:GetService("ReplicatedStorage").Events.LotChosen:FireServer(unpack(args))
-end})
-Main.Button({Text = 'Respawn', Callback = function()
-    game.Players.LocalPlayer.Character:Destroy()
-end})
-
--- VISUAL
-V.Toggle({Text = '50M Money visual', Callback = function(a)
-    aa = a
-    while aa do task.wait()
-    game:GetService("Workspace").GasStations.GasStation7.Values.Money.Value = '50000000'
-    game:GetService("Players").LocalPlayer.leaderstats.Money.Value = '$50M'
-    end
-end})
-
--- LOCAL PLAYER
-LP.Slider({Text = "Speed", Callback = function(Value)
-	game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = (Value)
-	end,
-	Min = 42.5,
-	Max = 200,
-	Def = 42.5
-})
-LP.Button({Text = "Reset Speed", Callback = function()
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 42.5
-end})
-LP.Slider({Text = "Jump", Callback = function(Value)
-	game.Players.LocalPlayer.Character.Humanoid.JumpPower = (Value)
-	end,
-	Min = 50.15,
-	Max = 200,
-	Def = 50.15
-})
-LP.Button({Text = "Reset Jump", Callback = function()
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-end})
-
--- TELEPORTS
-Tp.Button({Text = 'Gas 1', Callback = function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-808.529541015625, 72.22265625, 683.1481323242188)
-end})
-Tp.Button({Text = 'Gas 2', Callback = function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-141.5, 72.22265625, 435.6505432128906)
-end})
-Tp.Button({Text = 'Gas 3', Callback = function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(230, 72.22262573242188, -39)
-end})
-Tp.Button({Text = 'Gas 4', Callback = function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-321.32232666015625, 72.22265625, -652.6776733398438)
-end})
-Tp.Button({Text = 'Gas 5', Callback = function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1024.4114990234375, 72.22265625, -1344.107177734375)
-end})
-Tp.Button({Text = 'Gas 6', Callback = function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2220.155517578125, 72.22274780273438, -1396.0458984375)
-end})
-Tp.Button({Text = 'Gas 7', Callback = function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2692.877685546875, 72.22262573242188, -552.3326416015625)
-end})
--- MISC
-Misc.Button({Text = 'Rejoin', Callback = function()
-    game:GetService("TeleportService"):Teleport(game.PlaceId, LocalPlayer)
-end})
-
-Misc.Button({Text = 'Destroy Gui', Callback = function()
-    game:GetService("CoreGui")["Storm Hub | 🔥🚘 Gas Station Simulator"]:Destroy()
-end})
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
 elseif game.PlaceId == 11109756592 then -- YouTube Simulator Z
     game.StarterGui:SetCore("SendNotification", {
         Title = 'Storm Hub';
@@ -3799,7 +3555,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | Youtube Simulator Z", Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Storm Hub | Youtube Simulator Z", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
@@ -3820,6 +3576,8 @@ end)
 Toggle:AddKeybind(CRAP,function()
 end)
 sect1:AddLabel("Equip camera first")
+sect1:AddDropdown("Cameras", {}, 'Camera values in money', false, function(value)
+    end)
 local sect1 = tab1:CreateSector("Player", 'right')
 sect1:AddSlider("Speed", 24, 24, 100, false, function(v)
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
@@ -3828,8 +3586,9 @@ sect1:AddSlider("Jump", 24, 24, 100, false, function(v)
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
 end)
 local sect1 = tab1:CreateSector("Teleports", 'left')
-sect1:AddButton("Upgrade", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-98.19022369384766, 3.7174384593963623, 138.28245544433594)
+sect1:AddDropdown("Teleports", {"Upgrades"}, "Locations", false, function(value)
+    if value == 'Upgrades' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-98.19022369384766, 3.7174384593963623, 138.28245544433594)
     task.wait()
     local teleport_table = {
     location1 = Vector3.new(-101.19022369384766, 3.7174384593963623, 138.28245544433594), -- your desired position
@@ -3852,6 +3611,7 @@ function bypass_teleport(v)
 end
 
 bypass_teleport(teleport_table.location1)
+end
 end)
 -- Misc
 local sect1 = tab2:CreateSector("Misc", 'left')
@@ -3866,7 +3626,7 @@ end)
 local sect1 = tab2:CreateSector("Info", 'left')
 sect1:AddLabel("Rejoin if execute 2x time")
 sect1:AddLabel("if forgot to delete binds")
-
+tab2:CreateConfigSystem("right")
 elseif game.PlaceId == 855499080 then -- ⚔️ SKYWARS 🏹
     game.StarterGui:SetCore("SendNotification", {
         Title = 'Storm Hub';
@@ -3878,7 +3638,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | ⚔️ SKYWARS 🏹", Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Storm Hub | ⚔️ SKYWARS 🏹", Vector2.new(492, 598), num.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Esp")
 local tab3 = window:CreateTab("Misc")
@@ -4194,7 +3954,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | oMega Obby 🌟 625 Stages!", Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Storm Hub | oMega Obby 🌟 625 Stages!", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
@@ -4283,7 +4043,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | LUCKY BLOCK", Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Storm Hub | LUCKY BLOCK", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
@@ -4310,29 +4070,31 @@ sect1:AddButton("Galaxy Block", function()
     game:GetService("ReplicatedStorage").SpawnGalaxyBlock:FireServer()
 end)
 local sect1 = tab1:CreateSector("Teleports", 'left')
-sect1:AddButton("Base 1", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1312.22253, 193.300201, 205.191513, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-end)
-sect1:AddButton("Base 2", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1312.22253, 193.300201, -23.2105656, 0, 0, -1, 0, 1, 0, 1, 0, 0)
-end)
-sect1:AddButton("Base 3", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1155.22925, 193.300201, -179.830658, -1, 0, 0, 0, 1, 0, 0, 0, -1)
-end)
-sect1:AddButton("Base 4", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-927.108887, 193.300201, -179.830658, -1, 0, 0, 0, 1, 0, 0, 0, -1)
-end)
-sect1:AddButton("Base 5", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-770.282593, 193.300201, -22.9612503, 0, 0, 1, 0, 1, -0, -1, 0, 0)
-end)
-sect1:AddButton("Base 6", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-770.282593, 193.300201, 205.185471, 0, 0, 1, 0, 1, -0, -1, 0, 0)
-end)
-sect1:AddButton("Base 7", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-927.104492, 193.300201, 361.725464, 1, 0, 0, 0, 1, 0, 0, 0, 1)
-end)
-sect1:AddButton("Base 8", function()
+sect1:AddDropdown("Bases", {'Base 1 - Blue', 'Base 2 - Cyan', 'Base 3 - Green', 'Base 4 - Yellow', 'Base 5 - Orange', 'Base 6 - Pink', 'Base 7 - Purple', 'Base 8 - Red'}, "Choose your base to tp", false, function(value)
+    if value == 'Base 1 - Blue' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1312.22253, 193.300201, 205.191513, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+    end
+    if value == 'Base 2 - Cyan' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1312.22253, 193.300201, -23.2105656, 0, 0, -1, 0, 1, 0, 1, 0, 0)
+    end
+    if value == 'Base 3 - Green' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1155.22925, 193.300201, -179.830658, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+    end
+    if value == 'Base 4 - Yellow' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-927.108887, 193.300201, -179.830658, -1, 0, 0, 0, 1, 0, 0, 0, -1)
+    end
+    if value == 'Base 5 - Orange' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-770.282593, 193.300201, -22.9612503, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+    end
+    if value == 'Base 6 - Pink' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-770.282593, 193.300201, 205.185471, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+    end
+    if value == 'Base 7 - Purple' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-927.104492, 193.300201, 361.725464, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+    end
+    if value == 'Base 8 - Red' then
     game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1155.3374, 193.300201, 361.725464, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+    end
 end)
 local sect1 = tab1:CreateSector("Player", 'right')
 sect1:AddSlider("Speed", 16, 16, 60, false, function(v)
@@ -4345,17 +4107,6 @@ sect1:AddSlider("HipHeight", 0, 0, 100, false, function(v)
     game.Players.LocalPlayer.Character.Humanoid.HipHeight = v
 end)
 local sect1 = tab1:CreateSector("Combat", 'right')
-sect1:AddButton("Kill All - need HexSpitter", function()
-    local HexSpitter = P.LocalPlayer.Character.HexSpitter
-		local ServerControl = HexSpitter.Remotes.ServerControl
-		for _ = 1,20 do
-			for _, Child in next, game.Players:GetPlayers() do
-				if Child ~= game.Players.LocalPlayer then
-					ServerControl:InvokeServer('RayHit', {['Position'] = Vector3.new(0, 0, 0), ["Hit"] = Child.Character.Head})
-				end
-			end
-		end
-		end)
 
 -- Misc
 local sect1 = tab2:CreateSector("Misc", 'left')
@@ -4379,7 +4130,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | making scam calls to save your best friend", Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Storm Hub | making scam calls to save your best friend", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
@@ -4471,7 +4222,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | making memes in your basement at 3 AM", Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Storm Hub | making memes in your basement at 3 AM", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
@@ -4525,7 +4276,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | 🎟️ Evade", Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Storm Hub | Evade", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
@@ -4539,19 +4290,16 @@ sect1:AddButton("Respawn", function()
     game:GetService("ReplicatedStorage").Events.Respawn:FireServer()
 end)
 sect1 = tab1:CreateSector("Player", 'right')
-sect1:AddSlider("Speed", 16, 16, 60, false, function(v)
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
-end)
 sect1:AddSlider("Jump", 50, 50, 100, false, function(v)
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
 end)
-sect1:AddSlider("HipHeight", 0, 0, 50, false, function(v)
+sect1:AddSlider("HipHeight", -1.25, -1.25, 50, false, function(v)
     game.Players.LocalPlayer.Character.Humanoid.HipHeight = v
 end)
 -- Misc
 local sect1 = tab2:CreateSector("Misc", 'left')
 sect1:AddButton("Unload gui", function()
-    game:GetService("CoreGui")["Storm Hub | 🎟️ Evade"]:Destroy()
+    game:GetService("CoreGui")["Storm Hub | Evade"]:Destroy()
 end)
 sect1:AddLabel("made by thrax")
 local sect1 = tab2:CreateSector("Others", 'right')
@@ -4570,7 +4318,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | raise a floppa 2", Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Storm Hub | raise a floppa 2", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
@@ -4724,7 +4472,7 @@ end)
 -- Misc
 local sect1 = tab2:CreateSector("Misc", 'left')
 sect1:AddButton("Unload gui", function()
-    game:GetService("CoreGui")["Storm Hub | raise a floppa 2e"]:Destroy()
+    game:GetService("CoreGui")["Storm Hub | raise a floppa 2"]:Destroy()
 end)
 sect1:AddLabel("made by thrax")
 local sect1 = tab2:CreateSector("Others", 'right')
@@ -4743,7 +4491,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | raise a floppa 2 multiplayer", Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Storm Hub | raise a floppa 2 multiplayer", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
@@ -4846,7 +4594,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | The Presentation Experience", Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Storm Hub | The Presentation Experience", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
@@ -4906,6 +4654,11 @@ local args = {
 
 game:GetService("ReplicatedStorage").RedeemCode:InvokeServer(unpack(args))
 end)
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("HipHeight", 1.8, 1.8, 4, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.HipHeight = v
+end)
+
 -- Misc
 local sect1 = tab2:CreateSector("Misc", 'left')
 sect1:AddButton("Unload gui", function()
@@ -4918,4 +4671,1056 @@ sect1:AddButton("Rejoin", function()
     game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
 end)
 
+elseif game.PlaceId == 11596351062 then -- prove mom wrong by being a famous rapper tycoon
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Storm Hub | prove mom wrong by being a famous rapper", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddToggle("Auto Make Cds", false, function(a)
+    aa = a
+    while aa do task.wait()
+        game:GetService("ReplicatedStorage").Events.GenerateNumber:FireServer()
+task.wait(1)
+local args = {
+    [1] = game:GetService("Players").LocalPlayer
+}
+
+game:GetService("ReplicatedStorage").Events.CDs:FireServer(unpack(args))
+end
+end)
+sect1:AddToggle("Auto Collect CD", false, function(b)
+if game:GetService("Workspace").Tycoons.Tycoon1.TycoonOwner.Value == game.Players.LocalPlayer.Name then
+    fireproximityprompt(game:GetService("Workspace").Tycoons.Tycoon1.StaticItems.CDCollect.Union.ProximityPrompt)
+end
+if game:GetService("Workspace").Tycoons.Tycoon2.TycoonOwner.Value == game.Players.LocalPlayer.Name then
+    fireproximityprompt(game:GetService("Workspace").Tycoons.Tycoon2.StaticItems.CDCollect.Union.ProximityPrompt)
+end
+if game:GetService("Workspace").Tycoons.Tycoon3.TycoonOwner.Value == game.Players.LocalPlayer.Name then
+    fireproximityprompt(game:GetService("Workspace").Tycoons.Tycoon3.StaticItems.CDCollect.Union.ProximityPrompt)
+end
+if game:GetService("Workspace").Tycoons.Tycoon4.TycoonOwner.Value == game.Players.LocalPlayer.Name then
+    fireproximityprompt(game:GetService("Workspace").Tycoons.Tycoon4.StaticItems.CDCollect.Union.ProximityPrompt)
+end
+if game:GetService("Workspace").Tycoons.Tycoon5.TycoonOwner.Value == game.Players.LocalPlayer.Name then
+    fireproximityprompt(game:GetService("Workspace").Tycoons.Tycoon5.StaticItems.CDCollect.Union.ProximityPrompt)
+end
+end)
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 60, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+sect1:AddSlider("HipHeight", 0, 0, 4, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.HipHeight = v
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Storm Hub | prove mom wrong by being a famous rapper"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 9571238478 then -- Raise A Peter Lobby
+        game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Join a room first';
+        Duration = math.huge;
+    })
+elseif game.PlaceId == 9660733037 then -- Raise A Peter
+        game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Storm Hub | Raise A Peter", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddToggle("Auto Click", false, function(a)
+    aa = a
+    while aa do task.wait()
+        fireclickdetector(game:GetService("Workspace").Interactables.Peter.Peter.Clickable.DropMoney)
+    end
+end)
+sect1:AddToggle("Auto Collect Money", false, function(b)
+    bb = b
+    while bb do task.wait()
+                for i,v in pairs(game:GetService("Workspace").Interactables.MoneyBills.Money:GetDescendants()) do
+            if v:IsA"TouchTransmitter" then
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+            end
+        end
+    end
+end)
+sect1:AddToggle("Auto Collect Money Bag", false, function(b)
+    cc = c
+    while cc do task.wait()
+                for i,v in pairs(game:GetService("Workspace").Interactables.BagFolder.Bag:GetDescendants()) do
+            if v:IsA"TouchTransmitter" then
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+            end
+        end
+    end
+end)
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 60, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+sect1:AddSlider("HipHeight", 1.8, 1.8, 50, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.HipHeight = v
+end)
+sect1 = tab1:CreateSector("Teleports", 'left')
+sect1:AddButton("Shop", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(107.5505599975586, 3.199998617172241, 121.4301986694336)
+end)
+sect1:AddButton("Fridge", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(113.04570007324219, 3.6233229637145996, 25.679672241210938)
+end)
+sect1 = tab1:CreateSector("Misc", 'left')
+sect1:AddToggle("Auto Save", false, function(a)
+    aa = a
+    while aa do task.wait()
+        game:GetService("ReplicatedStorage").RemoteEvents.Save:FireServer()
+    end
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Storm Hub | Raise A Peter"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService("TeleportService"):Teleport(9571238478, game:GetService("Players").LocalPlayer)
+end)
+
+elseif game.PlaceId == 9285238704 then -- Race Clicker
+        game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Storm Hub | Race Clicker", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddToggle("Auto Click ( maybe slow )", false, function(a)
+    aa = a
+    while aa do
+        game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click:InvokeServer()
+        wait()
+    end
+end)
+local Toggle = sect1:AddToggle("Auto Click ( fast )", false, function(b)
+    bb = b
+    while bb do
+        mouse1click()
+        wait()
+    end
+end)
+Toggle:AddKeybind(CRAP,function()
+    end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Storm Hub | Race Clicker"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 9791603388 then -- Underground War 2.0
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Storm Hub | Underground War 2.0", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddDropdown("Team", {'Red', 'Blue'}, 'Change team', false, function(value)
+    if value == 'Red' then
+        local args = {
+            [1] = "Red"
+        }
+        
+        game:GetService("ReplicatedStorage").Events.Remote.PlayPressed:InvokeServer(unpack(args))
+    end
+    if value == 'Blue' then
+        local args = {
+            [1] = "Blue"
+        }
+
+        game:GetService("ReplicatedStorage").Events.Remote.PlayPressed:InvokeServer(unpack(args))
+    end
+end)
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Storm Hub | Underground War 2.0"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+-- Bypass anti cheat
+game:GetService("Workspace").LocalPlayer["L_AntiCheat"]:Destroy()
+
+elseif game.PlaceId == 9486506804 then -- FIFA World
+        game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Storm Hub | FIFA World", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddToggle("Auto Get Gold Balls", false, function(a)
+    aa = a
+    while aa do task.wait()
+        game:GetService("ReplicatedStorage").BallHandler_GetPlayerKicks:InvokeServer()
+        task.wait()
+        local args = {
+            [1] = 9.407562444917858
+        }
+        
+        game:GetService("ReplicatedStorage").KeepyUppy_FinishGame:FireServer(unpack(args))
+        end
+end)
+sect1:AddButton("Get Badges", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(140.90330505371094, 14.674736976623535, 50.96406555175781)
+    task.wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(7.058069229125977, 10.107654571533203, 217.2481689453125)
+    task.wait(0.5)
+    game:GetService("ReplicatedStorage").Zurich_OnPlayFifaPlusEvent:FireServer()
+end)
+sect1:AddButton("Buy Sticker", function()
+game:GetService("ReplicatedStorage").StickerHandler_BoughtStickerPack:InvokeServer()
+end)
+
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Storm Hub | FIFA World"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 6574375780 then -- Nok Piece
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Storm Hub | Nok Piece", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1 = tab1:CreateSector("Player", 'right')
+    sect1:AddSlider("Speed", 16, 16, 100, false, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+    end)
+    sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+    end)
+    sect1:AddSlider("HipHeight", 0, 0, 30, false, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.HipHeight = v
+    end)
+sect1 = tab1:CreateSector("Quests", 'left')
+sect1 = tab1:CreateSector("Auto Stats", 'right')
+sect1:AddToggle("Auto Strength", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = "StrengthText",
+            [2] = 1
+        }
+        
+        game:GetService("ReplicatedStorage").UpdateStats:FireServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Sword", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = "SwordText",
+            [2] = 1
+        }
+        
+        game:GetService("ReplicatedStorage").UpdateStats:FireServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto DF", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = "DeviLFruitText",
+            [2] = 1
+        }
+        
+        game:GetService("ReplicatedStorage").UpdateStats:FireServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Defense", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = "DefenseText",
+            [2] = 1
+        }
+        
+        game:GetService("ReplicatedStorage").UpdateStats:FireServer(unpack(args))
+    end
+end)
+sect1 = tab1:CreateSector("Teleports", 'left')
+sect1:AddDropdown("Islands", {'Bandit island'}, "Choose island", false, function(value)
+    if value == 'Bandit island' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(205.0145263671875, -78.0029067993164, -618.070556640625)
+    end
+    end)
+
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Storm Hub | Nok Piece"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 11040063484 then -- Sword Fighters Simulator
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Storm Hub | Sword Fighters Simulator", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddToggle("Auto Earn Power", false, function(a)
+    aa = a
+    while aa do wait()
+        game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click:InvokeServer()
+    end
+end)
+sect1:AddToggle("Auto Equip Best", false, function(b)
+    bb = b
+    while bb do task.wait()
+        game:GetService("ReplicatedStorage").Packages.Knit.Services.WeaponInvService.RF.EquipBest:InvokeServer()
+    end
+end)
+sect1:AddToggle("Auto Claim Chest", false, function(c)
+    cc = c
+    while cc do task.wait()
+        local args = {
+            [1] = "Chest 1"
+        }
+        
+        game:GetService("ReplicatedStorage").Packages.Knit.Services.ChestService.RF.ClaimChest:InvokeServer(unpack(args))
+        task.wait()
+                local args = {
+            [1] = "Chest 2"
+        }
+        
+        game:GetService("ReplicatedStorage").Packages.Knit.Services.ChestService.RF.ClaimChest:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Ascend", false, function(d)
+    dd = d
+    while dd do task.wait()
+        game:GetService("ReplicatedStorage").Packages.Knit.Services.AscendService.RF.Ascend:InvokeServer()
+    end
+end)
+sect1 = tab1:CreateSector("Player", 'right')
+    sect1:AddSlider("Speed", 16, 16, 100, false, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+    end)
+    sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+    end)
+    sect1:AddSlider("HipHeight", 1.8, 1.8, 30, false, function(v)
+        game.Players.LocalPlayer.Character.Humanoid.HipHeight = v
+    end)
+sect1 = tab1:CreateSector("Eggs", 'left')
+sect1:AddLabel("Need to get close")
+sect1:AddToggle("Auto Buy Weak Egg", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = {
+                ["eggName"] = "Egg 1",
+                ["baseAmount"] = 1,
+                ["auto"] = false,
+                ["amount"] = 1
+            }
+        }
+        
+        game:GetService("ReplicatedStorage").Packages.Knit.Services.EggService.RF.BuyEgg:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Buy Strong Egg", false, function(b)
+    bb = b
+    while bb do task.wait()
+        local args = {
+            [1] = {
+                ["eggName"] = "Egg 2",
+                ["baseAmount"] = 1,
+                ["auto"] = false,
+                ["amount"] = 1
+            }
+        }
+        
+        game:GetService("ReplicatedStorage").Packages.Knit.Services.EggService.RF.BuyEgg:InvokeServer(unpack(args))
+    end
+end)
+sect1 = tab1:CreateSector("Farm", 'right')
+sect1:AddToggle("Farm Dark Knight", false, function(a)
+    aa = a
+    while aa do task.wait()
+local args = {
+    [1] = "403ba670-c0e4-48c9-b2df-35ef1dd83065"
+}
+
+game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click:InvokeServer(unpack(args))
+local args = {
+    [1] = "eded25ae-7f5d-42a5-b90e-7a4d196c2f6b"
+}
+
+game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click:InvokeServer(unpack(args))
+local args = {
+    [1] = "cec0575a-1684-41ce-bf36-b78435252a7b"
+}
+
+game:GetService("ReplicatedStorage").Packages.Knit.Services.ClickService.RF.Click:InvokeServer(unpack(args))
+        end
+end)
+
+local mobs = sect1:AddDropdown("Select mobs", {'Dark Knight', 'Normal'}, false, function(value)
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Storm Hub | Sword Fighters Simulator"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 11216791462 then -- Hungry Pig
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Storm Hub | Hungry Pig", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddButton("Respawn", function()
+    game.Players.LocalPlayer.Character:Destroy()
+end)
+sect1:AddToggle("Safe", false, function(state)
+    if state then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-105.17459869384766, -407.80010986328125, 1348.3836669921875)
+        task.wait(0.1)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+    else
+        if game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored == true then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+        task.wait(0.1)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-29.22894287109375, 2.9999992847442627, -9.035615921020508)
+        end
+    end
+end)
+sect1:AddToggle("Show Pigs Hitbox", false, function(state)
+    if state then
+        game:GetService("Workspace").Pigs.Enemy1.Hitbox.Transparency = 0.5
+        game:GetService("Workspace").Pigs.Enemy2.Hitbox.Transparency = 0.5
+        game:GetService("Workspace").Pigs.Enemy3.Hitbox.Transparency = 0.5
+        game:GetService("Workspace").Pigs.Enemy4.Hitbox.Transparency = 0.5
+    else
+        game:GetService("Workspace").Pigs.Enemy1.Hitbox.Transparency = 1
+        game:GetService("Workspace").Pigs.Enemy2.Hitbox.Transparency = 1
+        game:GetService("Workspace").Pigs.Enemy3.Hitbox.Transparency = 1
+        game:GetService("Workspace").Pigs.Enemy4.Hitbox.Transparency = 1
+    end
+end)
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddLabel("Speed when running: 40")
+sect1:AddLabel("Speed with coil: 45")
+sect1:AddSlider("Speed", 16, 16, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+sect1:AddSlider("HipHeight", 0, 0, 50, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.HipHeight = v
+end)
+
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Storm Hub | Hungry Pig"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 1962086868 then -- Tower of Hell
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Storm Hub | Tower of Hell", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddButton("Finish", function()
+    function teleportTO(playerCFrame)
+    local plyr = game.Players.LocalPlayer;
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
+    end
+end
+teleportTO(game:GetService("Workspace").tower.finishes.Finish.CFrame)
+end)
+sect1:AddToggle("God Mode", false, function(state)
+    if state then
+        _G.G = true
+        while _G.G == true do task.wait()
+            for i,d in pairs(game:GetService("Workspace")[game.Players.LocalPlayer.Name].hitbox:GetChildren()) do
+			    game:GetService("Workspace")[game.Players.LocalPlayer.Name].hitbox.Name = 'God'
+            end
+        end
+	else
+	    _G.G = false
+	    for i,d in pairs(game:GetService("Workspace")[game.Players.LocalPlayer.Name].God:GetChildren()) do
+		    game:GetService("Workspace")[game.Players.LocalPlayer.Name].God.Name = 'hitbox'
+        end
+    end
+end)
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Storm Hub | Tower of Hell"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 11302865934 then -- Every Second You Get +1 Health
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Storm Hub | Every Second You Get +1 Health", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddButton("+2 Wins", function()
+   game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-719.7504272460938, 1.7262322902679443, -48.75621032714844)
+end)
+sect1:AddButton("+3 Wins", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(270.8516845703125, 1.29720258712768555, 57.934814453125)
+end)
+sect1:AddButton("+3 Wins", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(0.5359605550765991, 1.12935209274292, -757.4034423828125)
+end)
+sect1:AddButton("+5 Wins", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.6994476914405823, -1998.56982421875, 118.18257904052734)
+end)
+sect1:AddButton("Claim Trails", function()
+local args = {
+    [1] = "White Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Black Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Yellow Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Violet Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Turquoise Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Navy Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Green Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Brown Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Blue Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Red Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Purple Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Pink Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Orange Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Crimson Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+task.wait()
+local args = {
+    [1] = "Rainbow Trail"
+}
+
+game:GetService("ReplicatedStorage").TrailEvents.BuyItem:InvokeServer(unpack(args))
+end)
+sect1:AddToggle("Auto Win", false, function(a)
+    aa = a
+    while aa do task.wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-0.6994476914405823, -1998.56982421875, 118.18257904052734)
+        task.wait(0.5)
+    end
+end)
+sect1:AddToggle("Auto Equip Best Pet", false, function(b)
+    bb = b
+    while bb do task.wait()
+        local args = {
+            [1] = "EquipBest",
+            [2] = {
+                ["Pets"] = {}
+            }
+        }
+        
+        game:GetService("ReplicatedStorage").RemoteEvents.PetActionRequest:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Rebirth", false, function(c)
+    cc = c
+    while cc do task.wait()
+        game:GetService("ReplicatedStorage").RebirthEvent:FireServer()
+    end
+end)
+sect1:AddButton("Buy All Items - 30 points", function()
+local args = {
+    [1] = 1,
+    [2] = "Burger",
+    [3] = "Gears"
+}
+
+game:GetService("ReplicatedStorage").GearShop.Purchase:FireServer(unpack(args))
+task.wait()
+local args = {
+    [1] = 1,
+    [2] = "Ice Cream",
+    [3] = "Gears"
+}
+
+game:GetService("ReplicatedStorage").GearShop.Purchase:FireServer(unpack(args))
+task.wait()
+local args = {
+    [1] = 1,
+    [2] = "Bloxy Cola",
+    [3] = "Gears"
+}
+
+game:GetService("ReplicatedStorage").GearShop.Purchase:FireServer(unpack(args))
+task.wait()
+local args = {
+    [1] = 1,
+    [2] = "Pizza",
+    [3] = "Gears"
+}
+
+game:GetService("ReplicatedStorage").GearShop.Purchase:FireServer(unpack(args))
+task.wait()
+local args = {
+    [1] = 1,
+    [2] = "Bloxilicious",
+    [3] = "Gears"
+}
+
+game:GetService("ReplicatedStorage").GearShop.Purchase:FireServer(unpack(args))
+task.wait()
+local args = {
+    [1] = 2,
+    [2] = "Witch Brew",
+    [3] = "Gears"
+}
+
+game:GetService("ReplicatedStorage").GearShop.Purchase:FireServer(unpack(args))
+task.wait()
+local args = {
+    [1] = 3,
+    [2] = "Money Bag",
+    [3] = "Gears"
+}
+
+game:GetService("ReplicatedStorage").GearShop.Purchase:FireServer(unpack(args))
+task.wait()
+local args = {
+    [1] = 3,
+    [2] = "Bang Gun",
+    [3] = "Gears"
+}
+
+game:GetService("ReplicatedStorage").GearShop.Purchase:FireServer(unpack(args))
+task.wait()
+local args = {
+    [1] = 4,
+    [2] = "Saxophone",
+    [3] = "Gears"
+}
+
+game:GetService("ReplicatedStorage").GearShop.Purchase:FireServer(unpack(args))
+task.wait()
+local args = {
+    [1] = 4,
+    [2] = "Spray Paint",
+    [3] = "Gears"
+}
+
+game:GetService("ReplicatedStorage").GearShop.Purchase:FireServer(unpack(args))
+task.wait()
+local args = {
+    [1] = 15,
+    [2] = "Speed Coil",
+    [3] = "Gears"
+}
+
+game:GetService("ReplicatedStorage").GearShop.Purchase:FireServer(unpack(args))
+task.wait()
+local args = {
+    [1] = 15,
+    [2] = "Gravity Coil",
+    [3] = "Gears"
+}
+
+game:GetService("ReplicatedStorage").GearShop.Purchase:FireServer(unpack(args))
+task.wait()
+local args = {
+    [1] = 30,
+    [2] = "BoomBox",
+    [3] = "Gears"
+}
+
+game:GetService("ReplicatedStorage").GearShop.Purchase:FireServer(unpack(args))
+end)
+
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+sect1:AddSlider("HipHeight", 1.8, 1.8, 50, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.HipHeight = v
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Storm Hub | Every Second You Get +1 Health"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 5777099015 then -- Cheese Escape
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Cheese Escape", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddButton("Get Cheese", function()
+    game:GetService("ReplicatedStorage").AddCheese:FireServer()
+end)
+sect1:AddToggle("Get Cheese", false, function(a)
+    aa = a
+    while aa do task.wait()
+    game:GetService("ReplicatedStorage").AddCheese:FireServer()
+    end
+end)
+sect1:AddButton("Respawn", function()
+    game:GetService("ReplicatedStorage").Events.DamagePlayer:FireServer()
+end)
+sect1:AddButton("Open Boss Room", function()
+    fireclickdetector(game:GetService("Workspace").ButtonToOpenBossRoom.Button.ClickDetector)
+end)
+sect1:AddButton("Get Red Cheese", function()
+    fireclickdetector(game:GetService("Workspace").Handle.ClickDetector)
+end)
+sect1:AddButton("Active Green Button", function()
+    fireclickdetector(game:GetService("Workspace").Button.Button.ClickDetector)
+end)
+sect1:AddToggle("Auto Click Cheese", false, function(b)
+    bb = b
+    while bb do task.wait()
+        fireclickdetector(game:GetService("Workspace").Cheese.ClickDetector)
+    end
+end)
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 20, 20, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 37, 37, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+sect1:AddSlider("HipHeight", 2, 2, 50, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.HipHeight = v
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Storm Hub | Cheese Escape"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+else
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Game not supported';
+        Duration = 3;
+    })
 end
