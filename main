@@ -5236,7 +5236,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | Hungry Pig", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Hungry Pig", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
@@ -5251,14 +5251,14 @@ sect1:AddButton("Respawn", function()
 end)
 sect1:AddToggle("Safe", false, function(state)
     if state then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-105.17459869384766, -407.80010986328125, 1348.3836669921875)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-48.585208892822266, -28.479823112487793, 20.542724609375)
         task.wait(0.1)
         game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
     else
         if game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored == true then
         game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
         task.wait(0.1)
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-29.22894287109375, 2.9999992847442627, -9.035615921020508)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-48.64031982421875, 2.9999992847442627, 19.99298858642578)
         end
     end
 end)
@@ -5268,11 +5268,183 @@ sect1:AddToggle("Show Pigs Hitbox", false, function(state)
         game:GetService("Workspace").Pigs.Enemy2.Hitbox.Transparency = 0.5
         game:GetService("Workspace").Pigs.Enemy3.Hitbox.Transparency = 0.5
         game:GetService("Workspace").Pigs.Enemy4.Hitbox.Transparency = 0.5
+        game:GetService("Workspace").Pigs.Enemy5.Hitbox.Transparency = 0.5
     else
         game:GetService("Workspace").Pigs.Enemy1.Hitbox.Transparency = 1
         game:GetService("Workspace").Pigs.Enemy2.Hitbox.Transparency = 1
         game:GetService("Workspace").Pigs.Enemy3.Hitbox.Transparency = 1
         game:GetService("Workspace").Pigs.Enemy4.Hitbox.Transparency = 1
+        game:GetService("Workspace").Pigs.Enemy4.Hitbox.Transparency = 1
+    end
+end)
+sect1:AddDropdown("Grab foods", {'Pig', 'Brother', 'Mom', 'Dad', 'Dino'}, "Choose food", false, function(value)
+    if value == 'Pig' then
+    function teleportTO(playerCFrame)
+    local plyr = game.Players.LocalPlayer;
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
+    end
+end
+teleportTO(game:GetService("Workspace").Pigs.Enemy1.Food.Orientator.CFrame)
+    end
+    if value == 'Brother' then
+    function teleportTO(playerCFrame)
+    local plyr = game.Players.LocalPlayer;
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
+    end
+end
+teleportTO(game:GetService("Workspace").Pigs.Enemy2.Food.Orientator.CFrame)
+    end
+    if value == 'Mom' then
+            function teleportTO(playerCFrame)
+    local plyr = game.Players.LocalPlayer;
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
+    end
+end
+teleportTO(game:GetService("Workspace").Pigs.Enemy4.Food.Orientator.CFrame)
+    end
+    if value == 'Dad' then
+    function teleportTO(playerCFrame)
+    local plyr = game.Players.LocalPlayer;
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
+    end
+end
+teleportTO(game:GetService("Workspace").Pigs.Enemy3.Food.Orientator.CFrame)
+    end
+    if value == 'Dino' then
+    function teleportTO(playerCFrame)
+    local plyr = game.Players.LocalPlayer;
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
+    end
+end
+teleportTO(game:GetService("Workspace").Pigs.Enemy5.Food.Orientator.CFrame)
+    end
+end)
+sect1:AddDropdown("Get Item ( Free )", {'Teleport Wand', 'Speed Coil', 'Pistol', 'Shrink Potion', 'Gravity Coil', 'Boogie Bomb', 'Grow Potion', 'Taser', 'Bear Trap', 'Trowel', 'Ice Gun'}, "Choose item to buy", false, function(value)
+    if value == 'Teleport Wand' then
+local args = {
+    [1] = {
+        ["ImageID"] = "rbxassetid://11746951753",
+        ["Name"] = "Teleport Wand",
+        ["Cost"] = 0
+    }
+}
+
+game:GetService("ReplicatedStorage").PurchasePet:FireServer(unpack(args))
+end
+    if value == 'Speed Coil' then
+        local args = {
+    [1] = {
+        ["ImageID"] = "rbxassetid://11746951753",
+        ["Name"] = "Speed Coil",
+        ["Cost"] = 0
+    }
+}
+
+game:GetService("ReplicatedStorage").PurchasePet:FireServer(unpack(args))
+    end
+    if value == 'Pistol' then
+    local args = {
+    [1] = {
+        ["ImageID"] = "rbxassetid://11746951753",
+        ["Name"] = "Pistol",
+        ["Cost"] = 0
+    }
+}
+
+game:GetService("ReplicatedStorage").PurchasePet:FireServer(unpack(args))
+    end
+    if value == 'Shrink Potion' then
+        local args = {
+    [1] = {
+        ["ImageID"] = "rbxassetid://11746951753",
+        ["Name"] = "Shrink Potion",
+        ["Cost"] = 0
+    }
+}
+
+game:GetService("ReplicatedStorage").PurchasePet:FireServer(unpack(args))
+    end
+    if value == 'Gravity Coil' then
+        local args = {
+    [1] = {
+        ["ImageID"] = "rbxassetid://11746951753",
+        ["Name"] = "Gravity Coil",
+        ["Cost"] = 0
+    }
+}
+
+game:GetService("ReplicatedStorage").PurchasePet:FireServer(unpack(args))
+    end
+    if value == 'Boogie Bomb' then
+    local args = {
+    [1] = {
+        ["ImageID"] = "rbxassetid://11746951753",
+        ["Name"] = "BoogieBomb",
+        ["Cost"] = 0
+    }
+}
+
+game:GetService("ReplicatedStorage").PurchasePet:FireServer(unpack(args))
+    end
+    if value == 'Grow Potion' then
+        local args = {
+    [1] = {
+        ["ImageID"] = "rbxassetid://11746951753",
+        ["Name"] = "Grow Potion",
+        ["Cost"] = 0
+    }
+}
+
+game:GetService("ReplicatedStorage").PurchasePet:FireServer(unpack(args))
+    end
+    if value == 'Taser' then
+    local args = {
+    [1] = {
+        ["ImageID"] = "rbxassetid://11746951753",
+        ["Name"] = "Taser",
+        ["Cost"] = 0
+    }
+}
+
+game:GetService("ReplicatedStorage").PurchasePet:FireServer(unpack(args))
+    end
+        if value == 'Bear Trap' then
+        local args = {
+    [1] = {
+        ["ImageID"] = "rbxassetid://11746951753",
+        ["Name"] = "Bear Trap",
+        ["Cost"] = 0
+    }
+}
+
+game:GetService("ReplicatedStorage").PurchasePet:FireServer(unpack(args))
+    end
+    if value == 'Trowel' then
+        local args = {
+    [1] = {
+        ["ImageID"] = "rbxassetid://11746951753",
+        ["Name"] = "Trowel",
+        ["Cost"] = 0
+    }
+}
+
+game:GetService("ReplicatedStorage").PurchasePet:FireServer(unpack(args))
+end
+    if value == 'Ice Gun' then
+        local args = {
+    [1] = {
+        ["ImageID"] = "rbxassetid://11746951753",
+        ["Name"] = "IceGun",
+        ["Cost"] = 0
+    }
+}
+
+game:GetService("ReplicatedStorage").PurchasePet:FireServer(unpack(args))
     end
 end)
 sect1 = tab1:CreateSector("Player", 'right')
@@ -5292,7 +5464,7 @@ end)
 -- Misc
 local sect1 = tab2:CreateSector("Misc", 'left')
 sect1:AddButton("Unload gui", function()
-    game:GetService("CoreGui")["Storm Hub | Hungry Pig"]:Destroy()
+    game:GetService("CoreGui")["Hungry Pig"]:Destroy()
 end)
 sect1:AddLabel("made by thrax")
 sect1:AddLabel("Ui Bind: Right Ctrl")
@@ -5708,7 +5880,221 @@ end)
 -- Misc
 local sect1 = tab2:CreateSector("Misc", 'left')
 sect1:AddButton("Unload gui", function()
-    game:GetService("CoreGui")["Storm Hub | Cheese Escape"]:Destroy()
+    game:GetService("CoreGui")["Cheese Escape"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 277751860 then -- Epic Minigames
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Epic Minigames", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddToggle("Freeze", false, function(state)
+    if state then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+    else
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+    end
+end)
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 20, 20, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 37, 37, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+sect1 = tab1:CreateSector("Misc", 'left')
+sect1:AddButton("Bypass AntiCheat", function()
+    game:GetService("Players").LocalPlayer.PlayerScripts.IlllIli474iIIIIiiIi:Destroy()
+end)
+sect1:AddLabel("Bypass to functions work")
+sect1 = tab1:CreateSector("Turntable Scury", 'left')
+sect1:AddButton("Win", function()
+end)
+sect1 = tab1:CreateSector("Bullet Evasion", 'left')
+sect1 = tab1:CreateSector("Big Bomb Boom", 'left')
+sect1 = tab1:CreateSector("Slippery Sledding", 'left')
+sect1 = tab1:CreateSector("Crystal Clear", 'left')
+sect1 = tab1:CreateSector("Dodgeball", 'right')
+sect1 = tab1:CreateSector("Bullet Bound", 'right')
+sect1:AddButton("Win", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(118.23179626464844, 200.55474853515625, 80.64561462402344)
+end)
+sect1 = tab1:CreateSector("Round Race", 'left')
+    sect1:AddButton("Win", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-388.196044921875, -197.11471557617188, -278.36199951171875)
+end)
+sect1 = tab1:CreateSector("Just Jump", 'right')
+sect1 = tab1:CreateSector("Gear Battle", 'right')
+sect1 = tab1:CreateSector("Buttons Room", 'right')
+sect1 = tab1:CreateSector("Rocket Rumble", 'right')
+
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Epic Minigames"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 11970456 then -- Hole in the Wall
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Hole in the Wall", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddButton("Bypass wall", function()
+    game:GetService("Workspace").Frame.Wall:Destroy()
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Hole in the Wall"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 482742811 then -- Be Crushed by a Speeding Wall!
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Be Crushed by a Speeding Wall!", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddButton("Winner Team", function()
+    game:GetService("ReplicatedStorage").Remotes.GetOwned:InvokeServer()
+end)
+sect1:AddToggle("Auto Join Event", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = "Participate"
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.WallEscape:FireServer(unpack(args))
+    end
+end)
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 300, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+sect1  = tab1:CreateSector("Misc", 'left')
+sect1:AddToggle("Tp Tool", false, function(state)
+        if state then
+mouse = game.Players.LocalPlayer:GetMouse()
+tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = "Click Teleport"
+tool.Activated:connect(function()
+local pos = mouse.Hit+Vector3.new(0,2.5,0)
+pos = CFrame.new(pos.X,pos.Y,pos.Z)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+end)
+tool.Parent = game.Players.LocalPlayer.Backpack
+else
+game:GetService("Players").LocalPlayer.Backpack["Tp Tool"]:Destroy()
+end
+end)
+sect1 = tab1:CreateSector("Teleports", 'left')
+sect1:AddButton("Points 1", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1042.47900390625, 19.124547958374023, 414.0146179199219)
+end)
+sect1:AddButton("Points 2", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-738.4507446289062, 19.122655868530273, 236.49069213867188)
+end)
+sect1:AddButton("Points 3", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-440.4715270996094, 19.142126083374023, 414.3634033203125)
+end)
+sect1:AddButton("Points 4", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-140.28732299804688, 19.112646102905273, 236.33531188964844)
+end)
+sect1:AddButton("Code location", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(157.03213500976562, 12.622626304626465, 303.3457946777344)
+    task.wait()
+    game:GetService("Workspace").Camera.CFrame = CFrame.new(157.669189, 14.4659729, 303.793854, 0.0351217948, -0.0386803336, 0.998634219, 0, 0.99925077, 0.038704209, -0.999383092, -0.00135936134, 0.035)
+end)
+sect1:AddDropdown("Areas", {'Spawn', 'Winners', 'Vip'}, "Choose location", false, function(value)
+    if value == 'Spawn' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-1385.0240478515625, 15.33028507232666, 207.31948852539062)
+    end
+    if value == 'Winners' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(270.2647399902344, -73.2900390625, 323.2650451660156)
+    end
+    if value == 'Vip' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(528.6393432617188, 54.49258804321289, 325.72601318359375)
+    end
+end)
+sect1:AddButton("Win Event", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-3316.218505859375, 619.5513305664062, 11356.88671875)
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Be Crushed by a Speeding Wall!"]:Destroy()
 end)
 sect1:AddLabel("made by thrax")
 sect1:AddLabel("Ui Bind: Right Ctrl")
