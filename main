@@ -821,48 +821,6 @@ elseif game.PlaceId == 2537430692 then -- Jenga
     MainSection:NewButton("Reset", "", function()
         game.Players.LocalPlayer.Character["Head"]:Destroy()
     end)
-    MainSection:NewButton("Fps Boost", "", function()
-        local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
-local g = game
-local w = g.Workspace
-local l = g.Lighting
-local t = w.Terrain
-t.WaterWaveSize = 0
-t.WaterWaveSpeed = 0
-t.WaterReflectance = 0
-t.WaterTransparency = 0
-l.GlobalShadows = false
-l.FogEnd = 9e9
-l.Brightness = 0
-settings().Rendering.QualityLevel = "Level01"
-for i, v in pairs(g:GetDescendants()) do
-    if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
-        v.Material = "Plastic"
-        v.Reflectance = 0
-    elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
-        v.Transparency = 1
-    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-        v.Lifetime = NumberRange.new(0)
-    elseif v:IsA("Explosion") then
-        v.BlastPressure = 1
-        v.BlastRadius = 1
-    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
-        v.Enabled = false
-    elseif v:IsA("MeshPart") then
-        v.Material = "Plastic"
-        v.Reflectance = 0
-        v.TextureID = 10385902758728957
-    end
-end
-for i, e in pairs(l:GetChildren()) do
-    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
-        e.Enabled = false
-    end
-end
-end)
-    MainSection:NewButton("Disable Fps Boost - Will rejoin", "", function()
-        game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
-    end)
     MainSection:NewToggle("Tp Tool", "", function(state)
         if state then
         mouse = game.Players.LocalPlayer:GetMouse()
@@ -929,84 +887,8 @@ tool.Parent = game.Players.LocalPlayer.Backpack
     TeleportsSection:NewButton("making rn", "", function()
         end)
     
-    -- VISUAL
-    local Visual = Window:NewTab("Visual")
-    local VisualSection = Visual:NewSection("Visual")
-    VisualSection:NewButton("Delete Destroyer Objects", "", function()
-        game.Workspace.Projectiles:Destroy()
-    end)
-    VisualSection:NewToggle("Headless", "", function(state)
-        if state then
-            game:GetService("Workspace").LocalPlayer.Head.Transparency = 1
-            game:GetService("Workspace").LocalPlayer.Head.face.Transparency = 1
-        else
-            game:GetService("Workspace").LocalPlayer.Head.Transparency = 0
-            game:GetService("Workspace").LocalPlayer.Head.face.Transparency = 0
-        end
-    end)
-    VisualSection:NewToggle("Fake Korblox - Will remove the leg", "", function()    
-        if state then
-            _G.autoT = true
-                while _G.autoT == true do
-                    game:GetService("Workspace").LocalPlayer.RightLowerLeg.Transparency = 1
-                        wait()
-                end
-                    else
-                        _G.autoT = false
-                            while _G.autoT == true do
-                                game:GetService("Workspace").LocalPlayer.RightLowerLeg.Transparency = 0
-                                    wait()
-                            end
-                        end
-                    end)
-    VisualSection:NewToggle("Fake Korblox", "", function(state)
-        if state then
-            _G.autoK = true
-                while _G.autoK == true do
-                    local ply = game.Players.LocalPlayer
-                        local chr = ply.Character
-                        chr.RightLowerLeg.MeshId = "902942093"
-                        chr.RightLowerLeg.Transparency = "1"
-                        chr.RightUpperLeg.MeshId = "http://www.roblox.com/asset/?id=902942096"
-                        chr.RightUpperLeg.TextureID = "http://roblox.com/asset/?id=902843398"
-                        chr.RightFoot.MeshId = "902942089"
-                        chr.RightFoot.Transparency = "1"
-                            wait()
-                end
-                    else
-                        _G.autoK = false
-                            while _G.autoK == true do
-                                local ply = game.Players.LocalPlayer
-                                    local chr = ply.Character
-                                    chr.RightLowerLeg.MeshId = "902942093"
-                                    chr.RightLowerLeg.Transparency = "1"
-                                    chr.RightUpperLeg.MeshId = "http://www.roblox.com/asset/?id=902942096"
-                                    chr.RightUpperLeg.TextureID = "http://roblox.com/asset/?id=902843398"
-                                    chr.RightFoot.MeshId = "902942089"
-                                    chr.RightFoot.Transparency = "1"
-                                        wait()
-                                end
-                            end
-                        end)
-    
     -- FUNCTIONS IDK WHY I PUT THIS
     local Others = Window:NewTab("Others")
-    local OthersSection = Others:NewSection("Camera")
-    OthersSection:NewToggle("Instant Camera Zoom", "", function(state)
-        if state then
-            Player.LocalPlayer.DevCameraOcclusion = Invisicam
-        else
-            Player.LocalPlayer.DevCameraOcclusion = Zoom
-        end
-    end)
-    OthersSection:NewToggle("Inf Camera Zoom", "", function(state)
-        if state then
-            game:GetService("Players").LocalPlayer.DevCameraOcclusion = Invisicam
-        else
-            game:GetService("Players").LocalPlayer.DevCameraOcclusion = Zoom
-        end
-    end)
-    local OthersSection = Others:NewSection("Sound")
     OthersSection:NewToggle("Remove all sounds", "", function(state)
         if state then
             game:GetService("Workspace").Sounds.PlayerDeath.Volume = 0
@@ -1094,309 +976,7 @@ tool.Parent = game.Players.LocalPlayer.Backpack
     local CreditsSection = Credits:NewSection("Credits")
     CreditsSection:NewButton("Script made by thrax", "", function()
     end)
-elseif game.PlaceId == 3823850583 then -- Street Simulator
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
-    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-    local Window = Library.CreateLib("Storm Hub | Street Simulator", "Ocean")
-    
-    -- MAIN
-    local Main = Window:NewTab("Main")
-    local MainSection = Main:NewSection("Main")
-    MainSection:NewToggle("Auto Bet 2 in crash - auto cashout in 1.01", "", function(state)
-        if state then
-            _G.autoC = true
-                while _G.autoC == true do
-                    local args = {
-                        [1] = "Bet",
-                        [2] = "2",
-                        [3] = "1.01"
-                    }
-                    
-                    game:GetService("ReplicatedStorage").Events.CrashAction:FireServer(unpack(args))
-                        wait(2)
-                    end
-                        else
-                            _G.autoC = false
-                                while _G.autoC == true do
-                                    local args = {
-                                        [1] = "Bet",
-                                        [2] = "2",
-                                        [3] = "1.01"
-                                    }
-                                    
-                                    game:GetService("ReplicatedStorage").Events.CrashAction:FireServer(unpack(args))
-                                        wait(2)
-                                end
-                            end
-                        end)
-    MainSection:NewToggle("Auto Bet 2 in crash - auto cashout in 1.2", "", function(state)
-        if state then
-            _G.autoC = true
-                while _G.autoC == true do
-                    local args = {
-                        [1] = "Bet",
-                        [2] = "2",
-                        [3] = "1.2"
-                    }
-                    
-                    game:GetService("ReplicatedStorage").Events.CrashAction:FireServer(unpack(args))
-                        wait(2)
-                    end
-                        else
-                            _G.autoC = false
-                                while _G.autoC == true do
-                                    local args = {
-                                        [1] = "Bet",
-                                        [2] = "2",
-                                        [3] = "1.2"
-                                    }
-                                    
-                                    game:GetService("ReplicatedStorage").Events.CrashAction:FireServer(unpack(args))
-                                        wait(2)
-                                end
-                            end
-                        end)
-    MainSection:NewButton("Reset", "", function()
-        game.Players.LocalPlayer.Character["Head"]:Destroy()
-    end)
-    MainSection:NewButton("Fps Boost", "", function()
-        local decalsyeeted = true -- Leaving this on makes games look shitty but the fps goes up by at least 20.
-local g = game
-local w = g.Workspace
-local l = g.Lighting
-local t = w.Terrain
-t.WaterWaveSize = 0
-t.WaterWaveSpeed = 0
-t.WaterReflectance = 0
-t.WaterTransparency = 0
-l.GlobalShadows = false
-l.FogEnd = 9e9
-l.Brightness = 0
-settings().Rendering.QualityLevel = "Level01"
-for i, v in pairs(g:GetDescendants()) do
-    if v:IsA("Part") or v:IsA("Union") or v:IsA("CornerWedgePart") or v:IsA("TrussPart") then
-        v.Material = "Plastic"
-        v.Reflectance = 0
-    elseif v:IsA("Decal") or v:IsA("Texture") and decalsyeeted then
-        v.Transparency = 1
-    elseif v:IsA("ParticleEmitter") or v:IsA("Trail") then
-        v.Lifetime = NumberRange.new(0)
-    elseif v:IsA("Explosion") then
-        v.BlastPressure = 1
-        v.BlastRadius = 1
-    elseif v:IsA("Fire") or v:IsA("SpotLight") or v:IsA("Smoke") or v:IsA("Sparkles") then
-        v.Enabled = false
-    elseif v:IsA("MeshPart") then
-        v.Material = "Plastic"
-        v.Reflectance = 0
-        v.TextureID = 10385902758728957
-    end
-end
-for i, e in pairs(l:GetChildren()) do
-    if e:IsA("BlurEffect") or e:IsA("SunRaysEffect") or e:IsA("ColorCorrectionEffect") or e:IsA("BloomEffect") or e:IsA("DepthOfFieldEffect") then
-        e.Enabled = false
-    end
-end
-end)
-    MainSection:NewButton("Disable Fps Boost - Will rejoin", "", function()
-        game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
-    end)
-    MainSection:NewToggle("Tp Tool", "", function(state)
-        if state then
-        mouse = game.Players.LocalPlayer:GetMouse()
-tool = Instance.new("Tool")
-tool.RequiresHandle = false
-tool.Name = "Click Teleport"
-tool.Activated:connect(function()
-local pos = mouse.Hit+Vector3.new(0,2.5,0)
-pos = CFrame.new(pos.X,pos.Y,pos.Z)
-game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
-end)
-tool.Parent = game.Players.LocalPlayer.Backpack
-    else
-        game:GetService("Players").LocalPlayer.Backpack["Click Teleport"]:Destroy()
-        end
-    end)
-    MainSection:NewToggle("Disable Chat", "", function(state)
-    if state then
-        game:GetService("Players").LocalPlayer.PlayerGui.Chat.Enabled = false
-    else
-        game:GetService("Players").LocalPlayer.PlayerGui.Chat.Enabled = true
-    end
-    end)
-    MainSection:NewToggle("Fix korblox if appearing the 2 part", "", function(state)
-        if state then
-            _G.autoF = true
-                while _G.autoF == true do
-                    game:GetService("Workspace").LocalPlayer.RightLowerLeg.Transparency = 1
-                    wait()
-                end
-                    else
-                        _G.autoF = false
-                            while _G.autoF == true do
-                                game:GetService("Workspace").notthrax.RightLowerLeg.Transparency = 1
-                                wait()
-                            end
-                        end
-                    end)
 
-    -- PLAYER
-    local Player = Window:NewTab("Player")
-    local PlayerSection = Player:NewSection("Modifications")
-    PlayerSection:NewSlider("Walkspeed", "Changes the walkspeed", 500, 16, function(v)
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
-    end)
-    PlayerSection:NewButton("Reset WalkSpeed", "", function()
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
-    end)
-    PlayerSection:NewSlider("Jumppower", "Changes the JumpPower", 500, 50, function(v)
-        game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
-    end)
-    PlayerSection:NewButton("Reset JumpPower", "", function()
-        game.Players.LocalPlayer.Character.Humanoid.JumpPower = 50
-    end)
-    
-    -- TELEPORTS
-    local Teleports = Window:NewTab("Teleports")
-    local TeleportsSection = Teleports:NewSection("Teleports")
-    TeleportsSection:NewButton("Crash", "", function()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(1.987196683883667, -35.0000114440918, 56.522125244140625)
-        wait(1)
-    local teleport_table = {
-    location1 = Vector3.new(1.986707329750061, -35.000003814697266, 73.98504638671875), -- your desired position
-}
-
-local tween_s = game:GetService('TweenService')
-local tweeninfo = TweenInfo.new(1,Enum.EasingStyle.Linear)
-
-local lp = game.Players.LocalPlayer
-
-function bypass_teleport(v)
-    if lp.Character and 
-    lp.Character:FindFirstChild('HumanoidRootPart') then
-        local cf = CFrame.new(v)
-        local a = tween_s:Create(lp.Character.HumanoidRootPart,tweeninfo,{CFrame=cf})
-        a:Play()
-        -- a.Completed:Wait()
-        -- print('Teleporting Done!')
-    end
-end
-
-bypass_teleport(teleport_table.location1)
-    end)
-    TeleportsSection:NewButton("Loterry", "", function()
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(13.427461624145508, -35.0000114440918, 37.82958221435547)
-        wait(1)
-        local teleport_table = {
-    location1 = Vector3.new(12.963255882263184, -35.0000114440918, 16.403139114379883), -- your desired position
-}
-
-local tween_s = game:GetService('TweenService')
-local tweeninfo = TweenInfo.new(1,Enum.EasingStyle.Linear)
-
-local lp = game.Players.LocalPlayer
-
-function bypass_teleport(v)
-    if lp.Character and 
-    lp.Character:FindFirstChild('HumanoidRootPart') then
-        local cf = CFrame.new(v)
-        local a = tween_s:Create(lp.Character.HumanoidRootPart,tweeninfo,{CFrame=cf})
-        a:Play()
-        -- a.Completed:Wait()
-        -- print('Teleporting Done!')
-    end
-end
-
-bypass_teleport(teleport_table.location1)
-end)
-    
-    -- FUNCTIONS IDK WHY I PUT THIS
-    local Others = Window:NewTab("Others")
-    local OthersSection = Others:NewSection("Camera")
-    OthersSection:NewToggle("Instant Camera Zoom", "", function(state)
-        if state then
-            game:GetService("Players").LocalPlayer.DevCameraOcclusion = Invisicam
-        else
-            game:GetService("Players").LocalPlayer.DevCameraOcclusion = Zoom
-        end
-    end)
-    OthersSection:NewToggle("Inf Camera Zoom", "", function(state)
-        if state then
-            game:GetService("Players").LocalPlayer.DevCameraOcclusion = Invisicam
-        else
-            game:GetService("Players").LocalPlayer.DevCameraOcclusion = Zoom
-        end
-    end)
-    
-    -- VISUAL
-    local Visual = Window:NewTab("Visual")
-    local VisualSection = Visual:NewSection("Visual")
-    VisualSection:NewToggle("Headless", "", function(state)
-        if state then
-            game:GetService("Workspace").LocalPlayer.Head.Transparency = 1
-            game:GetService("Workspace").LocalPlayer.Head.face.Transparency = 1
-        else
-            game:GetService("Workspace").LocalPlayer.Head.Transparency = 0
-            game:GetService("Workspace").LocalPlayer.Head.face.Transparency = 0
-        end
-    end)
-    VisualSection:NewToggle("Fake Korblox - Will remove the leg", "", function()    
-        if state then
-            _G.autoT = true
-                while _G.autoT == true do
-                    game:GetService("Workspace").LocalPlayer.RightLowerLeg.Transparency = 1
-                        wait()
-                end
-                    else
-                        _G.autoT = false
-                            while _G.autoT == true do
-                                game:GetService("Workspace").LocalPlayer.RightLowerLeg.Transparency = 0
-                                    wait()
-                            end
-                        end
-                    end)
-    VisualSection:NewToggle("Fake Korblox", "", function(state)
-        if state then
-            _G.autoK = true
-                while _G.autoK == true do
-                    local ply = game.Players.LocalPlayer
-                        local chr = ply.Character
-                        chr.RightLowerLeg.MeshId = "902942093"
-                        chr.RightLowerLeg.Transparency = "1"
-                        chr.RightUpperLeg.MeshId = "http://www.roblox.com/asset/?id=902942096"
-                        chr.RightUpperLeg.TextureID = "http://roblox.com/asset/?id=902843398"
-                        chr.RightFoot.MeshId = "902942089"
-                        chr.RightFoot.Transparency = "1"
-                            wait()
-                end
-                    else
-                        _G.autoK = false
-                            while _G.autoK == true do
-                                local ply = game.Players.LocalPlayer
-                                    local chr = ply.Character
-                                    chr.RightLowerLeg.MeshId = "902942093"
-                                    chr.RightLowerLeg.Transparency = "1"
-                                    chr.RightUpperLeg.MeshId = "http://www.roblox.com/asset/?id=902942096"
-                                    chr.RightUpperLeg.TextureID = "http://roblox.com/asset/?id=902843398"
-                                    chr.RightFoot.MeshId = "902942089"
-                                    chr.RightFoot.Transparency = "1"
-                                        wait()
-                                end
-                            end
-                        end)
-    
-    -- MISC
-    local Misc = Window:NewTab("Misc")
-    local MiscSection = Misc:NewSection("Misc")
-    MiscSection:NewKeybind("Toggle UI", "", Enum.KeyCode.V, function()
-	    Library:ToggleUI()
-    end)
-    
-    -- CREDITS
-    local Credits = Window:NewTab("Credits")
-    local CreditsSection = Credits:NewSection("Credits")
-    CreditsSection:NewButton("Script made by thrax", "", function()
-    end)
 elseif game.PlaceId == 10710676163 then -- SPTS : Origin
     loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
     local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
@@ -6130,6 +5710,152 @@ end)
 local sect1 = tab2:CreateSector("Misc", 'left')
 sect1:AddButton("Unload gui", function()
     game:GetService("CoreGui")["Breaking Point"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 815405518 then -- The Floor Is LAVA!
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("The Floor Is LAVA!", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddButton("Revive", function()
+    game:GetService("ReplicatedStorage").Remotes.ReviveEvent:FireServer()
+end)
+sect1:AddButton("Be Thanos", function()
+    fireclickdetector(game:GetService("Workspace")["Thanos_Morph"].Base.ClickButton.ClickDetector)
+end)
+sect1:AddLabel("Thanos is made by the game")
+sect1:AddDropdown("Free VIP Pets", {'Ice Cube', 'Narwhal', 'Fox'}, "Choose pet", false, function(value)
+    if value == 'Ice Cube' then
+        fireclickdetector(game:GetService("Workspace").Pets["Ice Cube"].ClickPart.ClickDetector)
+    end
+    if value == 'Narwhal' then
+        fireclickdetector(game:GetService("Workspace").Pets.Narwhal.ClickPart.ClickDetector)
+    end
+    if value == 'Fox' then
+        fireclickdetector(game:GetService("Workspace").Pets.Fox.ClickPart.ClickDetector)
+    end
+end)
+sect1:AddToggle("Safe", false, function(state)
+    if state then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-6.732780933380127, 17.30870246887207, 68.42271423339844)
+        task.wait(0.1)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+    else
+        if game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored == true then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+        task.wait(0.1)
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-2.1960537433624268, 3.7188971042633057, -1.995797872543335)
+        end
+    end
+end)
+-- Player
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 300, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["The Floor Is LAVA!"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 6939111033 then -- Escape Papa Pizza's Pizzeria!
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Escape Papa Pizza's Pizzeria!", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddButton("Get Winners Badge", function()
+    for i,v in pairs(game:GetService("Workspace").WinnersBadge.Platform:GetDescendants()) do
+            if v:IsA"TouchTransmitter" then
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+            end
+        end
+    end)
+sect1:AddButton("Finish", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(49.368751525878906, 1028.9024658203125, -338.63226318359375)
+end)
+
+-- Player
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 300, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+-- Misc
+local sect1 = tab1:CreateSector("Misc", 'left')
+sect1:AddToggle("Tp Tool", false, function(state)
+        if state then
+        mouse = game.Players.LocalPlayer:GetMouse()
+tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = "Click Teleport"
+tool.Activated:connect(function()
+local pos = mouse.Hit+Vector3.new(0,2.5,0)
+pos = CFrame.new(pos.X,pos.Y,pos.Z)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+end)
+tool.Parent = game.Players.LocalPlayer.Backpack
+    else
+        game:GetService("Players").LocalPlayer.Backpack["Click Teleport"]:Destroy()
+        end
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Escape Papa Pizza's Pizzeria!"]:Destroy()
 end)
 sect1:AddLabel("made by thrax")
 sect1:AddLabel("Ui Bind: Right Ctrl")
