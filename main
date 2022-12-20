@@ -5641,18 +5641,31 @@ sect1:AddToggle("Increase light range", false, function(state)
     if state then
         _G.L = true do
             while _G.L == true do task.wait()
-                if game:GetService("Workspace").light.PointLight.Range == 18 then
-                    game:GetService("Workspace").light.PointLight.Range = 60
+                if game:GetService("Workspace").light.PointLight.Range == 15 then
+                    game:GetService("Workspace").light.PointLight.Range = 58
                         task.wait(0.1)
                     end
                 end
-            end
-        else
-            _G.L = false
-                task.wait(0.1)
-                    game:GetService("Workspace").light.PointLight.Range = 18
+                    if game:GetService("Workspace").light.PointLight.Range == 18 then
+                        game:GetService("Workspace").light.PointLight.Range = 59
+                    end
                 end
-            end)
+                    if game:GetService("Workspace").light.PointLight.Range == 25 then
+                        game:GetService("Workspace").light.PointLight.Range = 60
+                    end
+                else
+                    _G.L = false
+                        if game:GetService("Workspace").light.PointLight.Range == 58 then
+                            game:GetService("Workspace").light.PointLight.Range = 15
+                        end
+                        if game:GetService("Workspace").light.PointLight.Range == 59 then
+                            game:GetService("Workspace").light.PointLight.Range = 18
+                        end
+                        if game:GetService("Workspace").light.PointLight.Range == 60 then
+                            game:GetService("Workspace").light.PointLight.Range = 25
+                        end
+                    end
+                end)
 sect1:AddToggle("Light always ON", false, function(state)
     if state then
         _G.L = true do
@@ -5697,13 +5710,15 @@ sect1:AddButton("Kill All", function()
     end)
 sect1:AddLabel("Kill All Requirement: Pistol")
 
--- Player
-sect1 = tab1:CreateSector("Player", 'right')
-sect1:AddSlider("Speed", 16, 16, 300, false, function(v)
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
-end)
-sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+-- Character
+sect1 = tab1:CreateSector("Character", 'right')
+sect1:AddButton("Undisgue", function()
+local args = {
+    [1] = 42,
+    [2] = false
+}
+
+game:GetService("ReplicatedStorage").RemoteEvent:FireServer(unpack(args))
 end)
 
 -- Misc
@@ -5856,6 +5871,126 @@ end)
 local sect1 = tab2:CreateSector("Misc", 'left')
 sect1:AddButton("Unload gui", function()
     game:GetService("CoreGui")["Escape Papa Pizza's Pizzeria!"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 11575781062 then -- PSYCHO'S OLD FACTORY!
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("PSYCHO'S OLD FACTORY!", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddDropdown("Get Food", {'Cookie', 'Donuts', 'Bloxy Cola', 'Burguer'}, "Choose food", false, function(value)
+    if value == 'Cookie' then
+        local args = {
+            [1] = "entregarTool",
+            [2] = "Cookie"
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.FuncionesFunction:InvokeServer(unpack(args))
+    end
+    if value == 'Donuts' then
+        local args = {
+            [1] = "entregarTool",
+            [2] = "DonasTool"
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.EventosEvent:FireServer(unpack(args))
+    end
+    if value == 'Bloxy Cola' then
+        local args = {
+            [1] = "entregarTool",
+            [2] = "BloxyCola"
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.FuncionesFunction:InvokeServer(unpack(args))
+    end
+    if value == 'Burguer' then
+        local args = {
+            [1] = "entregarTool",
+            [2] = "Cheezburger"
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.FuncionesFunction:InvokeServer(unpack(args))
+    end
+end)
+
+-- Player
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 300, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+-- Others
+sect1 = tab1:CreateSector("Others", 'right')
+sect1:AddDropdown("Choose mode", {'Normal', 'Hard'}, "Choose mode", false, function(value)
+    if value == 'Normal' then
+        local args = {
+            [1] = "cambiarValor",
+            [2] = game:GetService("Players").LocalPlayer.Modo,
+            [3] = "Normal"
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.EventosEvent:FireServer(unpack(args))
+    end
+    if value == 'Hard' then
+        local args = {
+            [1] = "cambiarValor",
+            [2] = game:GetService("Players").LocalPlayer.Modo,
+            [3] = "Hard"
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.EventosEvent:FireServer(unpack(args))
+    end
+end)
+
+-- Misc
+local sect1 = tab1:CreateSector("Misc", 'left')
+sect1:AddToggle("Tp Tool", false, function(state)
+        if state then
+                    
+        mouse = game.Players.LocalPlayer:GetMouse()
+tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = "Click Teleport"
+tool.Activated:connect(function()
+local pos = mouse.Hit+Vector3.new(0,2.5,0)
+pos = CFrame.new(pos.X,pos.Y,pos.Z)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+end)
+tool.Parent = game.Players.LocalPlayer.Backpack
+    else
+        game:GetService("Players").LocalPlayer.Backpack["Click Teleport"]:Destroy()
+        end
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["PSYCHO'S OLD FACTORY!"]:Destroy()
 end)
 sect1:AddLabel("made by thrax")
 sect1:AddLabel("Ui Bind: Right Ctrl")
