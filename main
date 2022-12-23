@@ -3068,7 +3068,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | Youtube Simulator Z", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Youtube Simulator Z", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
@@ -3078,58 +3078,414 @@ end
 
 -- Main
 local sect1 = tab1:CreateSector("Autofarm", 'left')
-sect1:AddLabel("Auto Click only work w/ bind")
 local Toggle = sect1:AddToggle("Auto Click", false, function(a)
     aa = a
     while aa do task.wait()
-    mouse1click()
-    wait()
+    local N = game:GetService("VirtualInputManager")
+           N:SendKeyEvent(true, "E", false, game)
     end
 end)
 Toggle:AddKeybind(CRAP,function()
 end)
-sect1:AddLabel("Equip camera first")
-sect1:AddDropdown("Cameras", {}, 'Camera values in money', false, function(value)
-    end)
+sect1:AddToggle("Auto Buy Max SD", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game.Players.LocalPlayer.Money > 0 then
+            local args = {
+                [1] = 1,
+                [2] = 1
+            }
+            
+            game:GetService("ReplicatedStorage").Remotes.Functions.BUYSD:InvokeServer(unpack(args))
+        end
+    end
+end)
+sect1:AddToggle("Auto Export", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = {},
+            [2] = "lKuXhl",
+            [3] = 1,
+            [4] = "Video_1"
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Events.Export:FireServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Save Thumbnail", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = {
+                ["Color"] = 0.758,
+                ["Pic"] = 15,
+                ["Pose"] = 1,
+                ["Arrow"] = 1
+            },
+            [2] = "Thumbnail_1"
+        }
+
+        game:GetService("ReplicatedStorage").Remotes.Events.ThumbnailEnd:FireServer(unpack(args))
+
+    end
+end)
+sect1:AddToggle("Auto Upload Video", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = "Video_1",
+            [2] = "Thumbnail_1",
+            [3] = "Video_1"
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Events.Upload:FireServer(unpack(args)) 
+        task.wait()
+        local args = {
+            [1] = "Video_1",
+            [2] = "Thumbnail_2",
+            [3] = "Video_1"
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Events.Upload:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "Video_2",
+            [2] = "Thumbnail_1",
+            [3] = "Video_1"
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Events.Upload:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "Video_2",
+            [2] = "Thumbnail_2",
+            [3] = "Video_1"
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Events.Upload:FireServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Claim Strange Package", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = "Strange Package"
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.UseItem:InvokeServer(unpack(args))
+    end
+end)
+
+
+
+sect1 = tab1:CreateSector("Buy Item", 'left')
+sect1:AddDropdown("Cameras", {'Free / 1 click'}, "Cameras are in real value", false, function(value)
+    if value == 'Free / 1 click' then
+        local args = {
+            [1] = 1,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddDropdown("Tables", {'50$ / 2 clicks', '6$ / 4 clicks', '8$ / 8 clicks', '17$ / 16 clicks', '51$ / 33 clicks', '115$ / 66 clicks', '188$ / 133 clicks', '434$ / 266 clicks', '1,458$ / 532 clicks', '3,441$ / 1,064$ clicks', '5,732$ / 2,128 clicks', '13,760$ / 4,256 clicks', '47,577$ / 8,513 clicks', '115,895$ / 17,027 clicks', '198,881$ / 34,055 clicks', '491,151$ / 68,110 clicks', '1.745M$ / 136,221 clicks', '4.37M$ / 272,442 clicks', '7.708M$ / 544,884 clicks', '19.57M$ / 1.089M clicks'}, "Tables are in real value", false, function(value)
+    if value == '50$ / 2 clicks' then
+        local args = {
+            [1] = 1,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '6$ / 4 clicks' then
+        local args = {
+            [1] = 2,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '8$ / 8 clicks' then
+        local args = {
+            [1] = 3,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '17$ / 16 clicks' then
+        local args = {
+            [1] = 4,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '51$ / 33 clicks' then
+        local args = {
+            [1] = 5,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '115$ / 66 clicks' then
+        local args = {
+            [1] = 6,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '188$ / 133 clicks' then
+        local args = {
+            [1] = 7,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '434$ / 266 clicks' then
+        local args = {
+            [1] = 8,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '1,458$ / 532 clicks' then
+        local args = {
+            [1] = 9,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '3,441$ / 1,064 clicks' then
+        local args = {
+            [1] = 10,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '5,732$ / 2,128 clicks' then
+        local args = {
+            [1] = 11,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '13,760$ / 4,256  clicks' then
+        local args = {
+            [1] = 12,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '47,577$ / 8,513 clicks' then
+        local args = {
+            [1] = 13,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '115,895$ / 17,027' then
+        local args = {
+            [1] = 14,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '198,881$ / 34,055 clicks' then
+        local args = {
+            [1] = 15,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '491,151$ / 68,110 clicks' then
+        local args = {
+            [1] = 16,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '1.745M$ / 136,221 clicks' then
+        local args = {
+            [1] = 17,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '4.37M$ / 272,442 clicks' then
+        local args = {
+            [1] = 18,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '7.708M$ / 544,884 clicks' then
+        local args = {
+            [1] = 19,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '19.57M$ / 1.089M clicks' then
+        local args = {
+            [1] = 20,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+end)
 local sect1 = tab1:CreateSector("Player", 'right')
 sect1:AddSlider("Speed", 24, 24, 100, false, function(v)
     game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
 end)
-sect1:AddSlider("Jump", 24, 24, 100, false, function(v)
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
-end)
-local sect1 = tab1:CreateSector("Teleports", 'left')
-sect1:AddDropdown("Teleports", {"Upgrades"}, "Locations", false, function(value)
-    if value == 'Upgrades' then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-98.19022369384766, 3.7174384593963623, 138.28245544433594)
-    task.wait()
-    local teleport_table = {
-    location1 = Vector3.new(-101.19022369384766, 3.7174384593963623, 138.28245544433594), -- your desired position
-}
-
-local tween_s = game:GetService('TweenService')
-local tweeninfo = TweenInfo.new(0,Enum.EasingStyle.Linear)
-
-local lp = game.Players.LocalPlayer
-
-function bypass_teleport(v)
-    if lp.Character and 
-    lp.Character:FindFirstChild('HumanoidRootPart') then
-        local cf = CFrame.new(v)
-        local a = tween_s:Create(lp.Character.HumanoidRootPart,tweeninfo,{CFrame=cf})
-        a:Play()
-        -- a.Completed:Wait()
-        -- print('Teleporting Done!')
+local sect1 = tab1:CreateSector("Teleports", 'right')
+sect1:AddDropdown("Teleports", {'House', 'Upgrades', 'Furniture', 'Moms House'}, "Locations", false, function(value)
+    if value == 'House' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(34.03352355957031, 94.44109344482422, 115.43855285644531)
+task.wait()
+function teleportTO(playerCFrame)
+    local plyr = game.Players.LocalPlayer;
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
     end
 end
-
-bypass_teleport(teleport_table.location1)
+teleportTO(game:GetService("Workspace").Houses[game.Players.LocalPlayer.Name].Door.W.CFrame)
+task.wait(0.5)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(34.03352355957031, 94.44109344482422, 115.43855285644531)
+task.wait()
+function teleportTO(playerCFrame)
+    local plyr = game.Players.LocalPlayer;
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
+    end
 end
+teleportTO(game:GetService("Workspace").Houses[game.Players.LocalPlayer.Name].Door.W.CFrame)
+end
+    if value == 'Upgrades' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-95.59042358398438, 3.743878126144409, 138.2639617919922)
+        task.wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-99.38823699951172, 3.7012012004852295, 138.21839904785156)
+    end
+    if value == 'Furniture' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-84.74411010742188, 3.7943367958068848, 48.38411331176758)
+        task.wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-87.30216979980469, 4.4917378425598145, 46.575828552246094)
+    end
+    if value == 'Moms House' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-84.44708251953125, 3.685119390487671, 227.6964569091797)
+    end
 end)
+    sect1 = tab1:CreateSector("Codes", 'right')
+sect1:AddButton("Reedem RUBY_Z", function()
+    local args = {
+        [1] = "RUBY_Z"
+    }
+    
+    game:GetService("ReplicatedStorage").Remotes.Functions.VerifyCode:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Reedem MONEYRAIN", function()
+    local args = {
+        [1] = "MONEYRAIN"
+    }
+    
+    game:GetService("ReplicatedStorage").Remotes.Functions.VerifyCode:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Reedem ICEmoneyRAIN", function()
+    local args = {
+        [1] = "ICEmoneyRAIN"
+    }
+    
+    game:GetService("ReplicatedStorage").Remotes.Functions.VerifyCode:InvokeServer(unpack(args))
+end)
+sect1:AddLabel("Need ice flor unlocked")
+sect1:AddButton("Reedem TileZ", function()
+    local args = {
+        [1] = "TileZ"
+    }
+    
+    game:GetService("ReplicatedStorage").Remotes.Functions.VerifyCode:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Reedem CoinflipICE", function()
+    local args = {
+        [1] = "CoinflipICE"
+    }
+    
+    game:GetService("ReplicatedStorage").Remotes.Functions.VerifyCode:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Reedem Coinflip", function()
+    local args = {
+        [1] = "Coinflip"
+    }
+    
+    game:GetService("ReplicatedStorage").Remotes.Functions.VerifyCode:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Reedem Verified", function()
+    local args = {
+        [1] = "Verified"
+    }
+    
+    game:GetService("ReplicatedStorage").Remotes.Functions.VerifyCode:InvokeServer(unpack(args))
+end)
+sect1:AddLabel("Verified Badge")
+sect1:AddButton("Reedem Challenges", function()
+    local args = {
+        [1] = "Challenges"
+    }
+    
+    game:GetService("ReplicatedStorage").Remotes.Functions.VerifyCode:InvokeServer(unpack(args))
+end)
+sect1:AddDropdown("Codes broken:", {'Verified', 'Challenges'}, "Verified, Challenges                     ", true, function()
+end)
+    sect1 = tab1:CreateSector("Misc", 'left')
+    sect1:AddButton("Respawn", function()
+    game.Players.LocalPlayer.Character:Destroy()
+end)
+sect1:AddButton("Run Script", function()
+    local Player = game:GetService'Players'.LocalPlayer;
+local UIS = game:GetService'UserInputService';
+UIS.InputBegan:connect(function(UserInput)
+        if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.LeftShift then
+            _G.Running = true
+                while wait(0.005) and _G.Running == true do
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame + game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame.lookVector * 0.6
+end
+        end
+end)
+UIS.InputEnded:connect(function(UserInput)
+        if UserInput.UserInputType == Enum.UserInputType.Keyboard and UserInput.KeyCode == Enum.KeyCode.LeftShift then
+                _G.Running = false
+        end
+end)
+task.wait()
+game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: LeftShift';
+        Duration = 3;
+    })
+end)
+
 -- Misc
 local sect1 = tab2:CreateSector("Misc", 'left')
 sect1:AddButton("Unload gui", function()
-    game:GetService("CoreGui")["Storm Hub | Youtube Simulator Z"]:Destroy()
+    game:GetService("CoreGui")["Youtube Simulator Z"]:Destroy()
 end)
 sect1:AddLabel("made by thrax")
 local sect1 = tab2:CreateSector("Others", 'right')
@@ -5991,6 +6347,141 @@ end)
 local sect1 = tab2:CreateSector("Misc", 'left')
 sect1:AddButton("Unload gui", function()
     game:GetService("CoreGui")["PSYCHO'S OLD FACTORY!"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 11343134438 then -- Roblox but every second you get +1 Strength
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Roblox but every second you get +1 Strength", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddToggle("Increase Strength", false, function(a)
+    aa = a
+    while aa do wait()
+        game:GetService("ReplicatedStorage").Remotes.UpdateStrength:FireServer()
+        local args = {
+            [1] = game:GetService("Players").LocalPlayer.Character.Humanoid,
+            [2] = false
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.UpdateHealth:FireServer(unpack(args))
+    end
+end)
+
+-- Player
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 300, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+-- Misc
+local sect1 = tab1:CreateSector("Misc", 'left')
+sect1:AddToggle("Tp Tool", false, function(state)
+        if state then
+        mouse = game.Players.LocalPlayer:GetMouse()
+tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = "Click Teleport"
+tool.Activated:connect(function()
+local pos = mouse.Hit+Vector3.new(0,2.5,0)
+pos = CFrame.new(pos.X,pos.Y,pos.Z)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+end)
+tool.Parent = game.Players.LocalPlayer.Backpack
+    else
+        game:GetService("Players").LocalPlayer.Backpack["Click Teleport"]:Destroy()
+        end
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Roblox but every second you get +1 Strength"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 7549229959 then -- Squid Game
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Squid Game", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+
+-- Player
+sect1 = tab1:CreateSector("Player", 'left')
+sect1:AddSlider("Speed", 16, 16, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+-- Misc
+local sect1 = tab1:CreateSector("Misc", 'left')
+sect1:AddToggle("Tp Tool", false, function(state)
+        if state then
+        mouse = game.Players.LocalPlayer:GetMouse()
+tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = "Click Teleport"
+tool.Activated:connect(function()
+local pos = mouse.Hit+Vector3.new(0,2.5,0)
+pos = CFrame.new(pos.X,pos.Y,pos.Z)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+end)
+tool.Parent = game.Players.LocalPlayer.Backpack
+    else
+        game:GetService("Players").LocalPlayer.Backpack["Click Teleport"]:Destroy()
+        end
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Squid Game"]:Destroy()
 end)
 sect1:AddLabel("made by thrax")
 sect1:AddLabel("Ui Bind: Right Ctrl")
