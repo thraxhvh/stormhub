@@ -1,0 +1,8 @@
+if game.Players.LocalPlayer.Name == '472HP' then
+game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Blacklisted';
+        Duration = 3;
+    })
+end
+else
