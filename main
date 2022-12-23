@@ -3087,6 +3087,22 @@ local Toggle = sect1:AddToggle("Auto Click", false, function(a)
 end)
 Toggle:AddKeybind(CRAP,function()
 end)
+sect1:AddToggle("Auto Rebirth", false, function(a)
+    aa = a
+    while aa do task.wait()
+        game:GetService("ReplicatedStorage").Remotes.Functions.Rebirth:InvokeServer()
+    end
+end)
+sect1:AddToggle("Auto Roll Chest", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game.Players.LocalPlayer.Tokens > 0 then
+            game:GetService("ReplicatedStorage").Remotes.Functions.GetPets:InvokeServer()
+            task.wait()
+            game:GetService("ReplicatedStorage").Remotes.Functions.SpinFinish:InvokeServer()
+        end
+    end
+end)
 sect1:AddToggle("Auto Buy Max SD", false, function(a)
     aa = a
     while aa do task.wait()
@@ -3100,66 +3116,12 @@ sect1:AddToggle("Auto Buy Max SD", false, function(a)
         end
     end
 end)
-sect1:AddToggle("Auto Export", false, function(a)
-    aa = a
-    while aa do task.wait()
-        local args = {
-            [1] = {},
-            [2] = "lKuXhl",
-            [3] = 1,
-            [4] = "Video_1"
-        }
-        
-        game:GetService("ReplicatedStorage").Remotes.Events.Export:FireServer(unpack(args))
-    end
-end)
-sect1:AddToggle("Auto Save Thumbnail", false, function(a)
-    aa = a
-    while aa do task.wait()
-        local args = {
-            [1] = {
-                ["Color"] = 0.758,
-                ["Pic"] = 15,
-                ["Pose"] = 1,
-                ["Arrow"] = 1
-            },
-            [2] = "Thumbnail_1"
-        }
-
-        game:GetService("ReplicatedStorage").Remotes.Events.ThumbnailEnd:FireServer(unpack(args))
-
-    end
-end)
 sect1:AddToggle("Auto Upload Video", false, function(a)
     aa = a
     while aa do task.wait()
         local args = {
             [1] = "Video_1",
             [2] = "Thumbnail_1",
-            [3] = "Video_1"
-        }
-        
-        game:GetService("ReplicatedStorage").Remotes.Events.Upload:FireServer(unpack(args)) 
-        task.wait()
-        local args = {
-            [1] = "Video_1",
-            [2] = "Thumbnail_2",
-            [3] = "Video_1"
-        }
-        
-        game:GetService("ReplicatedStorage").Remotes.Events.Upload:FireServer(unpack(args))
-        task.wait()
-        local args = {
-            [1] = "Video_2",
-            [2] = "Thumbnail_1",
-            [3] = "Video_1"
-        }
-        
-        game:GetService("ReplicatedStorage").Remotes.Events.Upload:FireServer(unpack(args))
-        task.wait()
-        local args = {
-            [1] = "Video_2",
-            [2] = "Thumbnail_2",
             [3] = "Video_1"
         }
         
@@ -3180,7 +3142,7 @@ end)
 
 
 sect1 = tab1:CreateSector("Buy Item", 'left')
-sect1:AddDropdown("Cameras", {'Free / 1 click'}, "Cameras are in real value", false, function(value)
+sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks', '24$ / 8 clicks', '36$ / 16 clicks', '80$ / 33 clicks', '269$ / 66 clicks', '620$ / 133 clicks', '1,020$ / 266 clicks', '2,407$ / 532 clicks', '8,193$ / 1,064 clicks', '19,670$ / 2,128 clicks', '33,283$ / 4,256 clicks', '81,075$ / 8,513 clicks', '284,295$ / 17,027 clicks', '702,087$ / 34,055 clicks', '1.221M$ / 68,110 clicks', '3.057M$ / 136,221 clicks', '11.01M$ / 272,442 clicks', '27.98M$ / 544,884 clicks'}, "Cameras are in real value", false, function(value)
     if value == 'Free / 1 click' then
         local args = {
             [1] = 1,
@@ -3189,8 +3151,152 @@ sect1:AddDropdown("Cameras", {'Free / 1 click'}, "Cameras are in real value", fa
         
         game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
     end
+    if value == '11$ / 4 clicks' then
+            local args = {
+            [1] = 2,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '24$ / 8 clicks' then
+        local args = {
+            [1] = 3,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '36$ / 16 clicks' then
+            local args = {
+            [1] = 4,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '80$ / 33 clicks' then
+            local args = {
+            [1] = 5,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '269$ / 66 clicks' then
+            local args = {
+            [1] = 6,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '620$ / 133 clicks' then
+            local args = {
+            [1] = 7,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '1,020$ / 266 clicks' then
+            local args = {
+            [1] = 8,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '2,407$ / 532 clicks' then
+            local args = {
+            [1] = 9,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '8,193$ / 1,064 clicks' then
+            local args = {
+            [1] = 10,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '19,670$ / 2,128 clicks' then
+            local args = {
+            [1] = 11,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '33,283$ / 4,256 clicks' then
+            local args = {
+            [1] = 12,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '81,075$ / 8,513 clicks' then
+            local args = {
+            [1] = 13,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '284,295$ / 17,027 clicks' then
+            local args = {
+            [1] = 14,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '702,087$ / 34,055 clicks' then
+            local args = {
+            [1] = 15,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '1.221M$ / 68,110 clicks' then
+            local args = {
+            [1] = 16,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '3.057M$ / 136,221 clicks' then
+            local args = {
+            [1] = 17,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '11.01M$ / 272,442 clicks' then
+            local args = {
+            [1] = 18,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == '27.98M$ / 544,884 clicks' then
+            local args = {
+            [1] = 19,
+            [2] = true
+        }
+        
+        game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
 end)
-sect1:AddDropdown("Tables", {'50$ / 2 clicks', '6$ / 4 clicks', '8$ / 8 clicks', '17$ / 16 clicks', '51$ / 33 clicks', '115$ / 66 clicks', '188$ / 133 clicks', '434$ / 266 clicks', '1,458$ / 532 clicks', '3,441$ / 1,064$ clicks', '5,732$ / 2,128 clicks', '13,760$ / 4,256 clicks', '47,577$ / 8,513 clicks', '115,895$ / 17,027 clicks', '198,881$ / 34,055 clicks', '491,151$ / 68,110 clicks', '1.745M$ / 136,221 clicks', '4.37M$ / 272,442 clicks', '7.708M$ / 544,884 clicks', '19.57M$ / 1.089M clicks'}, "Tables are in real value", false, function(value)
+sect1:AddDropdown("Tables", {'50$ / 2 clicks', '6$ / 4 clicks', '8$ / 8 clicks', '17$ / 16 clicks', '51$ / 33 clicks', '115$ / 66 clicks', '188$ / 133 clicks', '434$ / 266 clicks', '1,458$ / 532 clicks', '3,441$ / 1,064 clicks', '5,732$ / 2,128 clicks', '13,760$ / 4,256 clicks', '47,577$ / 8,513 clicks', '115,895$ / 17,027 clicks', '198,881$ / 34,055 clicks', '491,151$ / 68,110 clicks', '1.745M$ / 136,221 clicks', '4.37M$ / 272,442 clicks', '7.708M$ / 544,884 clicks', '19.57M$ / 1.089M clicks'}, "Tables are in real value", false, function(value)
     if value == '50$ / 2 clicks' then
         local args = {
             [1] = 1,
@@ -3279,7 +3385,7 @@ sect1:AddDropdown("Tables", {'50$ / 2 clicks', '6$ / 4 clicks', '8$ / 8 clicks',
         
         game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
     end
-    if value == '13,760$ / 4,256  clicks' then
+    if value == '13,760$ / 4,256 clicks' then
         local args = {
             [1] = 12,
             [2] = false
@@ -3295,7 +3401,7 @@ sect1:AddDropdown("Tables", {'50$ / 2 clicks', '6$ / 4 clicks', '8$ / 8 clicks',
         
         game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
     end
-    if value == '115,895$ / 17,027' then
+    if value == '115,895$ / 17,027 clicks' then
         local args = {
             [1] = 14,
             [2] = false
@@ -3390,6 +3496,8 @@ end
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-87.30216979980469, 4.4917378425598145, 46.575828552246094)
     end
     if value == 'Moms House' then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-80.2867431640625, 3.681589126586914, 221.8603515625)
+        task.wait()
         game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-84.44708251953125, 3.685119390487671, 227.6964569091797)
     end
 end)
