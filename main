@@ -3058,13 +3058,11 @@ sect1:AddButton("Rejoin", function()
     game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
 end)
 elseif game.PlaceId == 11109756592 then -- YouTube Simulator Z
-    game.StarterGui:SetCore("SendNotification", {
+game.StarterGui:SetCore("SendNotification", {
         Title = 'Storm Hub';
         Text = 'Bind: Right Ctrl';
         Duration = 3;
     })
-_G.Color = Color3.fromRGB(66, 135, 245)
-_G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
@@ -3126,6 +3124,7 @@ sect1:AddToggle("Auto Upload Video", false, function(a)
         }
         
         game:GetService("ReplicatedStorage").Remotes.Events.Upload:FireServer(unpack(args))
+        task.wait()
     end
 end)
 sect1:AddToggle("Auto Claim Strange Package", false, function(a)
