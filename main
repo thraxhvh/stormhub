@@ -1468,44 +1468,6 @@ end)
 	    Library:ToggleUI()
     end)
     
-    -- CREDITS
-    local Credits = Window:NewTab("Credits")
-    local CreditsSection = Credits:NewSection("Credits")
-    CreditsSection:NewButton("Script made by thrax", "", function()
-    end)
-elseif game.PlaceId == 2788229376 then -- Da Hood
-    loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
-    local Library = loadstring(game:HttpGet("https://raw.githubusercontent.com/xHeptc/Kavo-UI-Library/main/source.lua"))()
-    local Window = Library.CreateLib("Storm Hub | Da Hood", "Ocean")
-    
-    -- MAIN
-    local Main = Window:NewTab("Main")
-    local MainSection = Main:NewSection("Main")
-    MainSection:NewButton("No Recoil", "", function()
-                function isframework(scriptInstance)
-    if tostring(scriptInstance) == "Framework" then
-        return true
-    end
-    return false
-end
-
-function checkArgs(instance,index)
-    if tostring(instance):lower():find("camera") and tostring(index) == "CFrame" then
-        return true
-    end
-    return false
-end
-
-newindex = hookmetamethod(game, "__newindex", function(self,index,value)
-    local callingScr = getcallingscript()
-
-    if isframework(callingScr) and checkArgs(self,index) then
-       return;
-    end
-
-    return newindex(self,index,value)
-end)
-    end)
 elseif game.PlaceId == 5523851880 then -- 8 Ball Pool
         game.StarterGui:SetCore("SendNotification", {
         Title = 'Storm Hub';
@@ -3141,7 +3103,7 @@ end)
 
 
 sect1 = tab1:CreateSector("Buy Item", 'left')
-sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks', '24$ / 8 clicks', '36$ / 16 clicks', '80$ / 33 clicks', '269$ / 66 clicks', '620$ / 133 clicks', '1,020$ / 266 clicks', '2,407$ / 532 clicks', '8,193$ / 1,064 clicks', '19,670$ / 2,128 clicks', '33,283$ / 4,256 clicks', '81,075$ / 8,513 clicks', '284,295$ / 17,027 clicks', '702,087$ / 34,055 clicks', '1.221M$ / 68,110 clicks', '3.057M$ / 136,221 clicks', '11.01M$ / 272,442 clicks', '27.98M$ / 544,884 clicks'}, "Cameras are in real value", false, function(value)
+sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 clicks', '11$ / 4 clicks', '24$ / 8 clicks', '36$ / 16 clicks', '80$ / 33 clicks', '269$ / 66 clicks', '620$ / 133 clicks', '1,020$ / 266 clicks', '2,407$ / 532 clicks', '8,193$ / 1,064 clicks', '19,670$ / 2,128 clicks', '33,283$ / 4,256 clicks', '81,075$ / 8,513 clicks', '284,295$ / 17,027 clicks', '702,087$ / 34,055 clicks', '1.221M$ / 68,110 clicks', '3.057M$ / 136,221 clicks', '11.01M$ / 272,442 clicks', '27.98M$ / 544,884 clicks', 'Secret'}, "Cameras are in real value", false, function(value)
     if value == 'Free / 1 click' then
         local args = {
             [1] = 1,
@@ -3152,7 +3114,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '11$ / 4 clicks' then
             local args = {
-            [1] = 2,
+            [1] = 3,
             [2] = true
         }
         
@@ -3160,7 +3122,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '24$ / 8 clicks' then
         local args = {
-            [1] = 3,
+            [1] = 4,
             [2] = true
         }
         
@@ -3168,7 +3130,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '36$ / 16 clicks' then
             local args = {
-            [1] = 4,
+            [1] = 5,
             [2] = true
         }
         
@@ -3176,7 +3138,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '80$ / 33 clicks' then
             local args = {
-            [1] = 5,
+            [1] = 6,
             [2] = true
         }
         
@@ -3184,7 +3146,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '269$ / 66 clicks' then
             local args = {
-            [1] = 6,
+            [1] = 7,
             [2] = true
         }
         
@@ -3192,7 +3154,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '620$ / 133 clicks' then
             local args = {
-            [1] = 7,
+            [1] = 8,
             [2] = true
         }
         
@@ -3200,7 +3162,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '1,020$ / 266 clicks' then
             local args = {
-            [1] = 8,
+            [1] = 9,
             [2] = true
         }
         
@@ -3208,7 +3170,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '2,407$ / 532 clicks' then
             local args = {
-            [1] = 9,
+            [1] = 10,
             [2] = true
         }
         
@@ -3216,7 +3178,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '8,193$ / 1,064 clicks' then
             local args = {
-            [1] = 10,
+            [1] = 11,
             [2] = true
         }
         
@@ -3224,7 +3186,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '19,670$ / 2,128 clicks' then
             local args = {
-            [1] = 11,
+            [1] = 12,
             [2] = true
         }
         
@@ -3232,7 +3194,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '33,283$ / 4,256 clicks' then
             local args = {
-            [1] = 12,
+            [1] = 13,
             [2] = true
         }
         
@@ -3240,7 +3202,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '81,075$ / 8,513 clicks' then
             local args = {
-            [1] = 13,
+            [1] = 14,
             [2] = true
         }
         
@@ -3248,7 +3210,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '284,295$ / 17,027 clicks' then
             local args = {
-            [1] = 14,
+            [1] = 15,
             [2] = true
         }
         
@@ -3256,7 +3218,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '702,087$ / 34,055 clicks' then
             local args = {
-            [1] = 15,
+            [1] = 16,
             [2] = true
         }
         
@@ -3264,7 +3226,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '1.221M$ / 68,110 clicks' then
             local args = {
-            [1] = 16,
+            [1] = 17,
             [2] = true
         }
         
@@ -3272,7 +3234,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '3.057M$ / 136,221 clicks' then
             local args = {
-            [1] = 17,
+            [1] = 18,
             [2] = true
         }
         
@@ -3280,7 +3242,7 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '11.01M$ / 272,442 clicks' then
             local args = {
-            [1] = 18,
+            [1] = 19,
             [2] = true
         }
         
@@ -3288,11 +3250,16 @@ sect1:AddDropdown("Cameras", {'Free / 1 click', '4$ / 2 click', '11$ / 4 clicks'
     end
     if value == '27.98M$ / 544,884 clicks' then
             local args = {
-            [1] = 19,
+            [1] = 20,
             [2] = true
         }
         
         game:GetService("ReplicatedStorage").Remotes.Functions.BuyUpgrade:InvokeServer(unpack(args))
+    end
+    if value == 'Secret' then
+        game:GetService("ReplicatedStorage").Remotes.Functions.BST:InvokeServer()
+        task.wait()
+        game:GetService("ReplicatedStorage").Remotes.Functions.UnequipCamera:InvokeServer()
     end
 end)
 sect1:AddDropdown("Tables", {'50$ / 2 clicks', '6$ / 4 clicks', '8$ / 8 clicks', '17$ / 16 clicks', '51$ / 33 clicks', '115$ / 66 clicks', '188$ / 133 clicks', '434$ / 266 clicks', '1,458$ / 532 clicks', '3,441$ / 1,064 clicks', '5,732$ / 2,128 clicks', '13,760$ / 4,256 clicks', '47,577$ / 8,513 clicks', '115,895$ / 17,027 clicks', '198,881$ / 34,055 clicks', '491,151$ / 68,110 clicks', '1.745M$ / 136,221 clicks', '4.37M$ / 272,442 clicks', '7.708M$ / 544,884 clicks', '19.57M$ / 1.089M clicks'}, "Tables are in real value", false, function(value)
@@ -4970,103 +4937,6 @@ sect1:AddButton("Rejoin", function()
     game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
 end)
 
-elseif game.PlaceId == 6574375780 then -- Nok Piece
-    game.StarterGui:SetCore("SendNotification", {
-        Title = 'Storm Hub';
-        Text = 'Bind: Right Ctrl';
-        Duration = 3;
-    })
-_G.Color = Color3.fromRGB(66, 135, 245)
-_G.Color2 = Color3.fromRGB(66, 135, 245)
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | Nok Piece", Vector2.new(492, 598), Enum.KeyCode.RightControl)
-local tab1 = window:CreateTab("Main")
-local tab2 = window:CreateTab("Misc")
-local plr = game.Players.LocalPlayer
-local function tp(place)
-    plr.Character.HumanoidRootPart.CFrame = place
-end
-
--- Main
-local sect1 = tab1:CreateSector("Main", 'left')
-sect1 = tab1:CreateSector("Player", 'right')
-    sect1:AddSlider("Speed", 16, 16, 100, false, function(v)
-        game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
-    end)
-    sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
-        game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
-    end)
-    sect1:AddSlider("HipHeight", 0, 0, 30, false, function(v)
-        game.Players.LocalPlayer.Character.Humanoid.HipHeight = v
-    end)
-sect1 = tab1:CreateSector("Quests", 'left')
-sect1 = tab1:CreateSector("Auto Stats", 'right')
-sect1:AddToggle("Auto Strength", false, function(a)
-    aa = a
-    while aa do task.wait()
-        local args = {
-            [1] = "StrengthText",
-            [2] = 1
-        }
-        
-        game:GetService("ReplicatedStorage").UpdateStats:FireServer(unpack(args))
-    end
-end)
-sect1:AddToggle("Auto Sword", false, function(a)
-    aa = a
-    while aa do task.wait()
-        local args = {
-            [1] = "SwordText",
-            [2] = 1
-        }
-        
-        game:GetService("ReplicatedStorage").UpdateStats:FireServer(unpack(args))
-    end
-end)
-sect1:AddToggle("Auto DF", false, function(a)
-    aa = a
-    while aa do task.wait()
-        local args = {
-            [1] = "DeviLFruitText",
-            [2] = 1
-        }
-        
-        game:GetService("ReplicatedStorage").UpdateStats:FireServer(unpack(args))
-    end
-end)
-sect1:AddToggle("Auto Defense", false, function(a)
-    aa = a
-    while aa do task.wait()
-        local args = {
-            [1] = "DefenseText",
-            [2] = 1
-        }
-        
-        game:GetService("ReplicatedStorage").UpdateStats:FireServer(unpack(args))
-    end
-end)
-sect1 = tab1:CreateSector("Teleports", 'left')
-sect1:AddDropdown("Islands", {'Bandit island'}, "Choose island", false, function(value)
-    if value == 'Bandit island' then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(205.0145263671875, -78.0029067993164, -618.070556640625)
-    end
-    end)
-
-
--- Misc
-local sect1 = tab2:CreateSector("Misc", 'left')
-sect1:AddButton("Unload gui", function()
-    game:GetService("CoreGui")["Storm Hub | Nok Piece"]:Destroy()
-end)
-sect1:AddLabel("made by thrax")
-sect1:AddLabel("Ui Bind: Right Ctrl")
-local sect1 = tab2:CreateSector("Others", 'right')
-sect1:AddButton("Rejoin", function()
-    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
-end)
-
 elseif game.PlaceId == 11040063484 then -- Sword Fighters Simulator
     game.StarterGui:SetCore("SendNotification", {
         Title = 'Storm Hub';
@@ -5865,80 +5735,6 @@ sect1:AddButton("Rejoin", function()
     game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
 end)
 
-elseif game.PlaceId == 277751860 then -- Epic Minigames
-    game.StarterGui:SetCore("SendNotification", {
-        Title = 'Storm Hub';
-        Text = 'Bind: Right Ctrl';
-        Duration = 3;
-    })
-_G.Color = Color3.fromRGB(66, 135, 245)
-_G.Color2 = Color3.fromRGB(66, 135, 245)
-
-loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
-local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Epic Minigames", Vector2.new(492, 598), Enum.KeyCode.RightControl)
-local tab1 = window:CreateTab("Main")
-local tab2 = window:CreateTab("Misc")
-local plr = game.Players.LocalPlayer
-local function tp(place)
-    plr.Character.HumanoidRootPart.CFrame = place
-end
-
--- Main
-local sect1 = tab1:CreateSector("Main", 'left')
-sect1:AddToggle("Freeze", false, function(state)
-    if state then
-        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
-    else
-        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
-    end
-end)
-sect1 = tab1:CreateSector("Player", 'right')
-sect1:AddSlider("Speed", 20, 20, 100, false, function(v)
-    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
-end)
-sect1:AddSlider("Jump", 37, 37, 200, false, function(v)
-    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
-end)
-sect1 = tab1:CreateSector("Misc", 'left')
-sect1:AddButton("Bypass AntiCheat", function()
-    game:GetService("Players").LocalPlayer.PlayerScripts.IlllIli474iIIIIiiIi:Destroy()
-end)
-sect1:AddLabel("Bypass to functions work")
-sect1 = tab1:CreateSector("Turntable Scury", 'left')
-sect1:AddButton("Win", function()
-end)
-sect1 = tab1:CreateSector("Bullet Evasion", 'left')
-sect1 = tab1:CreateSector("Big Bomb Boom", 'left')
-sect1 = tab1:CreateSector("Slippery Sledding", 'left')
-sect1 = tab1:CreateSector("Crystal Clear", 'left')
-sect1 = tab1:CreateSector("Dodgeball", 'right')
-sect1 = tab1:CreateSector("Bullet Bound", 'right')
-sect1:AddButton("Win", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(118.23179626464844, 200.55474853515625, 80.64561462402344)
-end)
-sect1 = tab1:CreateSector("Round Race", 'left')
-    sect1:AddButton("Win", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-388.196044921875, -197.11471557617188, -278.36199951171875)
-end)
-sect1 = tab1:CreateSector("Just Jump", 'right')
-sect1 = tab1:CreateSector("Gear Battle", 'right')
-sect1 = tab1:CreateSector("Buttons Room", 'right')
-sect1 = tab1:CreateSector("Rocket Rumble", 'right')
-
-
--- Misc
-local sect1 = tab2:CreateSector("Misc", 'left')
-sect1:AddButton("Unload gui", function()
-    game:GetService("CoreGui")["Epic Minigames"]:Destroy()
-end)
-sect1:AddLabel("made by thrax")
-sect1:AddLabel("Ui Bind: Right Ctrl")
-local sect1 = tab2:CreateSector("Others", 'right')
-sect1:AddButton("Rejoin", function()
-    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
-end)
-
 elseif game.PlaceId == 11970456 then -- Hole in the Wall
     game.StarterGui:SetCore("SendNotification", {
         Title = 'Storm Hub';
@@ -6589,6 +6385,467 @@ end)
 local sect1 = tab2:CreateSector("Misc", 'left')
 sect1:AddButton("Unload gui", function()
     game:GetService("CoreGui")["Squid Game"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 3956818381 then -- Ninja Legends
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Ninja Legends", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+sect1 = tab1:CreateSector("Auto Farm", 'left')
+sect1:AddToggle("Auto Swing", false, function(a)
+    aa = a
+    while aa do wait()
+        local args = {
+            [1] = "swingKatana"
+        }
+        
+        game:GetService("Players").LocalPlayer.ninjaEvent:FireServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Sell", false, function(a)
+    aa = a
+    while aa do task.wait()
+        for i,v in pairs(game:GetService("Workspace").sellAreaCircles.sellAreaCircle16.circleInner:GetDescendants()) do
+            if v:IsA"TouchTransmitter" then
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+            end
+        end
+    end
+end)
+sect1:AddToggle("Auto Collect Hoops", false, function(a)
+    aa = a
+    while aa do wait()
+        local args = {
+            [1] = "useHoop",
+            [2] = workspace.Hoops.Hoop
+        }
+        
+        game:GetService("ReplicatedStorage").rEvents.hoopEvent:FireServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Collect Soul", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").soulPartsFolder.soulPart then
+        local args = {
+            [1] = "collectSoul",
+            [2] = workspace.soulPartsFolder.soulPart
+        }
+        
+        game:GetService("Players").LocalPlayer.ninjaEvent:FireServer(unpack(args))
+        end
+    end
+end)
+
+-- Player
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+sect1:AddButton("Inf Jump", function(a)
+    aa = a
+    while aa do task.wait()
+        if game.Players.LocalPlayer.multiJumpCount.Value < 999999999999999999 then
+            game.Players.LocalPlayer.multiJumpCount.Value = 999999999999999999
+        end
+    end
+end)
+sect1 = tab1:CreateSector("Auto Buy", 'left')
+sect1:AddToggle("Auto Buy Sword", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game.Players.LocalPlayer.Coins  > 0 then
+            local args = {
+                [1] = "buyAllSwords",
+                [2] = "Inner Peace Island"
+            }
+            
+            game:GetService("Players").LocalPlayer.ninjaEvent:FireServer(unpack(args))
+        end
+    end
+end)
+sect1:AddToggle("Auto Buy Belts", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game.Players.LocalPlayer.Coins.Value > 0 then
+            local args = {
+                [1] = "buyAllBelts",
+                [2] = "Inner Peace Island"
+            }
+            
+            game:GetService("Players").LocalPlayer.ninjaEvent:FireServer(unpack(args))
+        end
+    end
+end)
+sect1:AddToggle("Auto Buy Skills", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game.Players.LocalPlayer.Chi.Value > 0 then
+            local args = {
+                [1] = "buyAllSkills",
+                [2] = "Inner Peace Island"
+            }
+            
+            game:GetService("Players").LocalPlayer.ninjaEvent:FireServer(unpack(args))
+        end
+    end
+end)
+
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Ninja Legends"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 277751860 then -- Epic Minigames
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Epic Minigames", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddToggle("Freeze", false, function(state)
+    if state then
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+    else
+        game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+    end
+end)
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 20, 20, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 37, 37, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+sect1 = tab1:CreateSector("Misc", 'left')
+sect1:AddButton("Get All Badges Visual", function()
+game:GetService("Players").LocalPlayer.badges.Welcome.Value = true
+game:GetService("Players").LocalPlayer.badges.Minigamer.Value = true
+game:GetService("Players").LocalPlayer.badges.Skilled.Value = true
+game:GetService("Players").LocalPlayer.badges.Seasoned.Value = true
+game:GetService("Players").LocalPlayer.badges.Expert.Value = true
+game:GetService("Players").LocalPlayer.badges.Pro.Value = true
+game:GetService("Players").LocalPlayer.badges.Legend.Value = true
+game:GetService("Players").LocalPlayer.badges.Myth.Value = true
+game:GetService("Players").LocalPlayer.badges.Demigod.Value = true
+game:GetService("Players").LocalPlayer.badges.Epic.Value = true
+game:GetService("Players").LocalPlayer.badges.Unbeatable.Value = true
+game:GetService("Players").LocalPlayer.badges["Control freak"].Value = true
+game:GetService("Players").LocalPlayer.badges.Champion.Value = true
+game:GetService("Players").LocalPlayer.badges["Quick escape"].Value = true
+game:GetService("Players").LocalPlayer.badges["Hit the jackpot!"].Value = true
+game:GetService("Players").LocalPlayer.badges["Right on time"].Value = true
+game:GetService("Players").LocalPlayer.badges["Mission accomplished"].Value = true
+game:GetService("Players").LocalPlayer.badges["Amazing performance"].Value = true
+game:GetService("Players").LocalPlayer.badges.Proven.Value = true
+game:GetService("Players").LocalPlayer.badges["Caught speeding"].Value = true
+game:GetService("Players").LocalPlayer.badges.Untouchable.Value = true
+game:GetService("Players").LocalPlayer.badges["Spark of creation"].Value = true
+game:GetService("Players").LocalPlayer.badges["There goes dinner"].Value = true
+game:GetService("Players").LocalPlayer.badges.Leader.Value = true
+game:GetService("Players").LocalPlayer.badges["Whack-a-lot"].Value = true
+game:GetService("Players").LocalPlayer.badges.Trailblazer.Value = true
+game:GetService("Players").LocalPlayer.badges.Shopaholic.Value = true
+game:GetService("Players").LocalPlayer.badges["Secret finder"].Value = true
+game:GetService("Players").LocalPlayer.badges["Lightning bolt"].Value = true
+game:GetService("Players").LocalPlayer.badges["Only one winner"].Value = true
+game:GetService("Players").LocalPlayer.badges["High-roller"].Value = true
+game:GetService("Players").LocalPlayer.badges["Down-roller"].Value = true
+game:GetService("Players").LocalPlayer.badges["Bullet speed"].Value = true
+game:GetService("Players").LocalPlayer.badges["Back-packed"].Value = true
+game:GetService("Players").LocalPlayer.badges.Winner.Value = true
+game:GetService("Players").LocalPlayer.badges["Minigame Master"].Value = true
+game:GetService("Players").LocalPlayer.badges.Aficionado.Value = true
+game:GetService("Players").LocalPlayer.badges["Speed sledding"].Value = true
+game:GetService("Players").LocalPlayer.badges.Cannoneer.Value = true
+game:GetService("Players").LocalPlayer.badges["Remnants of the past"].Value = true
+game:GetService("Players").LocalPlayer.badges["On top of the world"].Value = true
+game:GetService("Players").LocalPlayer.badges.Partygoer.Value = true
+game:GetService("Players").LocalPlayer.badges.Superstar.Value = true
+game:GetService("Players").LocalPlayer.badges["Party animal"].Value = true
+game:GetService("Players").LocalPlayer.badges["All-nighter"].Value = true
+game:GetService("Players").LocalPlayer.badges["Star saviour"].Value = true
+game:GetService("Players").LocalPlayer.badges.Veteran.Value = true
+game:GetService("Players").LocalPlayer.badges["Monster Slayer"].Value = true
+end)
+sect1:AddToggle("Free Vip", false, function(state)
+    if state then
+    game:GetService("Players").LocalPlayer.vip.Value = true
+    else
+    game:GetService("Players").LocalPlayer.vip.Value = false
+    end
+end)
+sect1 = tab1:CreateSector("Turntable Scury", 'left')
+sect1:AddButton("Win", function()
+end)
+sect1 = tab1:CreateSector("Bullet Evasion", 'left')
+sect1 = tab1:CreateSector("Big Bomb Boom", 'left')
+sect1 = tab1:CreateSector("Slippery Sledding", 'left')
+sect1 = tab1:CreateSector("Crystal Clear", 'left')
+sect1 = tab1:CreateSector("Dodgeball", 'right')
+sect1 = tab1:CreateSector("Bullet Bound", 'right')
+sect1:AddButton("Win", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(118.23179626464844, 200.55474853515625, 80.64561462402344)
+end)
+sect1 = tab1:CreateSector("Round Race", 'left')
+    sect1:AddButton("Win", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-388.196044921875, -197.11471557617188, -278.36199951171875)
+end)
+sect1 = tab1:CreateSector("Just Jump", 'right')
+sect1 = tab1:CreateSector("Gear Battle", 'right')
+sect1 = tab1:CreateSector("Buttons Room", 'right')
+sect1 = tab1:CreateSector("Rocket Rumble", 'right')
+sect1 = tab1:CreateSector("Mining Emerald", 'right')
+sect1:AddButton("Win", function()
+    function teleportTO(playerCFrame)
+    local plyr = game.Players.LocalPlayer;
+    if plyr.Character then
+        plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
+    end
+end
+teleportTO(game:GetService("Workspace")["Manic Mining"].emerald)
+end)
+sect1 = tab1:CreateSector("Mine Crystal", 'right')
+sect1:AddToggle("Auto Mine", false, function(a)
+    aa = a
+    while aa do wait()
+        local args = {
+            [1] = "RockExplode",
+            [2] = {
+                ["object"] = workspace:FindFirstChild("Blast Mining").Spots.Spot11.Rock
+            }
+        }
+        
+        workspace:FindFirstChild("Blast Mining").Replicator:FireServer(unpack(args))
+    end
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Epic Minigames"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 5977280685 then -- Ninja Legends 2
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Ninja Legends 2", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+sect1 = tab1:CreateSector("Auto Farm", 'left')
+sect1:AddToggle("Auto Swing", false, function(a)
+    aa = a
+    while aa do task.wait(0.1)
+        local args = {
+            [1] = "swingBlade"
+        }
+
+        game:GetService("Players").LocalPlayer.saberEvent:FireServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Sell", false, function(a)
+    aa = a
+    while aa do task.wait()
+        for i,v in pairs(game:GetService("Workspace").sellAreaCircles.sellAreaCircle.circleInner:GetDescendants()) do
+            if v:IsA"TouchTransmitter" then
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+            end
+        end
+    end
+end)
+sect1:AddToggle("Auto Claim Chest", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = "Cybernetic Chest"
+        }
+        
+        game:GetService("ReplicatedStorage").rEvents.checkChestRemote:InvokeServer(unpack(args))
+        task.wait(0.1)
+        local args = {
+            [1] = "Chaos Origins Chest"
+        }
+        
+        game:GetService("ReplicatedStorage").rEvents.checkChestRemote:InvokeServer(unpack(args))
+        task.wait(0.1)
+        local args = {
+            [1] = "Rising Eternity Chest"
+        }
+        
+        game:GetService("ReplicatedStorage").rEvents.checkChestRemote:InvokeServer(unpack(args))
+        task.wait(0.1)
+        local args = {
+            [1] = "Divine Destiny Chest"
+        }
+        
+        game:GetService("ReplicatedStorage").rEvents.checkChestRemote:InvokeServer(unpack(args))
+        task.wait(0.1)
+        local args = {
+            [1] = "Dark Nebula Chest"
+        }
+        
+        game:GetService("ReplicatedStorage").rEvents.checkChestRemote:InvokeServer(unpack(args))
+    end
+end)
+
+-- Player
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+sect1:AddButton("Max Jump", function(a)
+    aa = a
+    while aa do task.wait()
+        if game.Players.LocalPlayer.multiJumpCount.Value < 50 then
+            game.Players.LocalPlayer.multiJumpCount.Value = 50
+        end
+    end
+end)
+sect1 = tab1:CreateSector("Auto Buy", 'left')
+sect1:AddToggle("Auto Buy Sword", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game.Players.LocalPlayer.Coins  > 0 then
+            local args = {
+                [1] = "buyAllItems",
+                [2] = {
+                    ["whichItems"] = "Swords",
+                    ["whichPlanet"] = "Planet Chaos"
+                }
+            }
+            
+            game:GetService("Players").LocalPlayer.saberEvent:FireServer(unpack(args))
+
+        end
+    end
+end)
+sect1:AddToggle("Auto Buy Belts", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game.Players.LocalPlayer.Coins.Value > 0 then
+            local args = {
+                [1] = "buyAllItems",
+                [2] = {
+                    ["whichItems"] = "Crystals",
+                    ["whichPlanet"] = "Planet Chaos"
+                }
+            }
+            
+            game:GetService("Players").LocalPlayer.saberEvent:FireServer(unpack(args))
+
+        end
+    end
+end)
+sect1:AddToggle("Auto Buy Skills", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game.Players.LocalPlayer.Shards.Value > 0 then
+            local args = {
+                [1] = "buyAllItems",
+                [2] = {
+                    ["whichItems"] = "Skills",
+                    ["whichPlanet"] = "Planet Chaos"
+                }
+            }
+            
+            game:GetService("Players").LocalPlayer.saberEvent:FireServer(unpack(args))
+
+        end
+    end
+end)
+sect1:AddToggle("Auto Buy Powers", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game.Players.LocalPlayer.Shards.Value > 0 then
+            local args = {
+                [1] = "buyAllItems",
+                [2] = {
+                    ["whichItems"] = "Powers",
+                    ["whichPlanet"] = "Planet Chaos"
+                }
+            }
+            
+            game:GetService("Players").LocalPlayer.saberEvent:FireServer(unpack(args))
+        end
+    end
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Ninja Legends 2"]:Destroy()
 end)
 sect1:AddLabel("made by thrax")
 sect1:AddLabel("Ui Bind: Right Ctrl")
