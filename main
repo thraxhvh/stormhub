@@ -1,5 +1,3 @@
-loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/stormhub/main/webhook"))()
-wait()
 if game.PlaceId == 155615604 then -- Prison Life
     game.StarterGui:SetCore("SendNotification", {
         Title = 'Storm Hub';
@@ -7603,6 +7601,29 @@ sect1:AddButton("Redeem All Codes", function()
         Text = 'All Codes Redeemed';
         Duration = 3;
     })
+end)
+
+-- Quest Stuff
+sect1 = tab1:CreateSector("Quest Stuff", 'right')
+sect1:AddButton("Teddy", function()
+    fireclickdetector(
+        game:GetService("Workspace").QuestStuff.Model["Colour me!"].Body.Hitbox.ClickDetector
+    )
+end)
+sect1:AddButton("Key", function()
+    fireclickdetector(
+        game:GetService("Workspace").QuestStuff.Key.Hitbox.ClickDetector
+    )
+end)
+sect1:AddButton("Fish", function()
+    fireclickdetector(
+        game:GetService("Workspace").QuestStuff.Fish.Hitbox.ClickDetector
+    )
+end)
+sect1:AddButton("Diamond", function()
+    fireclickdetector(
+        game:GetService("Workspace").QuestStuff.Diamond.Hitbox.ClickDetector
+    )
 end)
 
 -- Misc
