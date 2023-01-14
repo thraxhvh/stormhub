@@ -1,1 +1,1 @@
-oadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/stormhub/main/webhook"))()
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/stormhub/main/webhook"))()
