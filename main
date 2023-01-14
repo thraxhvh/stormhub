@@ -7602,6 +7602,11 @@ sect1:AddButton("Redeem All Codes", function()
         Duration = 3;
     })
 end)
+sect1:AddButton("Code", function()
+    game:GetService("ReplicatedStorage").Events.GetMyCode:InvokeServer()
+    task.wait(0.1)
+    game:GetService("ReplicatedStorage").Events.ClaimCodeRewards:InvokeServer()
+end)
 
 -- Quest Stuff
 sect1 = tab1:CreateSector("Quest Stuff", 'right')
