@@ -13,6 +13,7 @@
 / 24/01/2023 /
 [+] Script
   - Game added: Nuke Simulator
+  - Game added: Hacker Tycoon
 [+] Busy Business
   - Auto Farm
     - Updated
@@ -20,3 +21,24 @@
   - Sections removed
 [+] Nuke Simulator
   - Added eggs / silos
+
+/ 25/01/2023 /
+[+] Script
+  - Game added: Farm Factory Tycoon
+  
+[+] Nuke Simulator
+  - Auto Farm removed
+  - Auto Collect
+    - Updated ( should be better now )
+    - Prob another version
+  - Worlds
+    - Added all worlds of the game to buy
+  - Added more eggs, normal / golds
+  
+[+] Farm Factory Tycoon
+  - Auto Farm Updated
+    - Now work for all plots
+  - Gold egg
+    - Added for premium / gems
+  - No lag now ( i think )
+  
