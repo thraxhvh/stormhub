@@ -2917,7 +2917,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | Build A Boat For Treasure", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local window = library:CreateWindow("Build A Boat For Treasure", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
@@ -2927,112 +2927,85 @@ end
 
 -- Main
 local sect1 = tab1:CreateSector("Main", 'left')
-sect1:AddButton("Auto Farm", function()
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-48.51678466796875, 45.55967330932617, -89.11919403076172)
-task.wait(0.1)
-    local teleport_table = {
-    location1 = Vector3.new(-48.150936126708984, 39.39284133911133, 8725.5146484375), -- your desired position
-}
-
-local tween_s = game:GetService('TweenService')
-local tweeninfo = TweenInfo.new(5,Enum.EasingStyle.Linear)
-
-local lp = game.Players.LocalPlayer
-
-function bypass_teleport(v)
-    if lp.Character and 
-    lp.Character:FindFirstChild('HumanoidRootPart') then
-        local cf = CFrame.new(v)
-        local a = tween_s:Create(lp.Character.HumanoidRootPart,tweeninfo,{CFrame=cf})
-        a:Play()
-        -- a.Completed:Wait()
-        -- print('Teleporting Done!')
-    end
-end
-
-bypass_teleport(teleport_table.location1)
-task.wait(5)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-68.7127685546875, -310.3124084472656, 8784.208984375)
-task.wait()
-    local teleport_table = {
-    location1 = Vector3.new(-56.23459243774414, -360.40423583984375, 9486.35546875), -- your desired position
-}
-
-local tween_s = game:GetService('TweenService')
-local tweeninfo = TweenInfo.new(5,Enum.EasingStyle.Linear)
-
-local lp = game.Players.LocalPlayer
-
-function bypass_teleport(v)
-    if lp.Character and 
-    lp.Character:FindFirstChild('HumanoidRootPart') then
-        local cf = CFrame.new(v)
-        local a = tween_s:Create(lp.Character.HumanoidRootPart,tweeninfo,{CFrame=cf})
-        a:Play()
-        -- a.Completed:Wait()
-        -- print('Teleporting Done!')
-    end
-end
-
-bypass_teleport(teleport_table.location1)
-task.wait(5)
-workspace.ClaimRiverResultsGold:FireServer()
-end)
 sect1:AddToggle("Auto Farm", false, function(state)
-if state then
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-48.51678466796875, 45.55967330932617, -89.11919403076172)
-task.wait(0.1)
-    local teleport_table = {
-    location1 = Vector3.new(-48.150936126708984, 39.39284133911133, 8725.5146484375), -- your desired position
+    if state then
+    -- // Custom Settings
+getgenv().TreasureAutoFarm = {
+    Enabled = true, -- // Toggle the auto farm on and off
+    Teleport = 1, -- // How fast between each teleport between the stages and stuff
+    TimeBetweenRuns = 1 -- // How long to wait until it goes to the next run
 }
 
-local tween_s = game:GetService('TweenService')
-local tweeninfo = TweenInfo.new(5,Enum.EasingStyle.Linear)
+-- // Services
+local Players = game:GetService("Players")
+local Workspace = game:GetService("Workspace")
+local Lighting = game:GetService("Lighting")
 
-local lp = game.Players.LocalPlayer
+-- // Vars
+local LocalPlayer = Players.LocalPlayer
 
-function bypass_teleport(v)
-    if lp.Character and 
-    lp.Character:FindFirstChild('HumanoidRootPart') then
-        local cf = CFrame.new(v)
-        local a = tween_s:Create(lp.Character.HumanoidRootPart,tweeninfo,{CFrame=cf})
-        a:Play()
-        -- a.Completed:Wait()
-        -- print('Teleporting Done!')
+-- // Goes through all of the stages
+local autoFarm = function(currentRun)
+    -- // Variables
+    local Character = LocalPlayer.Character
+    local NormalStages = Workspace.BoatStages.NormalStages
+
+    -- // Go to each stage thing
+    for i = 1, 10 do
+        local Stage = NormalStages["CaveStage" .. i]
+        local DarknessPart = Stage:FindFirstChild("DarknessPart")
+
+        if (DarknessPart) then
+            -- // Teleport to next stage
+            print("Teleporting to next stage: Stage " .. i)
+            Character.HumanoidRootPart.CFrame = DarknessPart.CFrame
+
+            -- // Create a temp part under you
+            local Part = Instance.new("Part", LocalPlayer.Character)
+            Part.Anchored = true
+            Part.Position = LocalPlayer.Character.HumanoidRootPart.Position - Vector3.new(0, 6, 0)
+
+            -- // Wait and remove temp part
+            wait(getgenv().TreasureAutoFarm.Teleport)
+            Part:Destroy()
+        end
+    end
+
+    -- // Go to end
+    print("Teleporting to the end")
+    repeat wait()
+        Character.HumanoidRootPart.CFrame = NormalStages.TheEnd.GoldenChest.Trigger.CFrame
+    until Lighting.ClockTime ~= 14
+
+    -- // Wait until you have respawned
+    local Respawned = false
+    local Connection
+    Connection = LocalPlayer.CharacterAdded:Connect(function()
+        Respawned = true
+        Connection:Disconnect()
+    end)
+
+    repeat wait() until Respawned
+    wait(getgenv().TreasureAutoFarm.TimeBetweenRuns)
+    print("Auto Farm: Run " .. currentRun .. " finished")
+end
+
+-- // Whilst the autofarm is enable, constantly do it
+local autoFarmRun = 1
+while wait() do
+    if (getgenv().TreasureAutoFarm.Enabled) then
+        print("Initialising Auto Farm: Run " .. autoFarmRun)
+        autoFarm(autoFarmRun)
+        autoFarmRun = autoFarmRun + 1
     end
 end
-
-bypass_teleport(teleport_table.location1)
-task.wait(5)
-    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-68.7127685546875, -310.3124084472656, 8784.208984375)
-task.wait()
-    local teleport_table = {
-    location1 = Vector3.new(-56.23459243774414, -360.40423583984375, 9486.35546875), -- your desired position
-}
-
-local tween_s = game:GetService('TweenService')
-local tweeninfo = TweenInfo.new(5,Enum.EasingStyle.Linear)
-
-local lp = game.Players.LocalPlayer
-
-function bypass_teleport(v)
-    if lp.Character and 
-    lp.Character:FindFirstChild('HumanoidRootPart') then
-        local cf = CFrame.new(v)
-        local a = tween_s:Create(lp.Character.HumanoidRootPart,tweeninfo,{CFrame=cf})
-        a:Play()
-        -- a.Completed:Wait()
-        -- print('Teleporting Done!')
-    end
+else
+    getgenv().TreasureAutoFarm = {
+        Enabled = off, -- // Toggle the auto farm on and off
+        Teleport = 2, -- // How fast between each teleport between the stages and stuff
+        TimeBetweenRuns = 1 -- // How long to wait until it goes to the next run
+    }
 end
-
-bypass_teleport(teleport_table.location1)
-task.wait(5)
-workspace.ClaimRiverResultsGold:FireServer()
-end
-end)
-sect1:AddButton("Respawn", function()
-    game.Players.LocalPlayer.Character:Destroy()
 end)
 sect1 = tab1:CreateSector("Player", 'right')
 sect1:AddSlider("Speed", 16, 16, 100, false, function(v)
@@ -3041,15 +3014,12 @@ end)
 sect1:AddSlider("Jump", 50, 50, 200, false, function(v)
     game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
 end)
-sect1:AddSlider("HipHeight", 2, 2, 50, false, function(v)
-    game.Players.LocalPlayer.Character.Humanoid.HipHeight = v
-end)
 
 
 -- Misc
 local sect1 = tab2:CreateSector("Misc", 'left')
 sect1:AddButton("Unload gui", function()
-    game:GetService("CoreGui")["Storm Hub | Build A Boat For Treasure"]:Destroy()
+    game:GetService("CoreGui")["Build A Boat For Treasure"]:Destroy()
 end)
 sect1:AddLabel("made by thrax")
 sect1:AddLabel("Ui Bind: Right Ctrl")
@@ -4110,7 +4080,7 @@ _G.Color2 = Color3.fromRGB(66, 135, 245)
 
 loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
 local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
-local window = library:CreateWindow("Storm Hub | making scam calls to save your best friend", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local window = library:CreateWindow("making scam calls to save your best friend", Vector2.new(492, 598), Enum.KeyCode.RightControl)
 local tab1 = window:CreateTab("Main")
 local tab2 = window:CreateTab("Misc")
 local plr = game.Players.LocalPlayer
@@ -4183,7 +4153,7 @@ end)
 -- Misc
 local sect1 = tab2:CreateSector("Misc", 'left')
 sect1:AddButton("Unload gui", function()
-    game:GetService("CoreGui")["Storm Hub | making scam calls to save your best friend"]:Destroy()
+    game:GetService("CoreGui")["making scam calls to save your best friend"]:Destroy()
 end)
 sect1:AddLabel("made by thrax")
 local sect1 = tab2:CreateSector("Others", 'right')
@@ -7630,6 +7600,161 @@ sect1:AddButton("Diamond", function()
         game:GetService("Workspace").QuestStuff.Diamond.Hitbox.ClickDetector
     )
 end)
+sect1 = tab1:CreateSector("Teleports", 'left')
+sect1:AddButton("Plot Shop", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(-127.74193572998047, 6.715226650238037, 91.44300079345703)
+end)
+
+-- Plots
+sect1 = tab1:CreateSector("Plots", 'right')
+sect1:AddButton("Show all buttons", function()
+    game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.qdr.SCashBuy.Visible = true
+    game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.qdr.CashBuy.Visible = true
+    game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.middl.SCashBuy.Visible = true
+    game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.middl.CashBuy.Visible = true
+    game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.trd.CashBuy.Visible = true
+    game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.trd.SCashBuy.Visible = true
+end)
+sect1:AddLabel("Buy plots with Cash")
+sect1:AddButton("Plot 2 | 1T Cash", function()
+    if game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.middl.Owned.Visible == true then
+        game.StarterGui:SetCore("SendNotification", {
+            Title = 'Storm Hub';
+            Text = 'You already have this plot';
+            Duration = 3;
+        })
+    elseif game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.middl.Owned.Visible == false then
+        if game:GetService("Players").LocalPlayer.leaderstats.Cash.Value > 1000000000000 then
+            game.StarterGui:SetCore("SendNotification", {
+                Title = 'Storm Hub';
+                Text = 'Plot bought with 1T Cash';
+                Duration = 3;
+               })
+            elseif game:GetService("Players").LocalPlayer.leaderstats.Cash.Value < 1000000000000 then
+                    game.StarterGui:SetCore("SendNotification", {
+                       Title = 'Storm Hub';
+                        Text = 'You dont have money';
+                        Duration = 3;
+                    })
+                end
+            end
+        end)
+sect1:AddButton("Plot 3 | 10T Cash", function()
+    if game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.trd.Owned.Visible == true then
+        game.StarterGui:SetCore("SendNotification", {
+            Title = 'Storm Hub';
+            Text = 'You already have this plot';
+            Duration = 3;
+        })
+    elseif game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.trd.Owned.Visible == false then
+        if game:GetService("Players").LocalPlayer.leaderstats.Cash.Value > 10000000000000 then
+            game.StarterGui:SetCore("SendNotification", {
+                Title = 'Storm Hub';
+                Text = 'Plot bought with 10T Cash';
+                Duration = 3;
+            })
+        elseif game:GetService("Players").LocalPlayer.leaderstats.Cash.Value < 10000000000000 then
+            game.StarterGui:SetCore("SendNotification", {
+                Title = 'Storm Hub';
+                Text = 'You dont have money';
+                Duration = 3;
+            })
+        end
+    end
+end)
+sect1:AddButton("Plot 4 | 500T Cash", function()
+    if game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.qdr.Owned.Visible == true then
+        game.StarterGui:SetCore("SendNotification", {
+            Title = 'Storm Hub';
+            Text = 'You already have this plot';
+            Duration = 3;
+        })
+    elseif game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.qdr.Owned.Visible == false then
+        if game:GetService("Players").LocalPlayer.leaderstats.Cash.Value > 500000000000000 then
+            game.StarterGui:SetCore("SendNotification", {
+                Title = 'Storm Hub';
+                Text = 'Plot bought with 500T Cash';
+                Duration = 3;
+            })
+        elseif game:GetService("Players").LocalPlayer.leaderstats.Cash.Value < 500000000000000 then
+            game.StarterGui:SetCore("SendNotification", {
+                Title = 'Storm Hub';
+                Text = 'You dont have money';
+                Duration = 3;
+            })
+        end
+    end
+end)
+sect1:AddLabel("Buy plots with SCash")
+sect1:AddButton("Plot 2 | 2M SCash", function()
+    if game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.middl.Owned.Visible == true then
+        game.StarterGui:SetCore("SendNotification", {
+            Title = 'Storm Hub';
+            Text = 'You already have this plot';
+            Duration = 3;
+        })
+    elseif game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.middl.Owned.Visible == false then
+        if game:GetService("Players").LocalPlayer.leaderstats.SCash.Value > 2000000 then
+            game.StarterGui:SetCore("SendNotification", {
+                Title = 'Storm Hub';
+                Text = 'Plot bought with 2M SCash';
+                Duration = 3;
+               })
+            elseif game:GetService("Players").LocalPlayer.leaderstats.SCash.Value < 2000000 then
+                    game.StarterGui:SetCore("SendNotification", {
+                       Title = 'Storm Hub';
+                        Text = 'You dont have money';
+                        Duration = 3;
+                    })
+                end
+            end
+        end)
+sect1:AddButton("Plot 3 | 20M SCash", function()
+    if game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.trd.Owned.Visible == true then
+        game.StarterGui:SetCore("SendNotification", {
+            Title = 'Storm Hub';
+            Text = 'You already have this plot';
+            Duration = 3;
+        })
+    elseif game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.trd.Owned.Visible == false then
+        if game:GetService("Players").LocalPlayer.leaderstats.SCash.Value > 20000000 then
+            game.StarterGui:SetCore("SendNotification", {
+                Title = 'Storm Hub';
+                Text = 'Plot bought with 10T Cash';
+                Duration = 3;
+            })
+        elseif game:GetService("Players").LocalPlayer.leaderstats.SCash.Value < 20000000 then
+            game.StarterGui:SetCore("SendNotification", {
+                Title = 'Storm Hub';
+                Text = 'You dont have money';
+                Duration = 3;
+            })
+        end
+    end
+end)
+sect1:AddButton("Plot 4 | 1B SCash", function()
+    if game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.qdr.Owned.Visible == true then
+        game.StarterGui:SetCore("SendNotification", {
+            Title = 'Storm Hub';
+            Text = 'You already have this plot';
+            Duration = 3;
+        })
+    elseif game:GetService("Players").LocalPlayer.PlayerGui.PlotShop.Frame.Frame.qdr.Owned.Visible == false then
+        if game:GetService("Players").LocalPlayer.leaderstats.SCash.Value > 1000000000 then
+            game.StarterGui:SetCore("SendNotification", {
+                Title = 'Storm Hub';
+                Text = 'Plot bought with 500T Cash';
+                Duration = 3;
+            })
+        elseif game:GetService("Players").LocalPlayer.leaderstats.SCash.Value < 1000000000 then
+            game.StarterGui:SetCore("SendNotification", {
+                Title = 'Storm Hub';
+                Text = 'You dont have money';
+                Duration = 3;
+            })
+        end
+    end
+end)
 
 -- Misc
 local sect1 = tab2:CreateSector("Misc", 'left')
@@ -7644,6 +7769,7 @@ sect1:AddButton("Rejoin", function()
 end)
 
 elseif game.PlaceId == 142823291 then -- Murder Mystery 2 / MM2
+
     game.StarterGui:SetCore("SendNotification", {
         Title = 'Storm Hub';
         Text = 'Bind: Right Ctrl';
@@ -7691,7 +7817,7 @@ sect1:AddToggle("Notify when gun is dropped", false, function(a)
     end
 end)
 
-sect1:AddToggle("Loop Run ( Speed 40 )", false, function(state)
+local r = sect1:AddToggle("Loop Run ( Speed 40 )", false, function(state)
     if state then
         getgenv().A = true
         while getgenv().A == true do task.wait()
@@ -7703,6 +7829,9 @@ sect1:AddToggle("Loop Run ( Speed 40 )", false, function(state)
         game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 16
     end
 end)
+r:AddKeybind(CRAP,function()
+end)
+
 sect1:AddButton("Toggle Run", function()
     local Player = game:GetService'Players'.LocalPlayer;
     local UIS = game:GetService'UserInputService';
@@ -7726,74 +7855,185 @@ sect1:AddButton("Toggle Run", function()
 
 -- Auto Farm
 sect1 = tab1:CreateSector("Auto Farm", 'right')
-sect1:AddToggle("Fast Farm ( prob kick )", false, function(a)
+sect1:AddLabel("Safe Auto Farm")
+sect1:AddToggle("Workshop", false, function(a)
     aa = a
     while aa do task.wait()
         if game:GetService("Workspace").Workshop.CoinContainer["Coin_Server"].Coin.Coin then
-            function teleportTO(playerCFrame)
-                local plyr = game.Players.LocalPlayer;
-                if plyr.Character then
-                    plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
-                end
-            end
-            teleportTO(game:GetService("Workspace").Workshop.CoinContainer["Coin_Server"].Coin.Coin.CFrame)
-        elseif game:GetService("Workspace").LogCabin.CoinContainer["Coin_Server"].Coin.Coin then
-            function teleportTO(playerCFrame)
-                local plyr = game.Players.LocalPlayer;
-                if plyr.Character then
-                    plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
-                end
-            end
-            teleportTO(game:GetService("Workspace").LogCabin.CoinContainer["Coin_Server"].Coin.Coin.CFrame)
-        elseif game:GetService("Workspace").PoliceStation.CoinContainer["Coin_Server"].Coin.Coin then
-            function teleportTO(playerCFrame)
-                local plyr = game.Players.LocalPlayer;
-                if plyr.Character then
-                    plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
-                end
-            end
-            teleportTO(game:GetService("Workspace").PoliceStation.CoinContainer["Coin_Server"].Coin.Coin.CFrame)
-        elseif game:GetService("Workspace").nSOffice.CoinContainer["Coin_Server"].Coin.Coin then
-            function teleportTO(playerCFrame)
-                local plyr = game.Players.LocalPlayer;
-                if plyr.Character then
-                    plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
-                end
-            end
-            teleportTO(game:GetService("Workspace").nSOffice.CoinContainer["Coin_Server"].Coin.Coin.CFrame)
-        elseif game:GetService("Workspace").MilBase.CoinContainer["Coin_Server"].Coin.Coin then
-            function teleportTO(playerCFrame)
-                local plyr = game.Players.LocalPlayer;
-                if plyr.Character then
-                    plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
-                end
-            end
-            teleportTO(game:GetService("Workspace").MilBase.CoinContainer["Coin_Server"].Coin.Coin.CFrame)
-        elseif game:GetService("Workspace").Hotel.CoinContainer["Coin_Server"].Coin.Coin then
-            function teleportTO(playerCFrame)
-                local plyr = game.Players.LocalPlayer;
-                if plyr.Character then
-                    plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
-                end
-            end
-            teleportTO(game:GetService("Workspace").Hotel.CoinContainer["Coin_Server"].Coin.Coin.CFrame)
+            local New_CFrame = game:GetService("Workspace").Workshop.CoinContainer["Coin_Server"].Coin.Coin.CFrame
+
+            local ts = game:GetService('TweenService')
+            local char = game.Players.LocalPlayer.Character
+
+            local part = char.HumanoidRootPart
+            local ti = TweenInfo.new(1, Enum.EasingStyle.Linear)
+            local tp = {CFrame = New_CFrame}
+            ts:Create(part, ti, tp):Play()
         end
     end
 end)
-sect1:AddToggle("Safe Auto Farm", false, function(a)
+sect1:AddToggle("Log Cabin", false, function(a)
     aa = a
     while aa do task.wait()
-        local New_CFrame = game:GetService("Workspace").MilBase.CoinContainer["Coin_Server"].Coin.Coin.CFrame
+        if game:GetService("Workspace").LogCabin.CoinContainer["Coin_Server"].Coin.Coin then
+            local New_CFrame = game:GetService("Workspace").LogCabin.CoinContainer["Coin_Server"].Coin.Coin.CFrame
 
-local ts = game:GetService('TweenService')
-local char = game.Players.LocalPlayer.Character
+            local ts = game:GetService('TweenService')
+            local char = game.Players.LocalPlayer.Character
 
-local part = char.HumanoidRootPart
-local ti = TweenInfo.new(1, Enum.EasingStyle.Linear)
-local tp = {CFrame = New_CFrame}
-ts:Create(part, ti, tp):Play()
+            local part = char.HumanoidRootPart
+            local ti = TweenInfo.new(1, Enum.EasingStyle.Linear)
+            local tp = {CFrame = New_CFrame}
+            ts:Create(part, ti, tp):Play()
+        end
     end
 end)
+sect1:AddToggle("Police Station", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").PoliceStation.CoinContainer["Coin_Server"].Coin.Coin then
+            local New_CFrame = game:GetService("Workspace").PoliceStation.CoinContainer["Coin_Server"].Coin.Coin.CFrame
+
+            local ts = game:GetService('TweenService')
+            local char = game.Players.LocalPlayer.Character
+
+            local part = char.HumanoidRootPart
+            local ti = TweenInfo.new(1, Enum.EasingStyle.Linear)
+            local tp = {CFrame = New_CFrame}
+            ts:Create(part, ti, tp):Play()
+        end
+    end
+end)
+sect1:AddToggle("nSOffice", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").nSOffice.CoinContainer["Coin_Server"].Coin.Coin then
+            local New_CFrame = game:GetService("Workspace").nSOffice.CoinContainer["Coin_Server"].Coin.Coin.CFrame
+            
+            local ts = game:GetService('TweenService')
+            local char = game.Players.LocalPlayer.Character
+    
+            local part = char.HumanoidRootPart
+            local ti = TweenInfo.new(1, Enum.EasingStyle.Linear)
+            local tp = {CFrame = New_CFrame}
+            ts:Create(part, ti, tp):Play()
+        end
+    end
+end)
+sect1:AddToggle("Mil Base", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").MilBase.CoinContainer["Coin_Server"].Coin.Coin then
+            local New_CFrame = game:GetService("Workspace").MilBase.CoinContainer["Coin_Server"].Coin.Coin.CFrame
+    
+            local ts = game:GetService('TweenService')
+            local char = game.Players.LocalPlayer.Character
+    
+            local part = char.HumanoidRootPart
+            local ti = TweenInfo.new(1, Enum.EasingStyle.Linear)
+            local tp = {CFrame = New_CFrame}
+        
+            ts:Create(part, ti, tp):Play()
+        end
+    end
+end)
+sect1:AddToggle("Hotel", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").Hotel.CoinContainer["Coin_Server"].Coin.Coin then
+            local New_CFrame = game:GetService("Workspace").Hotel.CoinContainer["Coin_Server"].Coin.Coin.CFrame
+            
+            local ts = game:GetService('TweenService')
+            local char = game.Players.LocalPlayer.Character
+            
+           local part = char.HumanoidRootPart
+           local ti = TweenInfo.new(1, Enum.EasingStyle.Linear)
+           local tp = {CFrame = New_CFrame}
+            ts:Create(part, ti, tp):Play()
+        end
+    end
+end)
+sect1:AddToggle("Ice Castle", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").IceCastle.CoinContainer["Coin_Server"].Coin.Coin then
+            local New_CFrame = game:GetService("Workspace").IceCastle.CoinContainer["Coin_Server"].Coin.Coin.CFrame
+            
+            local ts = game:GetService('TweenService')
+            local char = game.Players.LocalPlayer.Character
+            
+            local part = char.HumanoidRootPart
+            local ti = TweenInfo.new(1, Enum.EasingStyle.Linear)
+            local tp = {CFrame = New_CFrame}
+            ts:Create(part, ti, tp):Play()
+        end
+    end
+end)
+sect1:AddToggle("Factory", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").Factory.CoinContainer["Coin_Server"].Coin.Coin then
+            local New_CFrame = game:GetService("Workspace").Factory.CoinContainer["Coin_Server"].Coin.Coin.CFrame
+        
+            local ts = game:GetService('TweenService')
+            local char = game.Players.LocalPlayer.Character
+    
+            local part = char.HumanoidRootPart
+            local ti = TweenInfo.new(1, Enum.EasingStyle.Linear)
+            local tp = {CFrame = New_CFrame}
+            ts:Create(part, ti, tp):Play()
+        end
+    end
+end)
+sect1:AddToggle("Hospital 3", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").Hospital3.CoinContainer["Coin_Server"].Coin.Coin then
+            local New_CFrame = game:GetService("Workspace").Hospital3.CoinContainer["Coin_Server"].Coin.Coin.CFrame
+            
+            local ts = game:GetService('TweenService')
+            local char = game.Players.LocalPlayer.Character
+            
+            local part = char.HumanoidRootPart
+            local ti = TweenInfo.new(1, Enum.EasingStyle.Linear)
+            local tp = {CFrame = New_CFrame}
+            ts:Create(part, ti, tp):Play()
+        end
+    end
+end)
+sect1:AddToggle("Station", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").Station.CoinContainer["Coin_Server"].Coin.Coin then
+            local New_CFrame = game:GetService("Workspace").Station.CoinContainer["Coin_Server"].Coin.Coin.CFrame
+            
+            local ts = game:GetService('TweenService')
+            local char = game.Players.LocalPlayer.Character
+            
+            local part = char.HumanoidRootPart
+            local ti = TweenInfo.new(1, Enum.EasingStyle.Linear)
+            local tp = {CFrame = New_CFrame}
+            ts:Create(part, ti, tp):Play()
+        end
+    end
+end)
+sect1:AddToggle("Office 3", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").Office3.CoinContainer["Coin_Server"].Coin.Coin then
+            local New_CFrame = game:GetService("Workspace").Office3.CoinContainer["Coin_Server"].Coin.Coin.CFrame
+            
+            local ts = game:GetService('TweenService')
+            local char = game.Players.LocalPlayer.Character
+            
+            local part = char.HumanoidRootPart
+            local ti = TweenInfo.new(1, Enum.EasingStyle.Linear)
+            local tp = {CFrame = New_CFrame}
+            ts:Create(part, ti, tp):Play()
+        end
+    end
+end)
+
 
 -- Player
 sect1 = tab1:CreateSector("Player", 'left')
@@ -7806,10 +8046,8 @@ end)
 
 -- Gui
 sect1 = tab1:CreateSector("Gui", 'right')
-sect1:AddDropdown("Open Gui", {'Christmas'}, "", false, function(value)
-    if value == 'Christmas' then
-        game:GetService("Players").LocalPlayer.PlayerGui.CrossPlatform.Christmas2022.Main.Visible = true
-    end
+sect1:AddButton("Christmas", function()
+    game:GetService("Players").LocalPlayer.PlayerGui.CrossPlatform.Christmas2022.Main.Visible = true
 end)
 
 -- Event
@@ -7824,6 +8062,133 @@ sect1:AddToggle("Auto Buy Tier", false, function(a)
         game:GetService("ReplicatedStorage").Christmas2022Events.BuyTiers:FireServer(unpack(args))
     end
 end)
+sect1:AddToggle("Auto Claim", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = "1"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "2"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "3"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "4"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "5"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "6"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "7"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "8"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "9"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "10"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "11"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "12"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "13"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "14"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "15"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "16"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "17"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "18"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "19"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        local args = {
+            [1] = "20"
+        }
+
+        game:GetService("ReplicatedStorage").Christmas2022Events.ClaimReward:FireServer(unpack(args))
+        task.wait()
+        
+    end
+end)
+
 
 -- Visuals
 sect1 = tab1:CreateSector("Visuals", 'right')
@@ -8233,6 +8598,2057 @@ sect1:AddButton("Unload gui", function()
 end)
 sect1:AddLabel("made by thrax")
 sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 7606302010 then -- YoYo Simulator
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("YoYo Simulator", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+local a = sect1:AddToggle("Auto Click", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = game:GetService("Players").LocalPlayer
+        }
+
+        game:GetService("ReplicatedStorage").GameEvents.ToolEvents.ToolEvent:FireServer(unpack(args))
+    end
+end)
+a:AddKeybind(CRAP,function()
+end)
+sect1:AddToggle("Auto Sell", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Players").LocalPlayer.ClientData.BackpackStorage.Value > '0' then
+            local args = {
+                [1] = "Home",
+                [2] = game:GetService("Players").LocalPlayer
+            }
+
+            game:GetService("ReplicatedStorage").GameEvents.SellEvent:FireServer(unpack(args))
+        end
+    end
+end)
+sect1:AddToggle("Auto Equip Best Pets", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        game:GetService("ReplicatedStorage").GameEvents.PetEvents.EquipBestPets:FireServer()
+    end
+end)
+
+-- Players
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 20, 20, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 37, 37, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+-- Auto Buy
+sect1 = tab1:CreateSector("Auto Buy", 'left')
+sect1:AddToggle("Auto Buy YoYo", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = game:GetService("Players").LocalPlayer
+        }
+
+        game:GetService("ReplicatedStorage").GameEvents.ToolEvents.BuyAllTools:FireServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Buy Backpack", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = game:GetService("Players").LocalPlayer
+        }
+
+        game:GetService("ReplicatedStorage").GameEvents.BackpackEvents.BuyAllBackpacks:FireServer(unpack(args))
+    end
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["YoYo Simulator"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 6403373529 then -- Slap Battles
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Slap Battles", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddButton("Die", false, function()
+    local args = {
+        [  1] = game:GetService("Players").LocalPlayer.Character,
+        [2] = false
+    }
+
+    game:GetService("ReplicatedStorage").HumanoidDied:FireServer(unpack(args))
+end)
+
+-- Gloves
+sect1 = tab1:CreateSector("Gloves", 'right')
+sect1:AddButton("Rock ( Diamond Glove )", function()
+    game:GetService("ReplicatedStorage").Rockmode:FireServer()
+end)
+
+-- Teleports
+sect1 = tab1:CreateSector("Teleports", 'left')
+sect1:AddButton("Default Only Arena", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(122.22811126708984, 359.9842834472656, -0.659048318862915)
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Slap Battles"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 9015014224 then -- Slap Battles No One Shot Gloves
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Slap Battles No One Shot Gloves", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddButton("Die", false, function()
+    local args = {
+        [  1] = game:GetService("Players").LocalPlayer.Character,
+        [2] = false
+    }
+
+    game:GetService("ReplicatedStorage").HumanoidDied:FireServer(unpack(args))
+end)
+sect1:AddToggle("Dont Die Fallig", false, function(state)
+    if state then
+        game:GetService("Workspace").dedBarrier.Transparency = 0
+        game:GetService("Workspace").dedBarrier.CanCollide = true
+    else
+        game:GetService("Workspace").dedBarrier.Transparency = 1
+        game:GetService("Workspace").dedBarrier.CanCollide = false
+    end
+end)
+
+-- Gloves
+sect1 = tab1:CreateSector("Gloves", 'right')
+sect1:AddButton("Rock ( Diamond Glove )", function()
+    game:GetService("ReplicatedStorage").Rockmode:FireServer()
+end)
+
+-- Teleports
+sect1 = tab1:CreateSector("Teleports", 'left')
+sect1:AddButton("Default Only Arena", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(122.22811126708984, 359.9842834472656, -0.659048318862915)
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Slap Battles No One Shot Gloves"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 11400511154 then -- Monkey Tycoon
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Monkey Tycoon", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddButton("Collect Bananas", function()
+    function teleportTO(playerCFrame)
+            local plyr = game.Players.LocalPlayer;
+            if plyr.Character then
+                plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
+            end
+        end
+        teleportTO(game:GetService("Workspace").Drops["Dropper_Drop"].CFrame)
+    end)
+sect1:AddToggle("Auto Collect Bananas", false, function(value)
+    local toggle = value
+        while toggle do wait()
+            if game:GetService("Workspace").Drops["Dropper_Drop"] then
+                function teleportTO(playerCFrame)
+                    local plyr = game.Players.LocalPlayer;
+                    if plyr.Character then
+                        plyr.Character.HumanoidRootPart.CFrame = playerCFrame;
+                    end
+                end
+                teleportTO(game:GetService("Workspace").Drops["Dropper_Drop"].CFrame)
+            end
+            task.wait(1)
+        if not toggle then
+            break
+        end
+    end
+end)
+sect1:AddToggle("Auto Collect Bananas ( 2 )", false, function(a)
+    aa = a
+    while aa do task.wait()
+        game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(187.84906005859375, 16.101581573486328, -288.9872131347656)
+        wait(0.1)
+        local teleport_table = {
+            location1 = Vector3.new(187.90570068359375, 16.101579666137695, -316.4402770996094), -- your desired position
+        }
+        
+        local tween_s = game:GetService('TweenService')
+        local tweeninfo = TweenInfo.new(1,Enum.EasingStyle.Linear)
+        
+        local lp = game.Players.LocalPlayer
+        
+        function bypass_teleport(v)
+            if lp.Character and 
+            lp.Character:FindFirstChild('HumanoidRootPart') then
+                local cf = CFrame.new(v)
+                local a = tween_s:Create(lp.Character.HumanoidRootPart,tweeninfo,{CFrame=cf})
+                a:Play()
+                -- a.Completed:Wait()
+                -- print('Teleporting Done!')
+            end
+        end
+        
+        bypass_teleport(teleport_table.location1)
+        task.wait(1)
+        local teleport_table = {
+            location1 = Vector3.new(181.52032470703125, 15.891997337341309, -304.080322265625), -- your desired position
+        }
+        
+        local tween_s = game:GetService('TweenService')
+        local tweeninfo = TweenInfo.new(1,Enum.EasingStyle.Linear)
+        
+        local lp = game.Players.LocalPlayer
+        
+        function bypass_teleport(v)
+            if lp.Character and 
+            lp.Character:FindFirstChild('HumanoidRootPart') then
+                local cf = CFrame.new(v)
+                local a = tween_s:Create(lp.Character.HumanoidRootPart,tweeninfo,{CFrame=cf})
+                a:Play()
+                -- a.Completed:Wait()
+                -- print('Teleporting Done!')
+            end
+        end
+        
+        bypass_teleport(teleport_table.location1)
+        task.wait(1)
+        local teleport_table = {
+            location1 = Vector3.new(181.6031951904297, 15.999180793762207, -298.775390625), -- your desired position
+        }
+        
+        local tween_s = game:GetService('TweenService')
+        local tweeninfo = TweenInfo.new(0.5,Enum.EasingStyle.Linear)
+        
+        local lp = game.Players.LocalPlayer
+        
+        function bypass_teleport(v)
+            if lp.Character and 
+            lp.Character:FindFirstChild('HumanoidRootPart') then
+                local cf = CFrame.new(v)
+                local a = tween_s:Create(lp.Character.HumanoidRootPart,tweeninfo,{CFrame=cf})
+                a:Play()
+                -- a.Completed:Wait()
+                -- print('Teleporting Done!')
+            end
+        end
+        
+        bypass_teleport(teleport_table.location1)
+        task.wait(1)
+    end
+end)
+sect1:AddToggle("Auto Collect Bananas ( 3 )", false, function(state)
+    if state then
+        getgenv().A = true
+        while getgenv().A == true do task.wait()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+    wait(0.1)
+    local New_CFrame = game:GetService("Workspace").Drops["Dropper_Drop"].CFrame
+
+    local ts = game:GetService('TweenService')
+    local char = game.Players.LocalPlayer.Character
+
+    local part = char.HumanoidRootPart
+    local ti = TweenInfo.new(0.5, Enum.EasingStyle.Linear)
+    local tp = {CFrame = New_CFrame}
+    ts:Create(part, ti, tp):Play()
+    task.wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+    task.wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = true
+    task.wait(2)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+    end
+        else
+            getgenv().A = false
+            wait(0.1)
+            game.Players.LocalPlayer.Character.HumanoidRootPart.Anchored = false
+    end
+end)
+sect1:AddLabel("Best Method")
+sect1:AddToggle("Auto Deposit Bananas", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        game:GetService("ReplicatedStorage").GTycoonClient.Remotes.DepositDrops:FireServer()
+    end
+end)
+sect1:AddToggle("Auto Merge", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        game:GetService("ReplicatedStorage").GTycoonClient.Remotes.MergeDroppers:FireServer()
+    end
+end)
+sect1:AddToggle("Auto Buy Monkey", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        local args = {
+            [1] = 1
+        }
+
+        game:GetService("ReplicatedStorage").GTycoonClient.Remotes.BuyDropper:FireServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Buy Max Monkeys", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        game:GetService("ReplicatedStorage").GTycoonClient.Remotes.BuyDropperMax:FireServer()
+    end
+end)
+sect1:AddLabel("Auto Buy Monkey but no lags")
+sect1:AddToggle("Auto Buy Speed", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = 1
+        }
+
+        game:GetService("ReplicatedStorage").GTycoonClient.Remotes.BuySpeed:FireServer(unpack(args))
+    end
+end)
+        
+
+
+-- Player
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 300, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Monkey Tycoon"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 11606818992 then -- STEEP STEPS
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("STEEP STEPS", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddToggle("Camera", false, function(state)
+    if state then
+        game:GetService("Players").LocalPlayer.CameraMinZoomDistance = 0
+        game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = math.huge
+    else
+        game:GetService("Players").LocalPlayer.CameraMinZoomDistance = 2
+        game:GetService("Players").LocalPlayer.CameraMaxZoomDistance = 20
+    end
+end)
+sect1:AddToggle("Tp Tool", false, function(state)
+    if state then
+mouse = game.Players.LocalPlayer:GetMouse()
+tool = Instance.new("Tool")
+tool.RequiresHandle = false
+tool.Name = "Tp Tool"
+tool.Activated:connect(function()
+local pos = mouse.Hit+Vector3.new(0,2.5,0)
+pos = CFrame.new(pos.X,pos.Y,pos.Z)
+game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = pos
+end)
+tool.Parent = game.Players.LocalPlayer.Backpack
+else
+game:GetService("Players").LocalPlayer.Backpack["Tp Tool"]:Destroy()
+end
+end)
+sect1:AddButton("Inf Yield", function()
+    loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()
+end)
+
+-- Spawnpoints
+sect1 = tab1:CreateSector("Spawnpoints", 'right')
+sect1:AddButton("Castle", function()
+    local args = {
+        [1] = workspace.NPCs.Spawnpoint
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.Spawnpoint:InvokeServer(unpack(args))
+end)
+
+-- Teleports
+sect1 = tab1:CreateSector("Teleports", 'left')
+sect1:AddButton("Start", function()
+    local args = {
+        [1] = "start"
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.Teleport:FireServer(unpack(args))
+end)
+
+sect1:AddButton("Castle", function()
+    local args = {
+        [1] = "castle"
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.Teleport:FireServer(unpack(args))
+end)
+
+-- Gui
+sect1 = tab1:CreateSector("Gui", 'right')
+sect1:AddToggle("Teleport Gui", false, function(state)
+    if state then
+        game:GetService("Players").LocalPlayer.PlayerGui.Menu.Tabs.Teleports.Visible = true
+    else
+        game:GetService("Players").LocalPlayer.PlayerGui.Menu.Tabs.Teleports.Visible = false
+    end
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["STEEP STEPS"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 10914683361 then -- Busy Business
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Busy Business! 🍿", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddToggle("Main Auto Farm", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        local currentPlot;
+for i, v in pairs(workspace.Plots:GetChildren()) do
+   if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+       currentPlot = v
+   end
+end
+
+local useMachine = game:GetService("ReplicatedStorage").Communication.UseMachine
+local orderCustomer = game:GetService("ReplicatedStorage").Communication.CustomerOrder
+local serveCustomer = game:GetService("ReplicatedStorage").Communication.ServeCustomer
+local ServerScriptService = game:GetService("ServerScriptService")
+
+local vStation;
+   for i, v in pairs(currentPlot.Objects:GetChildren()) do
+       if v:FindFirstChild("Item") and v.Item.Value == Item then  
+           vStation = v
+       end
+   end
+   
+   function getItem(Item)
+   local vStation;
+   for i, v in pairs(currentPlot.Objects:GetChildren()) do
+       if v:FindFirstChild("Item") and v.Item.Value == Item then  
+           vStation = v
+       end
+   end
+ 
+   useMachine:FireServer(vStation, false)
+   useMachine:FireServer(vStation, true)
+end
+
+    for i, v in pairs(currentPlot.Customers:GetChildren()) do
+           if not (v:GetAttribute("Count") == 0) and v:GetAttribute("Count") and tonumber(v:GetAttribute("Count")) >= 1 then
+               local customerItem = v:GetAttribute("Item")
+               if not customerItem then continue end
+               for i = 1, v:GetAttribute("Count") do
+                   getItem(customerItem)
+                   serveCustomer:FireServer(v)
+               end
+           end
+       end
+    end
+end)
+sect1:AddToggle("Auto Get Costumer", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        local currentPlot;
+for i, v in pairs(workspace.Plots:GetChildren()) do
+   if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+       currentPlot = v
+   end
+end
+
+local useMachine = game:GetService("ReplicatedStorage").Communication.UseMachine
+local orderCustomer = game:GetService("ReplicatedStorage").Communication.CustomerOrder
+local serveCustomer = game:GetService("ReplicatedStorage").Communication.ServeCustomer
+local ServerScriptService = game:GetService("ServerScriptService")
+
+for i, v in pairs(currentPlot.Customers:GetChildren()) do
+            if not v:GetAttribute("OrderTaken") then
+                orderCustomer:FireServer(v)
+            end
+        end
+    end
+end)
+sect1:AddToggle("Auto Get Item", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local currentPlot;
+for i, v in pairs(workspace.Plots:GetChildren()) do
+   if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+       currentPlot = v
+   end
+end
+
+local useMachine = game:GetService("ReplicatedStorage").Communication.UseMachine
+local orderCustomer = game:GetService("ReplicatedStorage").Communication.CustomerOrder
+local serveCustomer = game:GetService("ReplicatedStorage").Communication.ServeCustomer
+local ServerScriptService = game:GetService("ServerScriptService")
+
+   function getItem(Item)
+    local vStation;
+    for i, v in pairs(currentPlot.Objects:GetChildren()) do
+        if v:FindFirstChild("Item") and v.Item.Value == Item then  
+            vStation = v
+        end
+    end
+  
+    useMachine:FireServer(vStation, false)
+    useMachine:FireServer(vStation, true)
+ end end
+end)
+sect1:AddToggle("Auto Serve", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        local currentPlot;
+for i, v in pairs(workspace.Plots:GetChildren()) do
+   if v:FindFirstChild("Owner") and v.Owner.Value == game.Players.LocalPlayer then
+       currentPlot = v
+   end
+end
+
+local useMachine = game:GetService("ReplicatedStorage").Communication.UseMachine
+local orderCustomer = game:GetService("ReplicatedStorage").Communication.CustomerOrder
+local serveCustomer = game:GetService("ReplicatedStorage").Communication.ServeCustomer
+local ServerScriptService = game:GetService("ServerScriptService")
+
+        for i, v in pairs(currentPlot.Customers:GetChildren()) do
+            if not (v:GetAttribute("Count") == 0) and v:GetAttribute("Count") and tonumber(v:GetAttribute("Count")) >= 1 then
+                local customerItem = v:GetAttribute("Item")
+                if not customerItem then continue end
+                for i = 1, v:GetAttribute("Count") do
+                    getItem(customerItem)
+                    serveCustomer:FireServer(v)
+                end
+            end
+        end
+    end
+end)
+sect1:AddToggle("Auto Buy Upgrades", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        local args = {
+            [1] = 1
+        }
+
+        game:GetService("ReplicatedStorage").Communication.BuyUpgrade:FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = 2
+        }
+
+        game:GetService("ReplicatedStorage").Communication.BuyUpgrade:FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = 3
+        }
+
+        game:GetService("ReplicatedStorage").Communication.BuyUpgrade:FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = 4
+        }
+
+        game:GetService("ReplicatedStorage").Communication.BuyUpgrade:FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = 5
+        }
+
+        game:GetService("ReplicatedStorage").Communication.BuyUpgrade:FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = 6
+        }
+
+        game:GetService("ReplicatedStorage").Communication.BuyUpgrade:FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = 7
+        }
+
+        game:GetService("ReplicatedStorage").Communication.BuyUpgrade:FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = 8
+        }
+
+        game:GetService("ReplicatedStorage").Communication.BuyUpgrade:FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = 9
+        }
+
+        game:GetService("ReplicatedStorage").Communication.BuyUpgrade:FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = 10
+        }
+
+        game:GetService("ReplicatedStorage").Communication.BuyUpgrade:FireServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Upgrade Lemonade", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        local args = {
+            [1] = "Lemonade"
+        }
+
+        game:GetService("ReplicatedStorage").Communication.UpgradeMachine:FireServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Upgrade Hotdog", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        local args = {
+            [1] = "Hotdog"
+        }
+
+        game:GetService("ReplicatedStorage").Communication.UpgradeMachine:FireServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Upgrade Soda", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        local args = {
+            [1] = "Soda"
+        }
+
+        game:GetService("ReplicatedStorage").Communication.UpgradeMachine:FireServer(unpack(args))
+    end
+end)
+
+
+-- Player
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Busy Business! 🍿"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+sect1:AddLabel("Ui Bind: Right Ctrl")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 11800876530 then -- +1 Blocks Every Second
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("+1 Blocks Every Second", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+local a = sect1:AddToggle("Auto Place Blocks", false, function(a)
+    aa = a
+    while aa do task.wait()
+        game:GetService("ReplicatedStorage").Remotes.PlaceBlock:FireServer()
+    end
+end)
+a:AddKeybind(CRAP,function()
+end)
+sect1:AddToggle("Auto Rebirth", false, function(a)
+    aa = a
+    while aa do task.wait(5)
+        local args = {
+            [1] = "RebirthShop"
+            }
+            
+        game:GetService("ReplicatedStorage").Remotes.Rebirth:InvokeServer(unpack(args))
+    end
+end)
+-- Player
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 60, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 100, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+-- Blocks
+sect1 = tab1:CreateSector("Blocks", 'left')
+sect1:AddButton("Brick", function()
+    local args = {
+        [1] = 1
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Wood", function()
+    local args = {
+        [1] = 2
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Stone", function()
+    local args = {
+        [1] = 3
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Sand", function()
+    local args = {
+        [1] = 4
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Iron", function()
+    local args = {
+        [1] = 5
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Snow", function()
+    local args = {
+        [1] = 6
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Deepslate", function()
+    local args = {
+        [1] = 7
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Red Sandstone", function()
+    local args = {
+        [1] = 8
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Green Wool", function()
+    local args = {
+        [1] = 9
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Coral", function()
+    local args = {
+        [1] = 10
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Magma", function()
+    local args = {
+        [1] = 11
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Emerald", function()
+    local args = {
+        [1] = 12
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Diamond", function()
+    local args = {
+        [1] = 13
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Obsidian", function()
+    local args = {
+        [1] = 14
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+sect1:AddButton("Gem", function()
+    local args = {
+        [1] = 15
+    }
+
+    game:GetService("ReplicatedStorage").Remotes.PurchaseTower:InvokeServer(unpack(args))
+end)
+
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["+1 Blocks Every Second"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 11599913094 then -- Nuke Simulator!🚀
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Nuke Simulator!🚀", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddToggle("Auto Collect", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local New_CFrame = game:GetService("Workspace").CurrencyDrops.Coin1.CFrame
+
+        local ts = game:GetService('TweenService')
+        local char = game.Players.LocalPlayer.Character
+
+        local part = char.HumanoidRootPart
+        local ti = TweenInfo.new(0, Enum.EasingStyle.Linear)
+        local tp = {CFrame = New_CFrame}
+        ts:Create(part, ti, tp):Play()
+        wait(0.5)
+        local New_CFrame = game:GetService("Workspace").CurrencyDrops.Coin2.CFrame
+
+        local ts = game:GetService('TweenService')
+        local char = game.Players.LocalPlayer.Character
+
+        local part = char.HumanoidRootPart
+        local ti = TweenInfo.new(0, Enum.EasingStyle.Linear)
+        local tp = {CFrame = New_CFrame}
+        ts:Create(part, ti, tp):Play()
+        wait(0.5)
+        local New_CFrame = game:GetService("Workspace").CurrencyDrops.gem1.CFrame
+
+        local ts = game:GetService('TweenService')
+        local char = game.Players.LocalPlayer.Character
+
+        local part = char.HumanoidRootPart
+        local ti = TweenInfo.new(0, Enum.EasingStyle.Linear)
+        local tp = {CFrame = New_CFrame}
+        ts:Create(part, ti, tp):Play()
+        wait(0.5)
+        local New_CFrame = game:GetService("Workspace").CurrencyDrops.gem2.CFrame
+
+        local ts = game:GetService('TweenService')
+        local char = game.Players.LocalPlayer.Character
+
+        local part = char.HumanoidRootPart
+        local ti = TweenInfo.new(0, Enum.EasingStyle.Linear)
+        local tp = {CFrame = New_CFrame}
+        ts:Create(part, ti, tp):Play()
+    end
+end)
+sect1:AddToggle("Auto Claim Chest", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").Chests.NormalChest.Root.BillboardGui.Time == "Claim" then
+            local args = {
+                [1] = "NormalChest"
+            }
+
+            game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.ChestService.RE.Claim:FireServer(unpack(args))
+            wait()
+            game.StarterGui:SetCore("SendNotification", {
+                Title = 'Storm Hub';
+                Text = 'Chest claimed';
+                Duration = 3;
+            })
+            task.wait(1)
+        end
+    end
+end)
+sect1:AddToggle("Auto Equip Best", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.NukeService.RE.EquipBest:FireServer()
+    end
+end)
+sect1:AddDropdown("Buy Locations", {'City - 15k', 'Jungle - 65k', 'Desert - 300k', 'Beach - 2m 100k', 'Site Deep Blue - 10m', 'Test Lab 33 - 30m', 'Volcano HQ = 300m', 'Moon Base - 1b'}, "", false, function(value)
+    if value == 'City - 15k' then
+        local args = {
+            [1] = "City"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.ZoneService.RF.PurchaseZone:InvokeServer(unpack(args))
+    end
+    if value == 'Jungle - 65k' then
+            local args = {
+            [1] = "Jungle"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.ZoneService.RF.PurchaseZone:InvokeServer(unpack(args))
+    end
+    if value == 'Desert - 300k' then
+        local args = {
+            [1] = "Desert"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.ZoneService.RF.PurchaseZone:InvokeServer(unpack(args))
+    end
+    if value == 'Beach - 2m 100k' then
+        local args = {
+            [1] = "Beach"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.ZoneService.RF.PurchaseZone:InvokeServer(unpack(args))
+    end
+    if value == 'Site Deep Blue - 10m' then
+        local args = {
+            [1] = "Site Deep Blue"
+        }
+
+       game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.ZoneService.RF.PurchaseZone:InvokeServer(unpack(args))
+    end
+    if value == 'Test Lab 33 - 30m' then
+        local args = {
+            [1] = "Test Lab 33"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.ZoneService.RF.PurchaseZone:InvokeServer(unpack(args))
+    end
+    if value == 'Volcano HQ - 300m' then
+        local args = {
+            [1] = "Volcano HQ"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.ZoneService.RF.PurchaseZone:InvokeServer(unpack(args))
+    end
+    if value == 'Moon Base - 1b' then
+        local args = {
+            [1] = "Moon Base"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.ZoneService.RF.PurchaseZone:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddLabel("Buy only 1 time or you will")
+sect1:AddLabel("lose money")
+
+-- Player
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 300, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+-- Silos
+sect1 = tab1:CreateSector("Silos", 'left')
+sect1:AddToggle("Silo 1 - 1k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 1"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 2 - 4k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 2"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 3 - 15k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 5"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 4 - 26.5k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 6"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 5 - 32.5k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 9"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 6 - 50k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 10"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 7 - 275k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 13"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 8 - 300k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 14"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 9 - 4k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 17"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 10 - 4k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 18"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 11 - 4k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 21"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 12 - 4k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 22"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 13 - 4k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 25"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 14 - 4k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 26"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 15 - 4k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 29"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Silo 16 - 4k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "Silo 30"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1 = tab1:CreateSector("Gold Silo", 'right')
+sect1:AddToggle("Gold Silo 1 - 9k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 3"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 2 - 15k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 4"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 3 - 75k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 7"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 4 - 150k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 8"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 5 - 350k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 11"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 6 - 600k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 12"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 7 - 2.9M money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 15"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 8 - 3.3M money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 16"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 9 - 15k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 19"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 10 - 15k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 20"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 11 - 15k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 23"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 12 - 15k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 24"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 13 - 15k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 27"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 14 - 15k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 28"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 15 - 15k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 31"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Gold Silo 16 - 15k money", false, function(a)
+    aa = a
+    while aa do task.wait(0.3)
+        local args = {
+            [1] = "G Silo 32"
+        }
+
+        game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.EggService.RF.Buy:InvokeServer(unpack(args))
+    end
+end)
+
+-- Misc
+sect1 = tab1:CreateSector("Misc", 'right')
+sect1:AddButton("Claim All Codes", function()
+    local args = {
+        [1] = "Kaboom"
+    }
+
+    game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.CodeService.RF.VerifyCode:InvokeServer(unpack(args))
+    local args = {
+        [1] = "OHIOSIMULATOR"
+    }
+
+    game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.CodeService.RF.VerifyCode:InvokeServer(unpack(args))
+    local args = {
+        [1] = "OHIO"
+    }
+
+    game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.CodeService.RF.VerifyCode:InvokeServer(unpack(args))
+    local args = {
+        [1] = "Bigboom"
+    }
+
+    game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.CodeService.RF.VerifyCode:InvokeServer(unpack(args))
+    local args = {
+        [1] = "XMAS"
+    }
+
+    game:GetService("ReplicatedStorage").Packages._Index:FindFirstChild("sleitnick_knit@1.4.7").knit.Services.CodeService.RF.VerifyCode:InvokeServer(unpack(args))
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Nuke Simulator!🚀"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 10198661638 then -- Farm Factory Tycoon
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Farm Factory Tycoon", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddToggle("Auto Gold Egg with Premium", false, function(a)
+    aa = a
+    while aa do task.wait(60)
+        game:GetService("ReplicatedStorage").Remote.Event.RandomGift:FindFirstChild("[C-S]GetFreeGoldEgg"):FireServer()
+    end
+end)
+sect1:AddToggle("Auto Gold Egg with Gems", false, function(a)
+    aa = a
+    while aa do task.wait(60)
+        game:GetService("ReplicatedStorage").Remote.Event.RandomGift:FindFirstChild("[C-S]BuyGoldEgg"):FireServer()
+    end
+end)
+sect1:AddToggle("Auto Buy", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        for i,v in pairs(game:GetService("Workspace").Tycoon[game.Players.LocalPlayer.Team.Name].Buttons:GetDescendants()) do
+            if v:IsA"TouchTransmitter" then
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 0)
+                firetouchinterest(game.Players.LocalPlayer.Character.HumanoidRootPart, v.Parent, 1)
+            end
+        end
+    end
+end)
+sect1:AddToggle("Auto Upgrade Chickens", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        local args = {
+           [1] = "Chicken1"
+        }
+        
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryUpgrade"):FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = "Chicken2"
+         }
+         
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryUpgrade"):FireServer(unpack(args))
+        task.wait(0.3)
+         local args = {
+            [1] = "Chicken3"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = "Chicken4"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = "Chicken5"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = "Chicken6"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = "Chicken7"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = "Chicken8"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = "Chicken9"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        task.wait(0.3)
+        local args = {
+            [1] = "Chicken10"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        task.wait(0.3)
+    end
+end)
+sect1:AddToggle("Auto Reset Chickens", false, function(a)
+    aa = a
+    while aa do task.wait(1)
+        local args = {
+            [1] = "Chicken1"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        local args = {
+            [1] = "Chicken2"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        local args = {
+            [1] = "Chicken3"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        local args = {
+            [1] = "Chicken4"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        local args = {
+            [1] = "Chicken5"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        local args = {
+            [1] = "Chicken6"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        local args = {
+            [1] = "Chicken7"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        local args = {
+            [1] = "Chicken8"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        local args = {
+            [1] = "Chicken9"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+        local args = {
+            [1] = "Chicken10"
+        }  
+
+        game:GetService("ReplicatedStorage").Remote.Event.Spawn:FindFirstChild("[C-S]TryRebirth"):FireServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Disable Notify Frame", false, function(state)
+    if state then
+        game:GetService("Players").notthrax.PlayerGui.HudMessageBar.Frame.Visible = false
+    else
+        game:GetService("Players").notthrax.PlayerGui.HudMessageBar.Frame.Visible = true
+    end
+end)
+
+-- Player
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 300, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+-- Obbys
+sect1 = tab1:CreateSector("Obbys", 'left')
+sect1:AddButton("Complete Common", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(44.0690308, 26.7711811, -675.024048, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+    task.wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(44.1421661, 30.7711258, -947.713989, -1.1920929e-07, 0, 1.00000012, 0, 1, 0, -1.00000012, 0, -1.1920929e-07)
+end)
+sect1:AddButton("Complete Epic", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(124.069031, 26.7709923, -675.024048, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+    task.wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(124.394417, 30.7709923, -947.850281, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+end)
+sect1:AddButton("Complete Hard", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(204.069, 26.7709732, -675.023926, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+    task.wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(204.852081, 30.7709732, -948.73999, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+end)
+sect1:AddButton("Complete All", function()
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(44.0690308, 26.7711811, -675.024048, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+    task.wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(44.1421661, 30.7711258, -947.713989, -1.1920929e-07, 0, 1.00000012, 0, 1, 0, -1.00000012, 0, -1.1920929e-07)
+    task.wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(124.069031, 26.7709923, -675.024048, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+    task.wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(124.394417, 30.7709923, -947.850281, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+    task.wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(204.069, 26.7709732, -675.023926, 1, 0, 0, 0, 1, 0, 0, 0, 1)
+    task.wait(0.1)
+    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(204.852081, 30.7709732, -948.73999, 0, 0, 1, 0, 1, -0, -1, 0, 0)
+end)
+
+-- Plots
+sect1 = tab1:CreateSector("Plots", 'right')
+sect1:AddToggle("Auto Farm Plot A", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").Tycoon.A.Box1Amount.Value > "0" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(201.63796997070312, 29.030719757080078, 7.021518707275391)
+            task.wait(0.1)
+            local N = game:GetService("VirtualInputManager")
+            N:SendKeyEvent(true, "E", false, game)
+            task.wait(0.1)
+            -- Sell
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(186.10682678222656, 29.144718170166016, -19.115262985229492)
+            task.wait(0.1)
+            local N = game:GetService("VirtualInputManager")
+            N:SendKeyEvent(true, "E", false, game)
+            task.wait(0.1)
+            -- Box 2
+            if game:GetService("Workspace").Tycoon.A.Box2Amount.Value > "0" then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(201.92552185058594, 29.030719757080078, 51.119972229003906)
+                task.wait(0.1)
+                local N = game:GetService("VirtualInputManager")
+                N:SendKeyEvent(true, "E", false, game)
+                task.wait(0.1)
+                -- Sell
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(186.10682678222656, 29.144718170166016, -19.115262985229492)
+                task.wait(0.1)
+                local N = game:GetService("VirtualInputManager")
+                N:SendKeyEvent(true, "E", false, game)
+                task.wait(0.1)
+                -- Box 3
+                if game:GetService("Workspace").Tycoon.A.Box3Amount.Value > "0" then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(201.8870086669922, 29.030725479125977, 97.00245666503906)
+                    task.wait(0.1)
+                    local N = game:GetService("VirtualInputManager")
+                    N:SendKeyEvent(true, "E", false, game)
+                    task.wait(0.1)
+                    -- Sell
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(186.10682678222656, 29.144718170166016, -19.115262985229492)
+                    task.wait(0.1)
+                    local N = game:GetService("VirtualInputManager")
+                    N:SendKeyEvent(true, "E", false, game)
+                end
+            end
+        end
+    end
+end)
+sect1:AddToggle("Auto Farm Plot B", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").Tycoon.B.Box1Amount.Value > "0" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(202.22698974609375, 29.030719757080078, -237.90219116210938)
+            task.wait(0.1)
+            local N = game:GetService("VirtualInputManager")
+            N:SendKeyEvent(true, "E", false, game)
+            task.wait(0.1)
+            -- Sell
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(186.02447509765625, 29.144718170166016, -263.6480407714844)
+            task.wait(0.1)
+            local N = game:GetService("VirtualInputManager")
+            N:SendKeyEvent(true, "E", false, game)
+            task.wait(0.1)
+            -- Box 2
+            if game:GetService("Workspace").Tycoon.B.Box2Amount.Value > "0" then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(201.72654724121094, 29.030719757080078, -193.66456604003906)
+                task.wait(0.1)
+                local N = game:GetService("VirtualInputManager")
+                N:SendKeyEvent(true, "E", false, game)
+                task.wait(0.1)
+                -- Sell
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(186.02447509765625, 29.144718170166016, -263.6480407714844)
+                task.wait(0.1)
+                local N = game:GetService("VirtualInputManager")
+                N:SendKeyEvent(true, "E", false, game)
+                task.wait(0.1)
+                -- Box 3
+                if game:GetService("Workspace").Tycoon.B.Box3Amount.Value > "0" then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(201.46815490722656, 29.030719757080078, -148.6407470703125)
+                    task.wait(0.1)
+                    local N = game:GetService("VirtualInputManager")
+                    N:SendKeyEvent(true, "E", false, game)
+                    task.wait(0.1)
+                    -- Sell
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(186.02447509765625, 29.144718170166016, -263.6480407714844)
+                    task.wait(0.1)
+                    local N = game:GetService("VirtualInputManager")
+                    N:SendKeyEvent(true, "E", false, game)
+                end
+            end
+        end
+    end
+end)
+sect1:AddToggle("Auto Farm Plot C", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").Tycoon.C.Box1Amount.Value > "0" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(201.0415496826172, 29.030719757080078, -482.7505798339844)
+            task.wait(0.1)
+            local N = game:GetService("VirtualInputManager")
+            N:SendKeyEvent(true, "E", false, game)
+            task.wait(0.1)
+            -- Sell
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(185.6959228515625, 29.144718170166016, -508.65496826171875)
+            task.wait(0.1)
+            local N = game:GetService("VirtualInputManager")
+            N:SendKeyEvent(true, "E", false, game)
+            task.wait(0.1)
+            -- Box 2
+            if game:GetService("Workspace").Tycoon.C.Box2Amount.Value > "0" then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(201.69126892089844, 29.030719757080078, -437.6745300292969)
+                task.wait(0.1)
+                local N = game:GetService("VirtualInputManager")
+                N:SendKeyEvent(true, "E", false, game)
+                task.wait(0.1)
+                -- Sell
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(185.6959228515625, 29.144718170166016, -508.65496826171875)
+                task.wait(0.1)
+                local N = game:GetService("VirtualInputManager")
+                N:SendKeyEvent(true, "E", false, game)
+                task.wait(0.1)
+                -- Box 3
+                if game:GetService("Workspace").Tycoon.C.Box3Amount.Value > "0" then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(202.4547576904297, 29.030719757080078, -393.5971984863281)
+                    task.wait(0.1)
+                    local N = game:GetService("VirtualInputManager")
+                    N:SendKeyEvent(true, "E", false, game)
+                    task.wait(0.1)
+                    -- Sell
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(185.6959228515625, 29.144718170166016, -508.65496826171875)
+                    task.wait(0.1)
+                    local N = game:GetService("VirtualInputManager")
+                    N:SendKeyEvent(true, "E", false, game)
+                end
+            end
+        end
+    end
+end)
+sect1:AddToggle("Auto Farm Plot D", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").Tycoon.D.Box1Amount.Value > "0" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(46.26240539550781, 29.030719757080078, 22.818387985229492)
+            task.wait(0.1)
+            local N = game:GetService("VirtualInputManager")
+            N:SendKeyEvent(true, "E", false, game)
+            task.wait(0.1)
+            -- Sell
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(62.54112243652344, 29.144718170166016, 47.79839324951172)
+            task.wait(0.1)
+            local N = game:GetService("VirtualInputManager")
+            N:SendKeyEvent(true, "E", false, game)
+            task.wait(0.1)
+            -- Box 2
+            if game:GetService("Workspace").Tycoon.D.Box2Amount.Value > "0" then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(45.94767761230469, 29.030719757080078, -22.278141021728516)
+                task.wait(0.1)
+                local N = game:GetService("VirtualInputManager")
+                N:SendKeyEvent(true, "E", false, game)
+                task.wait(0.1)
+                -- Sell
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(62.54112243652344, 29.144718170166016, 47.79839324951172)
+                task.wait(0.1)
+                local N = game:GetService("VirtualInputManager")
+                N:SendKeyEvent(true, "E", false, game)
+                task.wait(0.1)
+                -- Box 3
+                if game:GetService("Workspace").Tycoon.D.Box3Amount.Value > "0" then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(45.35967254638672, 29.030719757080078, -67.66346740722656)
+                    task.wait(0.1)
+                    local N = game:GetService("VirtualInputManager")
+                    N:SendKeyEvent(true, "E", false, game)
+                    task.wait(0.1)
+                    -- Sell
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(62.54112243652344, 29.144718170166016, 47.79839324951172)
+                    task.wait(0.1)
+                    local N = game:GetService("VirtualInputManager")
+                    N:SendKeyEvent(true, "E", false, game)
+                end
+            end
+        end
+    end
+end)
+sect1:AddToggle("Auto Farm Plot E", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").Tycoon.E.Box1Amount.Value > "0" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(47.54411697387695, 29.030719757080078, -223.62110900878906)
+            task.wait(0.1)
+            local N = game:GetService("VirtualInputManager")
+            N:SendKeyEvent(true, "E", false, game)
+            task.wait(0.1)
+            -- Sell
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(62.6294059753418, 29.144718170166016, -197.92152404785156)
+            task.wait(0.1)
+            local N = game:GetService("VirtualInputManager")
+            N:SendKeyEvent(true, "E", false, game)
+            task.wait(0.1)
+            -- Box 2
+            if game:GetService("Workspace").Tycoon.E.Box2Amount.Value > "0" then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(47.4652214050293, 29.030719757080078, -266.7096252441406)
+                task.wait(0.1)
+                local N = game:GetService("VirtualInputManager")
+                N:SendKeyEvent(true, "E", false, game)
+                task.wait(0.1)
+                -- Sell
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(62.6294059753418, 29.144718170166016, -197.92152404785156)
+                task.wait(0.1)
+                local N = game:GetService("VirtualInputManager")
+                N:SendKeyEvent(true, "E", false, game)
+                task.wait(0.1)
+                -- Box 3
+                if game:GetService("Workspace").Tycoon.E.Box3Amount.Value > "0" then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(46.65944290161133, 29.030719757080078, -312.45623779296875)
+                    task.wait(0.1)
+                    local N = game:GetService("VirtualInputManager")
+                    N:SendKeyEvent(true, "E", false, game)
+                    task.wait(0.1)
+                    -- Sell
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(62.6294059753418, 29.144718170166016, -197.92152404785156)
+                    task.wait(0.1)
+                    local N = game:GetService("VirtualInputManager")
+                    N:SendKeyEvent(true, "E", false, game)
+                end
+            end
+        end
+    end
+end)
+sect1:AddToggle("Auto Farm Plot F", false, function(a)
+    aa = a
+    while aa do task.wait()
+        if game:GetService("Workspace").Tycoon.F.Box1Amount.Value > "0" then
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(45.36732482910156, 29.030719757080078, -468.09710693359375)
+            task.wait(0.1)
+            local N = game:GetService("VirtualInputManager")
+            N:SendKeyEvent(true, "E", false, game)
+            task.wait(0.1)
+            -- Sell
+            game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(62.461753845214844, 29.144718170166016, -441.970458984375)
+            task.wait(0.1)
+            local N = game:GetService("VirtualInputManager")
+            N:SendKeyEvent(true, "E", false, game)
+            task.wait(0.1)
+            -- Box 2
+            if game:GetService("Workspace").Tycoon.F.Box2Amount.Value > "0" then
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(45.36732482910156, 29.030719757080078, -511.9203186035156)
+                task.wait(0.1)
+                local N = game:GetService("VirtualInputManager")
+                N:SendKeyEvent(true, "E", false, game)
+                task.wait(0.1)
+                -- Sell
+                game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(62.461753845214844, 29.144718170166016, -441.970458984375)
+                task.wait(0.1)
+                local N = game:GetService("VirtualInputManager")
+                N:SendKeyEvent(true, "E", false, game)
+                task.wait(0.1)
+                -- Box 3
+                if game:GetService("Workspace").Tycoon.F.Box3Amount.Value > "0" then
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(45.36732482910156, 29.030719757080078, -557.38916015625)
+                    task.wait(0.1)
+                    local N = game:GetService("VirtualInputManager")
+                    N:SendKeyEvent(true, "E", false, game)
+                    task.wait(0.1)
+                    -- Sell
+                    game.Players.LocalPlayer.Character.HumanoidRootPart.CFrame = CFrame.new(62.461753845214844, 29.144718170166016, -441.970458984375)
+                    task.wait(0.1)
+                    local N = game:GetService("VirtualInputManager")
+                    N:SendKeyEvent(true, "E", false, game)
+                end
+            end
+        end
+    end
+end)
+sect1:AddButton("Get your plot letter", function()
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = "Plot:    " ..game:GetService("Players").LocalPlayer.Team.Name;
+        Duration = 3;
+    })
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Farm Factory Tycoon"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
+local sect1 = tab2:CreateSector("Others", 'right')
+sect1:AddButton("Rejoin", function()
+    game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
+end)
+
+elseif game.PlaceId == 11874473440 then -- Car Factory Tycoon
+    game.StarterGui:SetCore("SendNotification", {
+        Title = 'Storm Hub';
+        Text = 'Bind: Right Ctrl';
+        Duration = 3;
+    })
+_G.Color = Color3.fromRGB(66, 135, 245)
+_G.Color2 = Color3.fromRGB(66, 135, 245)
+
+loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/scripts/main/anti%20afk"))()
+local library = loadstring(game:HttpGet("https://raw.githubusercontent.com/thraxhvh/material/main/docs"))()
+local window = library:CreateWindow("Car Factory Tycoon", Vector2.new(492, 598), Enum.KeyCode.RightControl)
+local tab1 = window:CreateTab("Main")
+local tab2 = window:CreateTab("Misc")
+local plr = game.Players.LocalPlayer
+local function tp(place)
+    plr.Character.HumanoidRootPart.CFrame = place
+end
+
+-- Main
+local sect1 = tab1:CreateSector("Main", 'left')
+sect1:AddToggle("Auto Deposit Metal", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = "Metal"
+        }
+
+        game:GetService("ReplicatedStorage").Packages.Knit.Services.MaterialService.RF.Collect:InvokeServer(unpack(args))
+                local args = {
+            [1] = workspace.Tycoons[game.Players.LocalPlayer.Team.Name].Model.Lines.Conveyor1
+        }
+
+        game:GetService("ReplicatedStorage").Packages.Knit.Services.MaterialService.RF.Drop:InvokeServer(unpack(args))
+    end
+end)
+sect1:AddToggle("Auto Deposit Glass", false, function(a)
+    aa = a
+    while aa do task.wait()
+        local args = {
+            [1] = "Glass"
+        }
+
+        game:GetService("ReplicatedStorage").Packages.Knit.Services.MaterialService.RF.Collect:InvokeServer(unpack(args))
+                local args = {
+            [1] = workspace.Tycoons[game.Players.LocalPlayer.Team.Name].Model.Lines.Conveyor1
+        }
+
+        game:GetService("ReplicatedStorage").Packages.Knit.Services.MaterialService.RF.Drop:InvokeServer(unpack(args))
+    end
+end)
+
+
+-- Player
+sect1 = tab1:CreateSector("Player", 'right')
+sect1:AddSlider("Speed", 16, 16, 200, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.WalkSpeed = v
+end)
+sect1:AddSlider("Jump", 50, 50, 300, false, function(v)
+    game.Players.LocalPlayer.Character.Humanoid.JumpPower = v
+end)
+
+-- Misc
+local sect1 = tab2:CreateSector("Misc", 'left')
+sect1:AddButton("Unload gui", function()
+    game:GetService("CoreGui")["Car Factory Tycoon"]:Destroy()
+end)
+sect1:AddLabel("made by thrax")
 local sect1 = tab2:CreateSector("Others", 'right')
 sect1:AddButton("Rejoin", function()
     game:GetService'TeleportService':TeleportToPlaceInstance(game.PlaceId,game.JobId,game:GetService'Players'.LocalPlayer)
