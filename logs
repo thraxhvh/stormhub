@@ -104,7 +104,7 @@
 [+] Script
   - Game added: Murderers vs. Sheriffs
 
-/ 10/03/03 /
+/ 10/03/2023 /
 [+] Flee The Facility
   - Main
     - Tp fixed
@@ -114,3 +114,12 @@
   - Misc
     - Enable shift lock
     - Custom text
+
+/ 11/03/2023 /
+[+] Flee The Facility
+  - All
+    - Things stopped working when enabling another
+
+/ 12/03/2023 /
+[+] Script
+  - Game added: Hospital Tycoon
