@@ -120,8 +120,13 @@ farming:NewTextBox("get clicks", "", function(v)
         game:GetService("ReplicatedStorage").ClickEvent:FireServer()
     end
 end)
-farming:NewTextBox("get clicks ( fast )", "", function(v)
+farming:NewTextBox("get clicks ( fast / crash chance )", "", function(v)
     for i = 1, v do
+        game:GetService("ReplicatedStorage").ClickEvent:FireServer()
+    end
+end)
+farming:NewTextBox("get clicks ( fast / no crash chance )", "", function(v)
+    for i = 1, v do wait(0.00000000000000001)
         game:GetService("ReplicatedStorage").ClickEvent:FireServer()
     end
 end)
